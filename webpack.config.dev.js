@@ -25,16 +25,19 @@ module.exports = {
         }
       },
       {
-        test: /\.(css|scss)$/,
-        loaders: ['style-loader', 'css-loader']
+        test: /\.css$/,
+        loaders: ['style', 'css']
       },
       {
-        test: /\.(svg|png|jpg|jpeg|gif)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        test: /\.(svg|png|jpg|jpeg|gif)$/,
         loader: "file-loader?name=images/[name].[ext]"
       },
       {
-        test: /\.(woff|woff2|ttf|eot|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "file-loader?name=fonts/[name].[ext]"
+        test: /\.(woff|woff2|ttf|eot|otf)$/,
+        loader: 'file',
+        query: {
+          name: 'font/[name].[ext]'
+        }
       }
     ]
   },
