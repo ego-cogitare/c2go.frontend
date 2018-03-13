@@ -18,6 +18,7 @@
   "dependencies": {
     "jquery": "1.12.4",
     "font-awesome": "fontawesome#^4.7.0",
-    "swiper": "3.4.2"
+    "swiper": "3.4.2",
+    "rome": "https://github.com/bevacqua/rome.git#2.1.22"
   }
 }

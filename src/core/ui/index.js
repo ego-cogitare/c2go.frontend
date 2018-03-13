@@ -1,7 +1,7 @@
-import Notifications from './Notifications.jsx';
+// import Notifications from './Notifications.jsx';
 import Popup from './Popup.jsx';
 
 export default {
-  Notifications,
+  // Notifications,
   Popup
 };

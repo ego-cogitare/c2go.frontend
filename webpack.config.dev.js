@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const config = require('./src/config/config.prod');
 
 module.exports = {
   entry: './src/app.jsx',
@@ -57,10 +58,13 @@ module.exports = {
         css: [
           '/vendors/font-awesome/css/font-awesome.min.css',
           '/vendors/swiper/dist/css/swiper.min.css',
+          '/vendors/rome/dist/rome.min.css',
         ],
         js: [
+          'https://maps.googleapis.com/maps/api/js?key=' + config.GOOGLE_APP_ID + '&libraries=places',
           '/vendors/jquery/dist/jquery.min.js',
           '/vendors/swiper/dist/js/swiper.min.js',
+          '/vendors/rome/dist/rome.min.js',
         ]
       }
     })
