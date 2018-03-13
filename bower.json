@@ -1,0 +1,23 @@
+{
+  "name": "courses",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "Alexander Bogish <ego.cogitare@gmail.com>"
+  ],
+  "license": "BSD-2-Clause",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/vendors",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "1.12.4",
+    "font-awesome": "fontawesome#^4.7.0",
+    "swiper": "3.4.2"
+  }
+}

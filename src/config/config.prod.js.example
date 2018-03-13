@@ -1,0 +1,5 @@
+module.exports = {
+  backUrl: 'http://api.unimed.com',
+  frontUrl: 'http://unimed.com',
+  staticFiles: '/uploads'
+};
