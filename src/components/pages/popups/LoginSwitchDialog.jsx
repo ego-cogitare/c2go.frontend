@@ -2,8 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { dispatch } from '../../../core/helpers/EventEmitter';
 
-export default class RegSwitchDialog extends React.Component {
-
+export default class LoginSwitchDialog extends React.Component {
   render() {
     return (
       <div class="registration-switch">
@@ -14,10 +13,8 @@ export default class RegSwitchDialog extends React.Component {
           <a href="#" class="btn google">
             Mit Google anmelden
           </a>
-          <a href="#register/email" class="btn email">Mit E-Mail-Adresse</a>
+          <a href="#login/email" class="btn email">Mit E-Mail-Adresse</a>
         </div>
-        <div class="hr" />
-        <div class="already-registered"><span>Hast du schon ein Konto?</span> <a href="#login" class="text-bold">Einloggen</a></div>
       </div>
     );
   }

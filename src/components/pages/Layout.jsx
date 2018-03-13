@@ -1,9 +1,8 @@
 import React from 'react';
-// import Settings from '../../core/helpers/Settings';
 import Partials from './partials';
 import Popups from './popups';
 import UI from '../../core/ui';
-import { dispatch } from '../../core/helpers/EventEmitter';
+import { dispatch, subscribe } from '../../core/helpers/EventEmitter';
 import { bootstrap } from '../../actions';
 import '../../staticFiles/css/main.css';
 
@@ -17,24 +16,65 @@ export default class Layout extends React.Component {
     };
   }
 
-  componentDidMount() {
-    dispatch('popup:show', {
-      title: 'Registrieren',
-      body: this.regSwitchDialog
-    });
+  /**
+   * Event should be fired on component render
+   */
+  initDialogs() {
+   this.regSwitchDialog = <Popups.RegSwitchDialog />;
+   this.loginSwitchDialog = <Popups.LoginSwitchDialog />;
+   this.emailRegistrationDialog = <Popups.EmailRegistrationDialog />;
+   this.emailLoginDialog = <Popups.EmailLoginDialog />;
+  }
 
-    dispatch('popup:show', {
-      title: 'Willkommen',
-      body: this.emailRegistrationDialog
+  componentDidMount() {
+    this.popups(this.props);
+
+    // If popup closed - navigate to /
+    subscribe('popup:closed', () => {
+      if (['#login', '#login/email', '#register', '#register/email'].indexOf(this.props.router.location.hash) !== -1) {
+        this.props.router.push(this.props.router.location.pathname);
+      }
     });
   }
 
-  /**
-  * Event should be fired on component render
-  */
-  initDialogs() {
-   this.regSwitchDialog = <Popups.RegSwitchDialog />;
-   this.emailRegistrationDialog = <Popups.EmailRegistrationDialog />;
+  componentWillReceiveProps(props) {
+    this.popups(props);
+  }
+
+  popups(props) {
+    switch (props.router.location.hash) {
+      case '#login':
+        dispatch('popup:show', {
+          title: 'Einloggen',
+          body: this.loginSwitchDialog
+        });
+      break;
+
+      case '#login/email':
+        dispatch('popup:show', {
+          title: 'Einloggen',
+          body: this.emailLoginDialog
+        });
+      break;
+
+      case '#register':
+        dispatch('popup:show', {
+          title: 'Registrieren',
+          body: this.regSwitchDialog
+        });
+      break;
+
+      case '#register/email':
+        dispatch('popup:show', {
+          title: 'Registrieren',
+          body: this.emailRegistrationDialog
+        });
+      break;
+
+      default:
+        dispatch('popup:close');
+      break;
+    }
   }
 
   render() {

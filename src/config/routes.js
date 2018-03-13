@@ -7,6 +7,10 @@ const routes = {
       path: 'home',
       component: require('../components/pages/Home.jsx').default
     },
+    {
+      path: 'how-it-works',
+      component: require('../components/pages/HowItWorks.jsx').default
+    },
     // {
     //   path: ['about-us(/:id)', 'delivery(/:id)'],
     //   component: require('../components/pages/WithMenu.jsx').default

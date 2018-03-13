@@ -6,9 +6,6 @@ export default class Header extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-    };
   }
 
   render() {
@@ -16,20 +13,20 @@ export default class Header extends React.Component {
       <header>
         <div class="header-wrapper clear">
           <div class="logo left">
-            <a href="#"></a>
+            <Link to="/"></Link>
           </div>
           <nav class="menu right">
             <div class="menu-item">
               <a href="#" class="ico-search">Event suchen</a>
             </div>
             <div class="menu-item">
-              <a class="active" href="#">So funktioniert's</a>
+              <Link to="/how-it-works" activeClassName="active">So funktioniert's</Link>
             </div>
             <div class="menu-item">
-              <a href="#">Registrieren</a>
+              <a href="#register">Registrieren</a>
             </div>
             <div class="menu-item">
-              <a href="#">Einloggen</a>
+              <a href="#login">Einloggen</a>
             </div>
           </nav>
           <div class="add-event right">
