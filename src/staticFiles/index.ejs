@@ -9,18 +9,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
   <title><%= htmlWebpackPlugin.options.title || 'Webpack App'%></title>
 
-  <% if (htmlWebpackPlugin.files.favicon) { %>
-    <link rel="shortcut icon" href="<%= htmlWebpackPlugin.files.favicon%>">
-  <% } %>
-
-  <% if (htmlWebpackPlugin.options.mobile) { %>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-  <% } %>
-
-  <% for (var css in htmlWebpackPlugin.files.css) { %>
-    <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
-  <% } %>
-
   <% if (htmlWebpackPlugin.options.externalSources) { %>
     <% for (var chunk in htmlWebpackPlugin.options.externalSources.css) { %>
       <link href="<%= htmlWebpackPlugin.options.externalSources.css[chunk] %>" rel="stylesheet">
@@ -31,6 +19,18 @@
     <% for (var chunk in htmlWebpackPlugin.options.externalSources.js) { %>
       <script src="<%= htmlWebpackPlugin.options.externalSources.js[chunk] %>"></script>
     <% } %>
+  <% } %>
+
+  <% if (htmlWebpackPlugin.files.favicon) { %>
+    <link rel="shortcut icon" href="<%= htmlWebpackPlugin.files.favicon%>">
+  <% } %>
+
+  <% if (htmlWebpackPlugin.options.mobile) { %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <% } %>
+
+  <% for (var css in htmlWebpackPlugin.files.css) { %>
+    <link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet">
   <% } %>
 </head>
 <body>
