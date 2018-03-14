@@ -1,14 +1,37 @@
 export default class User {
 
   static get data() {
-    return JSON.parse(localStorage.getItem('user'));
+    try {
+      return JSON.parse(localStorage.getItem('user'));
+    }
+    catch (e) {
+      return null;
+    }
+  }
+
+  static get token() {
+    return localStorage.getItem('token');
   }
 
   static set data(data) {
     localStorage.setItem('user', JSON.stringify(data));
   }
 
-  static get fullName() {
-    return (this.data.firstname || '')  + ' '  + (this.data.lastname || '');
+  static set token(token) {
+    localStorage.setItem('token', token);
+  }
+
+  static beginSession({ user, token }) {
+    this.data = user;
+    this.token = token;
+  }
+
+  static endSession() {
+    this.data = null;
+    this.token = '';
+  }
+
+  static get hasSession() {
+    return !!this.data;
   }
 }

@@ -1,5 +1,9 @@
 import { request } from '../core/helpers/Request';
 
-export function brand({id}, success, error) {
-    request(`/api/${id}`, {}, 'get', success, error);
+export function register(data, success, error) {
+    request(`/api/auth/registration`, data, 'post', success, error);
+};
+
+export function login(data, success, error) {
+    request(`/api/auth/login`, data, 'post', success, error);
 };

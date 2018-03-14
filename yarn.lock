@@ -3546,6 +3546,10 @@ uid-number@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/uid-number/-/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
 
+underscore@^1.8.3:
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
+
 union@~0.4.3:
   version "0.4.6"
   resolved "https://registry.yarnpkg.com/union/-/union-0.4.6.tgz#198fbdaeba254e788b0efcb630bc11f24a2959e0"
@@ -3565,6 +3569,10 @@ uniqid@^4.0.0:
 uniqs@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/uniqs/-/uniqs-2.0.0.tgz#ffede4b36b25290696e6e165d4a59edb998e6b02"
+
+uniqueid@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/uniqueid/-/uniqueid-1.0.0.tgz#e4ed178395c768c8b80a66673b81cfe11653c31d"
 
 unpipe@~1.0.0:
   version "1.0.0"

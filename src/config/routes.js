@@ -1,4 +1,5 @@
 import React from 'react';
+import User from '../core/helpers/User';
 
 const routes = {
   // Default routes list
@@ -10,6 +11,28 @@ const routes = {
     {
       path: 'how-it-works',
       component: require('../components/pages/HowItWorks.jsx').default
+    },
+    {
+      path: 'interests',
+      component: require('../components/pages/Interests.jsx').default
+    },
+    {
+      path: 'dashboard',
+      component: require('../components/pages/Dashboard.jsx').default
+    },
+    {
+      path: 'logout',
+      component: (props) => {
+        // Make logout request
+
+        // Remove localStorage data
+        User.endSession();
+
+        // Redirect to default url
+        props.router.push('/');
+
+        return null;
+      }
     },
     // {
     //   path: ['about-us(/:id)', 'delivery(/:id)'],

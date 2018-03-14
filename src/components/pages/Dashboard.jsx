@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import Partials from './partials';
 
-export default class HowItWorks extends React.Component {
+export default class Dashboard extends React.Component {
 
   constructor(props) {
     super(props);
@@ -12,7 +12,7 @@ export default class HowItWorks extends React.Component {
     return (
       <div class="text-center heading-2">
         <br/>
-        Development in progress...
+        Dashboard development in progress...
         <br/>
         <br/>
       </div>
