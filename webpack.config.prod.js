@@ -34,7 +34,7 @@ module.exports = {
       },
       {
         test: /\.(svg|png|jpg|jpeg|gif)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: "file-loader?name=images/[name].[ext]"
+        loader: "file-loader?name=images/[hash:8].[ext]"
       },
       {
         test: /\.(woff|woff2|ttf|eot|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
