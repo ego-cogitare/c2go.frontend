@@ -65,6 +65,7 @@ module.exports = {
         ],
         js: [
           'https://maps.googleapis.com/maps/api/js?key=' + config.GOOGLE_APP_ID + '&libraries=places',
+          'https://apis.google.com/js/api.js',
           './vendors/jquery/dist/jquery.min.js',
           './vendors/swiper/dist/js/swiper.min.js',
           './vendors/rome/dist/rome.min.js',
