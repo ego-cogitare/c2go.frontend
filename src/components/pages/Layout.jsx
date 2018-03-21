@@ -24,6 +24,7 @@ export default class Layout extends React.Component {
    this.loginSwitchDialog = <Popups.LoginSwitchDialog />;
    this.emailRegistrationDialog = <Popups.EmailRegistrationDialog />;
    this.emailLoginDialog = <Popups.EmailLoginDialog />;
+   this.termsOfUse = <Popups.TermsOfUse />;
   }
 
   componentDidMount() {
@@ -31,7 +32,7 @@ export default class Layout extends React.Component {
 
     // If popup closed - navigate to /
     subscribe('popup:closed', () => {
-      if (['#login', '#login/email', '#register', '#register/email'].indexOf(this.props.router.location.hash) !== -1) {
+      if (['#login', '#login/email', '#register', '#register/email', '#register/terms-of-use'].indexOf(this.props.router.location.hash) !== -1) {
         this.props.router.push(this.props.router.location.pathname);
       }
     });
@@ -68,6 +69,13 @@ export default class Layout extends React.Component {
         dispatch('popup:show', {
           title: 'Registrieren',
           body: this.emailRegistrationDialog
+        });
+      break;
+
+      case '#register/terms-of-use':
+        dispatch('popup:show', {
+          title: 'Nutzungsbedingungenakzeptieren',
+          body: this.termsOfUse
         });
       break;
 

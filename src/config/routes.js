@@ -21,6 +21,10 @@ const routes = {
       component: require('../components/pages/Dashboard.jsx').default
     },
     {
+      path: 'email-confirmation',
+      component: require('../components/pages/EmailConfirmation.jsx').default
+    },
+    {
       path: 'logout',
       component: (props) => {
         // Make logout request

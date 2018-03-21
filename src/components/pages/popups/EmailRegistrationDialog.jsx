@@ -1,6 +1,6 @@
 import React from 'react';
 import { dispatch } from '../../../core/helpers/EventEmitter';
-import { register } from '../../../actions';
+import { register, userValidation } from '../../../actions';
 import { browserHistory } from 'react-router';
 import User from '../../../core/helpers/User';
 
@@ -29,11 +29,10 @@ export default class EmailRegistrationDialog extends React.Component {
   doRegister(e) {
     e.preventDefault();
 
-    register(
+    userValidation(
       this.state,
       ({ token, user }) => {
-        User.beginSession({ token, user });
-        browserHistory.push('/interests');
+        location.hash = 'register/terms-of-use';
       },
       (e) => {
         const errors = {};
@@ -47,6 +46,24 @@ export default class EmailRegistrationDialog extends React.Component {
         this.setState({ errors });
       }
     );
+    // register(
+    //   this.state,
+    //   ({ token, user }) => {
+    //     User.beginSession({ token, user });
+    //     browserHistory.push('/email-confirmation');
+    //   },
+    //   (e) => {
+    //     const errors = {};
+    //     Object.keys(e.responseJSON.errors).forEach((field) => {
+    //       const errorMsg = e.responseJSON.errors[field].pop();
+    //       if (field === 'password' && errorMsg.match(/confirmation/)) {
+    //         field = 'password_confirmation';
+    //       }
+    //       errors[field] = errorMsg;
+    //     });
+    //     this.setState({ errors });
+    //   }
+    // );
   }
 
   render() {
@@ -97,7 +114,7 @@ export default class EmailRegistrationDialog extends React.Component {
                 </label>
               </div>
               <div class="right">
-                <button type="submit" class="btn">Registrieren</button>
+                <button type="submit" class="violet-button">Anfragen</button>
               </div>
             </div>
           </form>

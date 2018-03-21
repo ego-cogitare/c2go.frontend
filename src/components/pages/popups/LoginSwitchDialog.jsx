@@ -84,7 +84,7 @@ export default class LoginSwitchDialog extends React.Component {
           <a href="#" class="btn google" onClick={this.loginViaGooglePlus.bind(this)}>
             Mit Google anmelden
           </a>
-          <a href="#login/email" class="btn email">Mit E-Mail-Adresse</a>
+          <a href="#login/email" class="violet-button email">Mit E-Mail-Adresse</a>
         </div>
       </div>
     );

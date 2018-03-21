@@ -61,7 +61,7 @@ export default class EmailLoginDialog extends React.Component {
                 </label>
               </div>
               <div class="right">
-                <button type="submit" class="btn" name="">Einloggen</button>
+                <button type="submit" class="violet-button" name="">Einloggen</button>
               </div>
             </div>
           </form>
