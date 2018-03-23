@@ -1,5 +1,9 @@
 import { request } from '../core/helpers/Request';
 
+export function dashboard(success, error) {
+    request(`/api/dashboard`, {}, 'get', success, error);
+};
+
 export function register(data, success, error) {
     request(`/api/auth/registration`, data, 'post', success, error);
 };

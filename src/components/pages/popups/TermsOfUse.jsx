@@ -1,10 +1,74 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 import { Link } from 'react-router';
+import { register as registerEmail } from '../../../actions';
+import User from '../../../core/helpers/User';
 
 export default class TermsOfUse extends React.Component {
 
   constructor(props) {
     super(props);
+  }
+
+  redirectToBegin() {
+    location.hash = 'register';
+  }
+
+  getRegData() {
+    try {
+      const regData = JSON.parse(localStorage.getItem('regData'));
+      if (regData) {
+        return regData;
+      }
+      else {
+        this.redirectToBegin();
+      }
+    }
+    catch (e) {
+      this.redirectToBegin();
+    }
+    return {};
+  }
+
+  componentDidMount() {
+    this.getRegData();
+  }
+
+  doRegister(e) {
+    e.preventDefault();
+
+    // Get registering user data
+    const regData = this.getRegData();
+
+    switch (regData.method)
+    {
+      case 'email':
+        this.doRegisterViaEmail(regData);
+      break;
+
+      case 'facebook':
+        console.log('Register via facebook');
+      break;
+
+      case 'google':
+        console.log('Register via google');
+      break;
+
+      default:
+        this.redirectToBegin();
+      break;
+    }
+  }
+
+  doRegisterViaEmail(regData) {
+    registerEmail(
+      regData,
+      ({ token, user }) => {
+        localStorage.removeItem('regData');
+        User.beginSession({ token, user });
+      },
+      () => location.hash = 'register/email'
+    );
   }
 
   render() {
@@ -30,7 +94,7 @@ export default class TermsOfUse extends React.Component {
         </p>
         <div class="buttons clear">
           <input type="checkbox" style={{display:'block'}} />
-          <a href="#" class="violet-button">Registrieren</a>
+          <a href="#" class="violet-button" onClick={this.doRegister.bind(this)}>Registrieren</a>
         </div>
       </div>
     );

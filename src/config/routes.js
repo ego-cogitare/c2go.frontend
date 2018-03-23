@@ -25,6 +25,22 @@ const routes = {
       component: require('../components/pages/EmailConfirmation.jsx').default
     },
     {
+      path: 'register-photo',
+      component: require('../components/pages/RegisterPhoto.jsx').default
+    },
+    {
+      path: 'register-type',
+      component: require('../components/pages/RegisterType.jsx').default
+    },
+    {
+      path: 'register-settings',
+      component: require('../components/pages/RegisterSettings.jsx').default
+    },
+    {
+      path: 'register-interests',
+      component: require('../components/pages/Interests.jsx').default
+    },
+    {
       path: 'logout',
       component: (props) => {
         // Make logout request

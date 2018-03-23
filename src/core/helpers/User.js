@@ -2,10 +2,10 @@ export default class User {
 
   static get data() {
     try {
-      return JSON.parse(localStorage.getItem('user'));
+      return JSON.parse(localStorage.getItem('user')) || {};
     }
     catch (e) {
-      return null;
+      return {};
     }
   }
 
@@ -32,6 +32,6 @@ export default class User {
   }
 
   static get hasSession() {
-    return !!this.data;
+    return Object.keys(this.data).length > 0;
   }
 }

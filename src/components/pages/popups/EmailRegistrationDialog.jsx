@@ -1,8 +1,6 @@
 import React from 'react';
 import { dispatch } from '../../../core/helpers/EventEmitter';
 import { register, userValidation } from '../../../actions';
-import { browserHistory } from 'react-router';
-import User from '../../../core/helpers/User';
 
 export default class EmailRegistrationDialog extends React.Component {
 
@@ -31,7 +29,11 @@ export default class EmailRegistrationDialog extends React.Component {
 
     userValidation(
       this.state,
-      ({ token, user }) => {
+      (r) => {
+        // Store validated user information
+        localStorage.setItem('regData', JSON.stringify(Object.assign({}, this.state, { method: 'email' })));
+
+        // Show popup with terms of application use
         location.hash = 'register/terms-of-use';
       },
       (e) => {
@@ -46,24 +48,6 @@ export default class EmailRegistrationDialog extends React.Component {
         this.setState({ errors });
       }
     );
-    // register(
-    //   this.state,
-    //   ({ token, user }) => {
-    //     User.beginSession({ token, user });
-    //     browserHistory.push('/email-confirmation');
-    //   },
-    //   (e) => {
-    //     const errors = {};
-    //     Object.keys(e.responseJSON.errors).forEach((field) => {
-    //       const errorMsg = e.responseJSON.errors[field].pop();
-    //       if (field === 'password' && errorMsg.match(/confirmation/)) {
-    //         field = 'password_confirmation';
-    //       }
-    //       errors[field] = errorMsg;
-    //     });
-    //     this.setState({ errors });
-    //   }
-    // );
   }
 
   render() {

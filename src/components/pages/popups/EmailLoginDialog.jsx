@@ -26,8 +26,8 @@ export default class EmailLoginDialog extends React.Component {
     login(
       this.state,
       ({ token, user }) => {
+        // Starting user session
         User.beginSession({ token, user });
-        browserHistory.push('/dashboard');
       },
       (e) => {
         this.setState({ error: 'Email or password is incorrect.' });

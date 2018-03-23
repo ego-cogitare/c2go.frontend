@@ -23,6 +23,11 @@ export default class Header extends React.Component {
             <div class="menu-item">
               <Link to="/how-it-works" activeClassName="active">So funktioniert's</Link>
             </div>
+            { User.hasSession &&
+              <div class="menu-item">
+                <Link to="/dashboard" activeClassName="active">Dashboard</Link>
+              </div>
+            }
             { !User.hasSession &&
               <div class="menu-item">
                 <a href="#register">Registrieren</a>
