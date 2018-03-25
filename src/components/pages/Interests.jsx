@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router';
 import Partials from './partials';
+import Popups from './popups';
+import { progress } from '../../actions';
+import { dispatch } from '../../core/helpers/EventEmitter';
 
 export default class Interests extends React.Component {
 
@@ -12,7 +15,27 @@ export default class Interests extends React.Component {
     };
   }
 
+  next(e) {
+    e.preventDefault();
+
+    progress({ progress: 6 },() => {
+      dispatch('popup:show', {
+        title: 'Bestätigung – Erfolgreich registriert',
+        body: this.regComplete
+      });
+    });
+  }
+
+  /**
+   * Event should be fired on component render
+   */
+  initDialogs() {
+   this.regComplete = <Popups.RegComplete />;
+  }
+
   render() {
+    this.initDialogs();
+
     return (
       <div class="registration-interests">
         <div class="heading-3">Interessen</div>
@@ -141,6 +164,10 @@ export default class Interests extends React.Component {
               />
             </div>
           </div>
+        </div>
+
+        <div class="buttons">
+          <a href="#" class="violet-button" onClick={this.next.bind(this)}>Weiter</a>
         </div>
       </div>
     );

@@ -9,6 +9,17 @@ export default class User {
     }
   }
 
+  static get settings() {
+    return this.data.settings || [];
+  }
+
+  static get profilePhoto() {
+    const profilePhoto = this.settings.find(({ section, value }) => section === 'profile_photo');
+    return profilePhoto
+      ? config.staticFiles + '/' + profilePhoto.value
+      : require('../../staticFiles/img/icons/default-avatar.svg');
+  }
+
   static get token() {
     return localStorage.getItem('token');
   }

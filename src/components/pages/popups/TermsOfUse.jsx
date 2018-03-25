@@ -1,6 +1,6 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
-import { Link } from 'react-router';
+import { browserHistory, Link } from 'react-router';
+import classNames from 'classnames';
 import { register as registerEmail } from '../../../actions';
 import User from '../../../core/helpers/User';
 
@@ -8,6 +8,10 @@ export default class TermsOfUse extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      userAgree: false
+    };
   }
 
   redirectToBegin() {
@@ -36,6 +40,10 @@ export default class TermsOfUse extends React.Component {
 
   doRegister(e) {
     e.preventDefault();
+
+    if (!this.state.userAgree) {
+      return false;
+    }
 
     // Get registering user data
     const regData = this.getRegData();
@@ -92,9 +100,17 @@ export default class TermsOfUse extends React.Component {
           of philosophy and make a great impression of an educated and intelligent
           personality.
         </p>
+
         <div class="buttons clear">
-          <input type="checkbox" style={{display:'block'}} />
-          <a href="#" class="violet-button" onClick={this.doRegister.bind(this)}>Registrieren</a>
+          <div class="left">
+            <input type="checkbox" id="agree-checkbox" onChange={(e) => this.setState({ userAgree: e.target.checked })} />
+            <label for="agree-checkbox">
+              <span>Ich akzeptiere die Allgemeinen Geschäftsbedingungen</span>
+            </label>
+          </div>
+          <div class="right">
+            <a href="#" class={classNames('violet-button', { disabled: !this.state.userAgree })} onClick={this.doRegister.bind(this)}>Registrieren</a>
+          </div>
         </div>
       </div>
     );

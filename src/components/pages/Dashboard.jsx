@@ -22,11 +22,11 @@ export default class Dashboard extends React.Component {
 
   render() {
     return (
-        this.state.pageLoading ? null :
+        // this.state.pageLoading ? null :
         <div class="dashboard">
           <div class="header">
             <div class="wrapper clear">
-              <div class="avatar" style={{ backgroundImage: `url('${require('../../staticFiles/img/home/avatar-02.png')}')` }}></div>
+              <div class="avatar" style={{ backgroundImage: `url('${User.profilePhoto}')` }}></div>
               <div class="profile-actions">
                 <div class="text">Profil</div>
                 <div class="heading-1">{`${User.data.first_name} ${User.data.last_name}`}</div>

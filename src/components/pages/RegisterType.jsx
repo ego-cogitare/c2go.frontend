@@ -1,11 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import Partials from './partials';
+import { progress } from '../../actions';
 
 export default class RegisterType extends React.Component {
 
   constructor(props) {
     super(props);
+  }
+
+  next(profileType) {
+    progress({
+      progress: 4,
+      section: 'profile_type',
+      value: profileType
+    }, () => browserHistory.push('/register-settings'));
   }
 
   render() {
@@ -19,8 +28,8 @@ export default class RegisterType extends React.Component {
           darfst du eine Begleitperson kostenlos oder ermäßigt auf viele Reisen und Events mitnehmen
         </p>
         <div class="buttons">
-          <a href="#" class="violet-button">Ja</a>
-          <a href="#" class="violet-button">Nein</a>
+          <a href="#" class="violet-button" onClick={this.next.bind(this, 1)}>Ja</a>
+          <a href="#" class="violet-button" onClick={this.next.bind(this, 2)}>Nein</a>
         </div>
       </div>
     );

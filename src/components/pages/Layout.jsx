@@ -56,13 +56,13 @@ export default class Layout extends React.Component {
   }
 
   apiRequestBeginHandler({ url, params }) {
-    this.setState({ pageLoading: true });
+    //this.setState({ pageLoading: true });
   }
 
   apiRequestEndHandler({ url, params, result })
   {
     // Mark lash request as completed
-    this.setState({ pageLoading: false });
+    //this.setState({ pageLoading: false });
 
     // Redirect user to completed registration
     if ((result.status === 202) || (['/api/auth/login', '/api/auth/registration'].indexOf(url) !== -1 && result.status === 200)) {

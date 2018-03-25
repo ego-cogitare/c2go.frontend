@@ -7,12 +7,6 @@ export default class Search extends React.Component {
   constructor(props) {
     super(props);
 
-    this.autocompleteSettings = {
-      //types: ['(cities)'],
-      componentRestrictions: { 'country': 'de' },
-      language: 'de'
-    };
-
     this.state = {
       categories: [
         {
@@ -47,7 +41,7 @@ export default class Search extends React.Component {
     var $autocompleteFrom = $(this.refs['autocomplete-from']).get(0);
     if ($autocompleteFrom)
     {
-      var autocompleteFrom = new google.maps.places.Autocomplete($autocompleteFrom, this.autocompleteSettings)
+      var autocompleteFrom = new google.maps.places.Autocomplete($autocompleteFrom, config.autocomplete)
       .addListener('place_changed', function() {
         $autocompleteFrom.blur();
         console.log('Selected place', this.getPlace());
@@ -56,7 +50,7 @@ export default class Search extends React.Component {
     var $autocompleteTo = $(this.refs['autocomplete-to']).get(0);
     if ($autocompleteTo)
     {
-      var autocompleteTo = new google.maps.places.Autocomplete($autocompleteTo, this.autocompleteSettings)
+      var autocompleteTo = new google.maps.places.Autocomplete($autocompleteTo, config.autocomplete)
       .addListener('place_changed', function() {
         $autocompleteTo.blur();
         console.log('Selected place', this.getPlace());
@@ -69,7 +63,7 @@ export default class Search extends React.Component {
       var calendar = rome(
         $date, {
         time: false ,
-        inputFormat: 'MM/DD/YYYY',
+        inputFormat: 'DD.MM.YYYY',
         weekdayFormat: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
         dayFormat: 'D',
         appendTo: $date.parentNode

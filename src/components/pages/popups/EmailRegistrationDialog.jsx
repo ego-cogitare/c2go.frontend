@@ -15,6 +15,7 @@ export default class EmailRegistrationDialog extends React.Component {
       password_confirmation: '',
       birth_date: '',
       home_address: '',
+      location: {},
       is_subscribed: 0,
       errors: {}
     };
@@ -50,11 +51,50 @@ export default class EmailRegistrationDialog extends React.Component {
     );
   }
 
+  componentDidMount() {
+    const context = this;
+
+    const $homeAddress = this.refs.home_address;
+    if ($homeAddress)
+    {
+      const context = this;
+      const homeAddress = new google.maps.places.Autocomplete($homeAddress, config.autocomplete)
+        .addListener('place_changed', function() {
+          const place = this.getPlace();
+          $homeAddress.blur();
+          context.setState({
+            location: {
+              lat: place.geometry.location.lat(),
+              lng: place.geometry.location.lng()
+            },
+            home_address: place.formatted_address
+          });
+        });
+    }
+
+    const $date = this.refs.birth_date;
+    if ($date)
+    {
+      const calendar = rome(
+        $date, {
+        time: false ,
+        inputFormat: 'DD.MM.YYYY',
+        weekdayFormat: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+        dayFormat: 'D',
+        appendTo: $date.parentNode
+      })
+      .on('hide', function() {
+        context.setState({
+          birth_date: this.getDateString('DD.MM.YYYY')
+        });
+      });
+    }
+  }
+
   render() {
     return (
       <div class="registration-email">
         <div class="register-form">
-          <form action="" method="post" onSubmit={this.doRegister.bind(this)}>
             <div class="clear">
               <div class="column left">
                 <div class="form-controll">
@@ -67,7 +107,7 @@ export default class EmailRegistrationDialog extends React.Component {
                 </div>
                 <div class="form-controll" />
                 <div class="form-controll">
-                  <input type="text" class="input" name="birth_date" value={this.state.birth_date} onChange={this.updateField.bind(this)} placeholder="Geburtstag" />
+                  <input type="text" class="input" ref="birth_date" name="birth_date" value={this.state.birth_date || ''} onChange={this.updateField.bind(this)} placeholder="Geburtstag" />
                   <small class="color-red">{this.state.errors.birth_date}</small>
                 </div>
               </div>
@@ -85,7 +125,7 @@ export default class EmailRegistrationDialog extends React.Component {
                   <small class="color-red">{this.state.errors.password_confirmation}</small>
                 </div>
                 <div class="form-controll">
-                  <input type="text" class="input" name="home_address" value={this.state.home_address} onChange={this.updateField.bind(this)} placeholder="Wohnort" />
+                  <input type="text" class="input" ref="home_address" name="home_address" placeholder="Wohnort" />
                   <small class="color-red">{this.state.errors.home_address}</small>
                 </div>
               </div>
@@ -98,10 +138,9 @@ export default class EmailRegistrationDialog extends React.Component {
                 </label>
               </div>
               <div class="right">
-                <button type="submit" class="violet-button">Anfragen</button>
+                <button type="button" class="violet-button" onClick={this.doRegister.bind(this)}>Anfragen</button>
               </div>
             </div>
-          </form>
         </div>
       </div>
     );
