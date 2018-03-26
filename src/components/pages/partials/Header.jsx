@@ -18,7 +18,7 @@ export default class Header extends React.Component {
           </div>
           <nav class="menu right">
             <div class="menu-item">
-              <a href="#" class="ico-search">Event suchen</a>
+              <Link to="/" class="ico-search">Event suchen</Link>
             </div>
             <div class="menu-item">
               <Link to="/how-it-works" activeClassName="active">So funktioniert's</Link>
