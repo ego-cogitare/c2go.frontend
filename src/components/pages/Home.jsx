@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import Partials from './partials';
-// import {  } from '../../actions';
+import { events, categories } from '../../actions';
 import { buildUrl } from '../../core/helpers/Utils';
 
 export default class Home extends React.Component {
@@ -10,19 +10,52 @@ export default class Home extends React.Component {
     super(props);
 
     this.state = {
+      categories: [],
+      events: [[],[]]
     };
   }
 
   componentDidMount() {
-    new Swiper('.events-slider', {
-      direction: 'horizontal',
-      slidesPerView: 'auto',
-      paginationClickable: true,
-      loop: false,
-      spaceBetween: 0,
-      mousewheelControl: false,
-      speed: 1000
-    });
+    categories(
+      {},
+      ({ data }) => this.setState({ categories: data }),
+      (e) => console.error(e),
+    );
+    events(
+      {},
+      ({ data }) => this.setState({ events: data }, () => {
+        new Swiper('.events-slider', {
+          direction: 'horizontal',
+          slidesPerView: 'auto',
+          paginationClickable: true,
+          loop: false,
+          spaceBetween: 0,
+          mousewheelControl: false,
+          speed: 1000
+        });
+      }),
+      (e) => console.error(e)
+    );
+  }
+
+  getUserProfilePhoto(user) {
+    const profilePhoto = user.settings.find(({ section }) => section === 'profile_photo') || {};
+    return profilePhoto.value
+      ? `${config.staticFiles}/${profilePhoto.value}`
+      : require('../../staticFiles/img/dashboard/empty-avatar.png');
+  }
+
+  getEventCoverPhoto(category, subcategory) {
+    const coverPhoto = subcategory.cover_photo || category.cover_photo || '';
+    return coverPhoto ? `${config.staticFiles}/${coverPhoto}` : '';
+  }
+
+  eventSearchHandle(params) {
+    console.log('Events search', params);
+  }
+
+  eventAddHandle() {
+    console.log('Events add');
   }
 
   render() {
@@ -32,628 +65,72 @@ export default class Home extends React.Component {
           <div class="title">
             Events
           </div>
-          <Partials.Search />
+          <Partials.Search
+            categories={this.state.categories}
+            onEventsSearch={this.eventSearchHandle.bind(this)}
+            onEventAdd={this.eventAddHandle.bind(this)}
+          />
         </div>
         <div class="events-wrapper clear">
-          <div class="events-section">
-            <div class="section-title">
-              Top Events
+          { this.state.events[1] &&
+            <div class="events-section swiper-container events-slider">
+              <div class="section-title">
+                Top Events
+              </div>
+              <div class="events swiper-wrapper top">
+                {
+                  this.state.events[1].map(({ category, events }) => {
+                    return (
+                      events.map(({ id, category: subcategory, user, name, date, price, event_location_human }) => (
+                        <Partials.Event
+                          key={id}
+                          color={subcategory.color}
+                          avatar={this.getUserProfilePhoto(user)}
+                          picture={this.getEventCoverPhoto(category, subcategory)}
+                          title={name}
+                          category={subcategory.name}
+                          authorName={user.first_name}
+                          price={`${price}€`}
+                          time={date}
+                          location={`In ${event_location_human}`}
+                        />
+                      ))
+                    );
+                  })
+                }
+              </div>
             </div>
-            <div class="events top">
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-01.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-01.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-02.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-02.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-03.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-            </div>
-          </div>
-          <div class="events-section swiper-container events-slider">
-            <div class="section-title clear wrapper">
-              <div class="left">Kino und Theater</div>
-              <a href="#" class="right">Alle anzeigen</a>
-            </div>
-            <div class="events swiper-wrapper">
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-01.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-01.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-01.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-01.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-01.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-01.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-01.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-01.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-01.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-01.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-01.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-            </div>
-          </div>
-          <div class="events-section swiper-container events-slider">
-            <div class="section-title clear wrapper">
-              <div class="left">Reisen</div>
-              <a href="#" class="right">Alle anzeigen</a>
-            </div>
-            <div class="events swiper-wrapper">
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-02.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-02.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-02.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-02.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-02.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-02.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-02.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-02.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-02.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-02.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-02.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-            </div>
-          </div>
-          <div class="events-section swiper-container events-slider">
-            <div class="section-title clear wrapper">
-              <div class="left">Konzerte</div>
-              <a href="#" class="right">Alle anzeigen</a>
-            </div>
-            <div class="events swiper-wrapper">
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-04.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-05.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-06.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-04.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-05.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-06.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-            </div>
-          </div>
-          <div class="events-section swiper-container events-slider">
-            <div class="section-title clear wrapper">
-              <div class="left">Sport</div>
-              <a href="#" class="right">Alle anzeigen</a>
-            </div>
-            <div class="events swiper-wrapper">
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-07.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-08.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-09.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-07.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-08.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-09.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-07.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-08.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-09.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-            </div>
-          </div>
-          <div class="events-section swiper-container events-slider">
-            <div class="section-title clear wrapper">
-              <div class="left">Sonstiges</div>
-              <a href="#" class="right">Alle anzeigen</a>
-            </div>
-            <div class="events swiper-wrapper">
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-10.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-11.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-12.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-10.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-11.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-12.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-10.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-11.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-12.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-10.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-11.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-              <Partials.Event
-                type="video"
-                picture={require('../../staticFiles/img/home/event-12.jpg')}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-                title="Star Wars"
-                category="Kino"
-                authorName="Tina"
-                price="15€"
-                time="17.09.-31.10.17"
-                location="In Marburg"
-              />
-            </div>
-          </div>
+          }
+          { this.state.events[0] &&
+            this.state.events[0].map(({ category, events }) => {
+              return (
+                <div key={`category-${category.id}`} class="events-section swiper-container events-slider">
+                  <div class="section-title clear wrapper">
+                    <div class="left">{category.name}</div>
+                    <a href="#" class="right">Alle anzeigen</a>
+                  </div>
+                  <div class="events swiper-wrapper">
+                    {
+                      events.map(({ id, category: subcategory, user, name, date, price, event_location_human }) => (
+                        <Partials.Event
+                          key={id}
+                          color={subcategory.color}
+                          avatar={this.getUserProfilePhoto(user)}
+                          picture={this.getEventCoverPhoto(category, subcategory)}
+                          title={name}
+                          category={subcategory.name}
+                          authorName={user.first_name}
+                          price={`${price}€`}
+                          time={date}
+                          location={`In ${event_location_human}`}
+                        />
+                      ))
+                    }
+                  </div>
+                </div>
+              );
+            })
+          }
         </div>
       </div>
     );

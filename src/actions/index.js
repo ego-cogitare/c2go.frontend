@@ -20,6 +20,14 @@ export function progress(data, success, error) {
     request(`/api/user/progress/${data.progress}`, data, 'post', success, error);
 };
 
-export function profilePhoto(data, success, error, options) {
-    request(`/api/user/profile-photo`, data, 'post', success, error, options);
+export function profilePhoto(data, success, error) {
+    request(`/api/user/profile-photo`, data, 'post', success, error);
+};
+
+export function events(data, success, error) {
+    request(`/api/events`, data, 'get', success, error);
+};
+
+export function categories(data, success, error) {
+    request(`/api/categories`, data, 'get', success, error);
 };

@@ -8,32 +8,23 @@ export default class Search extends React.Component {
     super(props);
 
     this.state = {
-      categories: [
-        {
-          id: 1,
-          title: 'Kino'
-        },
-        {
-          id: 2,
-          title: 'Konzerte'
-        },
-        {
-          id: 3,
-          title: 'Reisen'
-        },
-        {
-          id: 4,
-          title: 'Sport'
-        },
-        {
-          id: 5,
-          title: 'Sonstiges'
-        },
-      ]
+      categories: [],
+      selectedCategory: {},
+      selectedDate: {},
+      location1_human: '',
+      location1_latlng: {},
+      location2_human: '',
+      location2_latlng: {},
     };
   }
 
+  componentWillReceiveProps({ categories }) {
+    this.setState({ categories });
+  }
+
   componentDidMount() {
+    const context = this;
+
     $(this.refs.categories).on('click', function() {
       $(this).toggleClass('expanded');
     });
@@ -43,8 +34,16 @@ export default class Search extends React.Component {
     {
       var autocompleteFrom = new google.maps.places.Autocomplete($autocompleteFrom, config.autocomplete)
       .addListener('place_changed', function() {
+        const place = this.getPlace();
         $autocompleteFrom.blur();
-        console.log('Selected place', this.getPlace());
+        context.setState({
+          location1_human: place.vicinity,
+          location1_latlng: {
+            lat: place.geometry.location.lat(),
+            lng: place.geometry.location.lng()
+          }
+        });
+        console.log('Selected place', place);
       });
     }
     var $autocompleteTo = $(this.refs['autocomplete-to']).get(0);
@@ -52,7 +51,15 @@ export default class Search extends React.Component {
     {
       var autocompleteTo = new google.maps.places.Autocomplete($autocompleteTo, config.autocomplete)
       .addListener('place_changed', function() {
+        const place = this.getPlace();
         $autocompleteTo.blur();
+        context.setState({
+          location2_human: place.vicinity,
+          location2_latlng: {
+            lat: place.geometry.location.lat(),
+            lng: place.geometry.location.lng()
+          }
+        });
         console.log('Selected place', this.getPlace());
       });
     }
@@ -70,11 +77,32 @@ export default class Search extends React.Component {
       })
       .on('hide', function() {
         $date.blur();
+        context.setState({ selectedDate: this.getDateString() });
       });
       $($date).next('.fa-calendar').on('click', function() {
         setTimeout(function() { calendar.show(); }, 100);
       });
     }
+  }
+
+  onCategorySelect(category, e) {
+    e.preventDefault();
+    this.setState({ selectedCategory: category });
+  }
+
+  onEventsSearch() {
+    this.props.onEventsSearch({
+      category: this.state.selectedCategory,
+      date: this.state.selectedDate,
+      location1: {
+        human: this.state.location1_human,
+        latlng: this.state.location1_latlng,
+      },
+      location2: {
+        human: this.state.location2_human,
+        latlng: this.state.location2_latlng,
+      }
+    });
   }
 
   render() {
@@ -85,12 +113,12 @@ export default class Search extends React.Component {
         </div>
         <div class="filter-wrapper">
           <div class="filter-item category" ref="categories">
-            Kategorie <i class="right fa fa-sort-desc"></i>
+            { this.state.selectedCategory.name || 'Kategorie' } <i class="right fa fa-sort-desc"></i>
             <div class="dropdown">
             {
-              this.state.categories.map(({ id, title }) => (
-                <div key={id} class="item">
-                  <Link to="">{title}</Link>
+              this.state.categories.map((category) => (
+                <div key={category.id} class="item" onClick={this.onCategorySelect.bind(this, category)}>
+                  <Link to="">{category.name}</Link>
                 </div>
               ))
             }
@@ -100,7 +128,7 @@ export default class Search extends React.Component {
             <input type="text" ref="autocomplete-from" class="input fullwidth" defaultValue="" placeholder="From" />
             <i class="right fa fa-map-marker"></i>
           </div>
-          <div class="filter-item to">
+          <div class="filter-item to" class={classNames('filter-item to', { hidden: this.state.selectedCategory.name !== 'Reise' })}>
             <input type="text" ref="autocomplete-to" class="input fullwidth" defaultValue="" placeholder="To" />
             <i class="right fa fa-map-marker"></i>
           </div>
@@ -108,13 +136,13 @@ export default class Search extends React.Component {
             <input type="text" id="date" class="input" placeholder="Datum" defaultValue="" />
             <i class="right fa fa-calendar"></i>
           </div>
-          <div class="filter-item search">
+          <div class="filter-item search" onClick={this.onEventsSearch.bind(this)}>
             <i class="fa fa-search"></i> Suchen
           </div>
         </div>
-        <a href="#" class="create-event">
+        <Link to="#" className="create-event" onClick={this.props.onEventAdd}>
           Event erstellen
-        </a>
+        </Link>
       </div>
     );
   }
