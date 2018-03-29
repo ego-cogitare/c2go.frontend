@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router';
 import Partials from './partials';
+import queryString from 'query-string';
 import { events, categories } from '../../actions';
 import { buildUrl } from '../../core/helpers/Utils';
+import classNames from 'classnames';
 
 export default class Home extends React.Component {
 
@@ -11,28 +13,69 @@ export default class Home extends React.Component {
 
     this.state = {
       categories: [],
-      events: [[],[]]
+      events: [[],[]],
+      params: {},
+      singleCategoryView: false
     };
   }
 
+  componentWillReceiveProps(props) {
+    this.fetchEvents();
+  }
+
   componentDidMount() {
+    this.fetchCategories();
+    this.fetchEvents();
+  }
+
+  fetchCategories() {
     categories(
-      {},
       ({ data }) => this.setState({ categories: data }),
       (e) => console.error(e),
     );
+  }
+
+  fetchEvents(params = null) {
+    if (!params) {
+      // Parse query string
+      const { category, date, location, destination } = queryString.parse(window.location.search);
+      params = { category, date, location, destination };
+
+      this.setState({
+        params,
+        singleCategoryView: !!category
+      });
+    }
+
+    // Fetch events list
     events(
-      {},
+      params,
       ({ data }) => this.setState({ events: data }, () => {
-        new Swiper('.events-slider', {
-          direction: 'horizontal',
-          slidesPerView: 'auto',
-          paginationClickable: true,
-          loop: false,
-          spaceBetween: 0,
-          mousewheelControl: false,
-          speed: 1000
-        });
+        // If single category browses - remove all swiper instances
+        if (this.state.singleCategoryView)
+        {
+          // Remove swiper instances
+          this.swiper && this.swiper.forEach((swiper) => {
+            try {
+              swiper.destroy(true, true);
+            }
+            catch (e) {
+            }
+          });
+        }
+        // Initialize swiper
+        else
+        {
+          this.swiper = new Swiper('.events-slider', {
+            direction: 'horizontal',
+            slidesPerView: 'auto',
+            paginationClickable: true,
+            loop: false,
+            spaceBetween: 0,
+            mousewheelControl: false,
+            speed: 1000
+          });
+        }
       }),
       (e) => console.error(e)
     );
@@ -50,24 +93,71 @@ export default class Home extends React.Component {
     return coverPhoto ? `${config.staticFiles}/${coverPhoto}` : '';
   }
 
-  eventSearchHandle(params) {
-    console.log('Events search', params);
-  }
+  // eventSearchHandle({ category, date, location1, location2 }) {
+  //   this.setState({
+  //     params: {
+  //       category,
+  //       date,
+  //       location1,
+  //       location2
+  //     }
+  //   });
+  //   // this.fetchEvents({
+  //   //   category: category.id,
+  //   //   date,
+  //   //   location: location1.human,
+  //   //   destination: location2.human,
+  //   // });
+  // }
 
   eventAddHandle() {
     console.log('Events add');
   }
 
+  get activeCategory() {
+    return this.state.categories
+      .find(({ id }) => id == this.state.params.category) || null;
+  }
+
+  get title() {
+    const category = this.activeCategory;
+
+    if (this.state.singleCategoryView)
+    {
+      if (category && !this.state.params.location) {
+        return category.name;
+      }
+      if (category && this.state.params.location) {
+        return category.name + ' in ' + this.state.params.location;
+      }
+    }
+    else
+    {
+      if (!category && this.state.params.location) {
+        return 'Events in ' + this.state.params.location;
+      }
+    }
+    return 'Events';
+  }
+
+  get backgroundImage() {
+    const category = this.activeCategory;
+
+    return category && category.cover_photo
+        ? `url('${config.staticFiles}/${category.cover_photo}')`
+        : null;
+  }
+
   render() {
     return (
       <div class="home">
-        <div class="cover">
+        <div class="cover" style={{ backgroundImage: this.backgroundImage }}>
           <div class="title">
-            Events
+            { this.title }
           </div>
           <Partials.Search
             categories={this.state.categories}
-            onEventsSearch={this.eventSearchHandle.bind(this)}
+            /*onEventsSearch={this.eventSearchHandle.bind(this)}*/
             onEventAdd={this.eventAddHandle.bind(this)}
           />
         </div>
@@ -104,10 +194,10 @@ export default class Home extends React.Component {
           { this.state.events[0] &&
             this.state.events[0].map(({ category, events }) => {
               return (
-                <div key={`category-${category.id}`} class="events-section swiper-container events-slider">
+                <div key={`category-${category.id}`} class={classNames('events-section swiper-container events-slider', {'single-category': this.state.singleCategoryView})}>
                   <div class="section-title clear wrapper">
                     <div class="left">{category.name}</div>
-                    <a href="#" class="right">Alle anzeigen</a>
+                    { !this.state.singleCategoryView && <Link to={{ pathname:'/', query: { category: category.id } }} class="right">Alle anzeigen</Link> }
                   </div>
                   <div class="events swiper-wrapper">
                     {

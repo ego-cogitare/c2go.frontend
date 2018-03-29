@@ -28,6 +28,6 @@ export function events(data, success, error) {
     request(`/api/events`, data, 'get', success, error);
 };
 
-export function categories(data, success, error) {
-    request(`/api/categories`, data, 'get', success, error);
+export function categories(success, error) {
+    request(`/api/categories`, {}, 'get', success, error);
 };
