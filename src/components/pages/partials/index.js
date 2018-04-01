@@ -5,6 +5,7 @@ import Search from './Search.jsx';
 import Event from './Event.jsx';
 import Interest from './Interest.jsx';
 import Invitation from './Invitation.jsx';
+import Proposal from './Proposal.jsx';
 
 export default {
   Header,
@@ -14,4 +15,5 @@ export default {
   Event,
   Interest,
   Invitation,
+  Proposal,
 };

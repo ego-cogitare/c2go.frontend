@@ -24,6 +24,10 @@ export function profilePhoto(data, success, error) {
     request(`/api/user/profile-photo`, data, 'post', success, error);
 };
 
+export function event({ id }, success, error) {
+    request(`/api/event/${id}`, {}, 'get', success, error);
+};
+
 export function events(data, success, error) {
     request(`/api/events`, data, 'get', success, error);
 };

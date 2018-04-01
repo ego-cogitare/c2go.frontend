@@ -11,7 +11,7 @@ export default class Event extends React.Component {
   render() {
     return (
       <div class={ classNames('event swiper-slide', this.props.type) }>
-        <div class="picture" data-color={this.props.color} style={{ backgroundImage: `url('${this.props.picture}')` }}>
+        <Link to={`event-proposals/${this.props.id}`} className="picture" data-color={this.props.color} style={{ display: 'block', backgroundImage: `url('${this.props.picture}')` }}>
           <svg xmlns="http://www.w3.org/2000/svg" width="1.5in" height="0.638889in" viewBox="0 0 108 46" class="label">
             <path fill={this.props.color}
                   d="M 103.00,0.00
@@ -40,7 +40,7 @@ export default class Event extends React.Component {
               <img src={this.props.avatar} alt={this.props.authorName} />
             </a>
           </div>
-        </div>
+        </Link>
         <div class="details">
           <div class="price-author">
             {this.props.price} mit {this.props.authorName}

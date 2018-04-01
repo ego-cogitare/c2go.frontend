@@ -174,6 +174,7 @@ export default class Home extends React.Component {
                       events.map(({ id, category: subcategory, user, name, date, price, event_location_human }) => (
                         <Partials.Event
                           key={id}
+                          id={id}
                           color={subcategory.color}
                           avatar={this.getUserProfilePhoto(user)}
                           picture={this.getEventCoverPhoto(category, subcategory)}
@@ -204,6 +205,7 @@ export default class Home extends React.Component {
                       events.map(({ id, category: subcategory, user, name, date, price, event_location_human }) => (
                         <Partials.Event
                           key={id}
+                          id={id}
                           color={subcategory.color}
                           avatar={this.getUserProfilePhoto(user)}
                           picture={this.getEventCoverPhoto(category, subcategory)}

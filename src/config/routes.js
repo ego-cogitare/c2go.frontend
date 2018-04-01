@@ -41,6 +41,10 @@ const routes = {
       component: require('../components/pages/Interests.jsx').default
     },
     {
+      path: 'event-proposals/:id',
+      component: require('../components/pages/EventProposals.jsx').default
+    },
+    {
       path: 'logout',
       component: (props) => {
         // Make logout request
