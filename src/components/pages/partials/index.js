@@ -6,6 +6,8 @@ import Event from './Event.jsx';
 import Interest from './Interest.jsx';
 import Invitation from './Invitation.jsx';
 import Proposal from './Proposal.jsx';
+import EventCover from './EventCover.jsx';
+import Rating from './Rating.jsx';
 
 export default {
   Header,
@@ -16,4 +18,6 @@ export default {
   Interest,
   Invitation,
   Proposal,
+  EventCover,
+  Rating,
 };

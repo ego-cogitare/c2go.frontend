@@ -45,6 +45,10 @@ const routes = {
       component: require('../components/pages/EventProposals.jsx').default
     },
     {
+      path: 'event-requests/:event/user/:user',
+      component: require('../components/pages/EventRequests.jsx').default
+    },
+    {
       path: 'logout',
       component: (props) => {
         // Make logout request

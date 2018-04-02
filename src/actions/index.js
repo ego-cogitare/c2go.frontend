@@ -24,8 +24,12 @@ export function profilePhoto(data, success, error) {
     request(`/api/user/profile-photo`, data, 'post', success, error);
 };
 
-export function event({ id }, success, error) {
-    request(`/api/event/${id}`, {}, 'get', success, error);
+export function proposals({ id }, success, error) {
+    request(`/api/events/proposals/${id}`, {}, 'get', success, error);
+};
+
+export function requests({ event, user }, success, error) {
+    request(`/api/events/requests/${event}/user/${user}`, {}, 'get', success, error);
 };
 
 export function events(data, success, error) {
