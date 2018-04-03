@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import Partials from './partials';
 import Popups from './popups';
-import { general } from '../../actions';
+import { general, storeRequest } from '../../actions';
 import { dispatch } from '../../core/helpers/EventEmitter';
 
 export default class EventRequest extends React.Component {
@@ -27,18 +27,24 @@ export default class EventRequest extends React.Component {
   postRequest(e) {
     const textarea = this.refs.message.refs.textarea;
 
-    dispatch('popup:show', {
-      title: 'Bestätigung – Anfrage versandt',
-      body: this.requestComplete
-    });
-
-    console.log(textarea.value);
-
-    this.refs.message.reset();
+    storeRequest(
+      { message: textarea.value,
+        user: this.state.user_id,
+        event: this.state.event_id
+      },
+      (r) => {
+        dispatch('popup:show', {
+          title: 'Bestätigung – Anfrage versandt',
+          body: this.requestComplete
+        });
+        this.refs.message.reset();
+      },
+      (e) => console.error(e)
+    );
   }
 
   initDialogs() {
-   this.requestComplete = <Popups.RequestComplete />;
+   this.requestComplete = <Popups.RequestComplete eventId={this.state.event_id} userId={this.state.user_id} />;
   }
 
   render() {

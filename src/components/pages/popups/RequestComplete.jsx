@@ -1,12 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { dispatch } from '../../../core/helpers/EventEmitter';
 
 export default class RequestComplete extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   popupClose(e) {
     e.preventDefault();
@@ -23,7 +19,7 @@ export default class RequestComplete extends React.Component {
           <img src={require('../../../staticFiles/img/icons/checkbox-big.png')} alt="Completed" />
         </div>
         <div class="buttons clear">
-          <Link to="/" class="violet-button">Weitersuchen</Link>
+          <Link to={`/event-requests/${this.props.eventId}/user/${this.props.userId}`} class="violet-button">Weitersuchen</Link>
           <a href="#" class="main-profile" onClick={this.popupClose.bind(this)}>Fertig</a>
         </div>
       </div>
