@@ -10,7 +10,7 @@ module.exports = {
   devtool: null,
   output: {
     path: "./public",
-    publicPath: "./",
+    publicPath: "/",
     filename: 'app.[hash].min.js'
   },
   module: {
