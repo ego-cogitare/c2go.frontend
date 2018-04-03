@@ -32,6 +32,10 @@ export function requests({ event, user }, success, error) {
     request(`/api/events/requests/${event}/user/${user}`, {}, 'get', success, error);
 };
 
+export function general({ event, user }, success, error) {
+    request(`/api/events/general/${event}/user/${user}`, {}, 'get', success, error);
+};
+
 export function events(data, success, error) {
     request(`/api/events`, data, 'get', success, error);
 };

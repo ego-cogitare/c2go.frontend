@@ -19,7 +19,7 @@ export default class EventRequests extends React.Component {
   componentDidMount() {
     requests(
       { ...this.props.params },
-      ({ data }) => this.setState({ ...data }, () => console.log(this.state)),
+      ({ data }) => this.setState({ ...data }),
       (e) => console.error(e)
     );
   }
@@ -33,7 +33,7 @@ export default class EventRequests extends React.Component {
         />
         <div class="proposals-wrapper clear" style={{ backgroundColor: '#ffffff' }}>
           <div class="proposal-section wrapper">
-            <div class="heading-1">{this.state.event.event_location_human} {this.state.event.date}</div>
+            <div class="heading-1">{this.state.event.event_location_human}, {this.state.event.date}</div>
             <div class="proposal-details clear">
               <div class="profile-photo">
                 <div class="heading-2">
@@ -105,9 +105,12 @@ export default class EventRequests extends React.Component {
             }
 
             <div class="buttons clear">
-              <div class="violet-button right">
+              <Link to={`/event-general/${this.state.event_id}/user/${this.state.user_id}`} class="violet-button right">
                 Anfragen
-              </div>
+              </Link>
+              <Link to="/" class="cancel">
+                Abbrechen
+              </Link>
             </div>
           </div>
         </div>

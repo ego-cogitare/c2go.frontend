@@ -8,6 +8,7 @@ import Invitation from './Invitation.jsx';
 import Proposal from './Proposal.jsx';
 import EventCover from './EventCover.jsx';
 import Rating from './Rating.jsx';
+import Textarea from './Textarea.jsx';
 
 export default {
   Header,
@@ -20,4 +21,5 @@ export default {
   Proposal,
   EventCover,
   Rating,
+  Textarea,
 };

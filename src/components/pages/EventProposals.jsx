@@ -71,7 +71,7 @@ export default class EventProposals extends React.Component {
                    0.00,0.00 1919.00,0.00 1919.00,0.00 Z" />
           </svg>
           <div class="proposals-section single-category swiper-container _events-slider">
-            <div class="heading-1">Frankfurt, im Metropolis 12.11.17</div>
+            <div class="heading-1">{this.state.event_location_human}, {this.state.date}</div>
             <div class="proposals swiper-wrapper clear">
               {
                 this.state.proposals.map(( user, key ) => {

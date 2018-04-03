@@ -1,11 +1,16 @@
 import React from 'react';
-import { browserHistory, Link } from 'react-router';
+import { Link } from 'react-router';
 import { dispatch } from '../../../core/helpers/EventEmitter';
 
-export default class EmailLoginDialog extends React.Component {
+export default class RequestComplete extends React.Component {
 
   constructor(props) {
     super(props);
+  }
+
+  popupClose(e) {
+    e.preventDefault();
+    dispatch('popup:close');
   }
 
   render() {
@@ -18,8 +23,8 @@ export default class EmailLoginDialog extends React.Component {
           <img src={require('../../../staticFiles/img/icons/checkbox-big.png')} alt="Completed" />
         </div>
         <div class="buttons clear">
-          <Link to="/" class="violet-button">Events suchen</Link>
-          <Link to="/dashboard" class="main-profile">Mein Profil</Link>
+          <Link to="/" class="violet-button">Weitersuchen</Link>
+          <a href="#" class="main-profile" onClick={this.popupClose.bind(this)}>Fertig</a>
         </div>
       </div>
     );

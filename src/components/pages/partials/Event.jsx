@@ -8,10 +8,18 @@ export default class Event extends React.Component {
     super(props);
   }
 
+  get creator() {
+    return (this.props.creator || {}).first_name || (this.props.creator || {}).last_name;
+  }
+
   render() {
     return (
       <div class={ classNames('event swiper-slide', this.props.type) }>
-        <Link to={`event-proposals/${this.props.id}`} className="picture" data-color={this.props.color} style={{ display: 'block', backgroundImage: `url('${this.props.picture}')` }}>
+        <Link to={(this.props.proposals || []).length > 1 ? `/event-proposals/${this.props.id}` : `/event-requests/${this.props.id}/user/${this.props.creator.id}`}
+              className="picture"
+              data-color={this.props.color}
+              style={{ display: 'block', backgroundImage: `url('${this.props.picture}')` }}
+        >
           <svg xmlns="http://www.w3.org/2000/svg" width="1.5in" height="0.638889in" viewBox="0 0 108 46" class="label">
             <path fill={this.props.color}
                   d="M 103.00,0.00
@@ -30,23 +38,21 @@ export default class Event extends React.Component {
             {this.props.category}
           </div>
           <div class="event-open">
-            <a href="#">Schaue</a>
+            <span>Schaue</span>
           </div>
           <div class="event-title">
             {this.props.title}
           </div>
           <div class="author-avatar">
-            <a href="#">
-              <img src={this.props.avatar} alt={this.props.authorName} />
-            </a>
+            <img src={this.props.avatar} alt={this.creator} />
           </div>
         </Link>
         <div class="details">
           <div class="price-author">
-            {this.props.price} mit {this.props.authorName}
+            {this.props.price} mit {this.creator}
           </div>
           <div class="date">
-            {this.props.time}
+            {this.props.date}
           </div>
           <div class="location">
             {this.props.location}

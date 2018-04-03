@@ -171,7 +171,7 @@ export default class Home extends React.Component {
                 {
                   this.state.events[1].map(({ category, events }) => {
                     return (
-                      events.map(({ id, category: subcategory, user, name, date, price, event_location_human }) => (
+                      events.map(({ id, category: subcategory, proposals, user, name, date, price, event_location_human }) => (
                         <Partials.Event
                           key={id}
                           id={id}
@@ -180,9 +180,10 @@ export default class Home extends React.Component {
                           picture={this.getEventCoverPhoto(category, subcategory)}
                           title={name}
                           category={subcategory.name}
-                          authorName={user.first_name}
+                          proposals={proposals}
+                          creator={user}
                           price={`${price}€`}
-                          time={date}
+                          date={date}
                           location={`In ${event_location_human}`}
                         />
                       ))
@@ -202,7 +203,7 @@ export default class Home extends React.Component {
                   </div>
                   <div class="events swiper-wrapper">
                     {
-                      events.map(({ id, category: subcategory, user, name, date, price, event_location_human }) => (
+                      events.map(({ id, category: subcategory, proposals, user, name, date, price, event_location_human }) => (
                         <Partials.Event
                           key={id}
                           id={id}
@@ -211,9 +212,10 @@ export default class Home extends React.Component {
                           picture={this.getEventCoverPhoto(category, subcategory)}
                           title={name}
                           category={subcategory.name}
-                          authorName={user.first_name}
+                          proposals={proposals}
+                          creator={user}
                           price={`${price}€`}
-                          time={date}
+                          date={date}
                           location={`In ${event_location_human}`}
                         />
                       ))
