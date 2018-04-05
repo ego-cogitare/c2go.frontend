@@ -7,12 +7,33 @@ export default class RegisterSettings extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      settings: {}
+    };
   }
 
   next(e) {
     e.preventDefault();
+    progress(
+      { progress: 5,
+        section: 'profile_settings',
+        value: JSON.stringify(this.state.settings) },
+      () => browserHistory.push('/register-interests')
+    );
+  }
 
-    progress({ progress: 5 }, () => browserHistory.push('/register-interests'));
+  skip(e) {
+    e.preventDefault();
+    progress(
+      { progress: 5 },
+      () => browserHistory.push('/register-interests')
+    );
+  }
+
+  updateOption(e) {
+    Object.assign(this.state.settings, { [`profile_${e.target.id}`]: Number(e.target.checked) });
+    this.setState({ settings: this.state.settings });
   }
 
   render() {
@@ -25,15 +46,15 @@ export default class RegisterSettings extends React.Component {
         <div class="section-title">Welche Behinderung hast du?</div>
         <div class="settings-section">
           <div class="setting">
-            <input type="checkbox" id="setting-1" />
+            <input type="checkbox" id="setting-1" onChange={this.updateOption.bind(this)} />
             <label for="setting-1">Cleaning And Organizing Your Computer</label>
           </div>
           <div class="setting">
-            <input type="checkbox" id="setting-2" />
+            <input type="checkbox" id="setting-2" onChange={this.updateOption.bind(this)} />
             <label for="setting-2">Why Use External It Support</label>
           </div>
           <div class="setting">
-            <input type="checkbox" id="setting-3" />
+            <input type="checkbox" id="setting-3" onChange={this.updateOption.bind(this)} />
             <label for="setting-3">Simple Scratch Cooking</label>
           </div>
         </div>
@@ -41,30 +62,30 @@ export default class RegisterSettings extends React.Component {
         <div class="section-title">Welche Unterstützung benötigst du?</div>
         <div class="settings-section">
           <div class="setting">
-            <input type="checkbox" id="setting-4" />
+            <input type="checkbox" id="setting-4" onChange={this.updateOption.bind(this)} />
             <label for="setting-4">Cleaning And Organizing Your Computer</label>
           </div>
           <div class="setting">
-            <input type="checkbox" id="setting-5" />
+            <input type="checkbox" id="setting-5" onChange={this.updateOption.bind(this)} />
             <label for="setting-5">Why Use External It Support</label>
           </div>
           <div class="setting">
-            <input type="checkbox" id="setting-6" />
+            <input type="checkbox" id="setting-6" onChange={this.updateOption.bind(this)} />
             <label for="setting-6">Simple Scratch Cooking</label>
           </div>
         </div>
-
-        <div class="notice-title">Anmerkung (Optional)</div>
-        <div class="notice" contentEditable="true" maxLength="120">
-          Lorem ipsum dolor sit amet, consectetur
-          adipiscing elit. Nam gravida venenatis
-          accumsan. In mi massa, tempus
-        </div>
-        <div class="chars-left">110/120</div>
-
+        <Partials.Textarea
+          label="Anmerkung (Optional)"
+          placeholder="Type some text here"
+          maxLength="120"
+          onChange={(text) => {
+            Object.assign(this.state.settings, { profile_annotaion: text });
+            this.setState({ settings: this.state.settings });
+          }}
+        />
         <div class="buttons">
-          <a href="#" class="violet-button">Weiter</a>
-          <a href="#" class="skip" onClick={this.next.bind(this)}>Überspringen</a>
+          <a href="#" class="violet-button" onClick={this.next.bind(this)}>Weiter</a>
+          <a href="#" class="skip" onClick={this.skip.bind(this)}>Überspringen</a>
         </div>
       </div>
     );

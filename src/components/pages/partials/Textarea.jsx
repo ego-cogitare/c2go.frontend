@@ -19,7 +19,16 @@ export default class Textarea extends React.Component {
     return (
       <div class="textarea-wrapper">
         <div class="textarea-title">{this.state.label}</div>
-        <textarea ref="textarea" class="textarea" maxLength={this.state.maxLength} onChange={(e) => this.setState({ value: e.target.value })}>
+        <textarea
+          ref="textarea"
+          class="textarea"
+          placeholder={this.state.placeholder}
+          maxLength={this.state.maxLength}
+          onChange={(e) => {
+            this.setState({ value: e.target.value });
+            this.props.onChange && this.props.onChange(e.target.value);
+          }}
+        >
           {this.state.value}
         </textarea>
         <div class="textarea-chars-left">{(this.state.value || '').length}/{this.state.maxLength}</div>

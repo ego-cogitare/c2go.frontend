@@ -67,7 +67,7 @@ export default class EmailRegistrationDialog extends React.Component {
               lat: place.geometry.location.lat(),
               lng: place.geometry.location.lng()
             },
-            home_address: place.formatted_address
+            home_address: place.vicinity
           });
         });
     }

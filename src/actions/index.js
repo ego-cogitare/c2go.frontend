@@ -17,6 +17,7 @@ export function login(data, success, error) {
 };
 
 export function progress(data, success, error) {
+  console.log(data)
     request(`/api/user/progress/${data.progress}`, data, 'post', success, error);
 };
 
