@@ -16,11 +16,11 @@ export function currencyIcon(code) {
 
 export function profilePhoto(user) {
   const defaultAvatar = require('../../staticFiles/img/icons/default-avatar.svg');
-  if (!user || !user.settings) {
+  if (!user || !user.settings || !user.settings.profile_photo) {
     return defaultAvatar;
   }
-  const profilePhoto = user.settings.find(({ section, value }) => section === 'profile_photo');
-  return profilePhoto ? config.staticFiles + '/' + profilePhoto.value : defaultAvatar;
+  const profilePhoto = user.settings.profile_photo;
+  return profilePhoto ? config.staticFiles + '/' + profilePhoto : defaultAvatar;
 };
 
 /**

@@ -26,6 +26,7 @@ export default class EventRequest extends React.Component {
 
   postRequest(e) {
     const textarea = this.refs.message.refs.textarea;
+    this.setState({ error: '' });
 
     storeRequest(
       { message: textarea.value,
@@ -39,7 +40,7 @@ export default class EventRequest extends React.Component {
         });
         this.refs.message.reset();
       },
-      (e) => console.error(e)
+      (e) => this.setState({ error: e.responseJSON.message })
     );
   }
 
@@ -70,6 +71,7 @@ export default class EventRequest extends React.Component {
               <Partials.Textarea
                 label={`Persönliche Nachricht an ${this.state.user.first_name || this.state.user.last_name}`}
                 maxLength="120"
+                error={this.state.error}
                 ref="message"
               />
               <div class="buttons clear">

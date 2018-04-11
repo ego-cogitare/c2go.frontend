@@ -1,9 +1,5 @@
 import { request } from '../core/helpers/Request';
 
-export function dashboard(success, error) {
-    request(`/api/dashboard`, {}, 'get', success, error);
-};
-
 export function register(data, success, error) {
     request(`/api/auth/registration`, data, 'post', success, error);
 };
@@ -25,8 +21,20 @@ export function profilePhoto(data, success, error) {
     request(`/api/user/profile-photo`, data, 'post', success, error);
 };
 
+export function eventAccept({ event }, success, error) {
+    request(`/api/events/accept/${event}`, {}, 'get', success, error);
+};
+
+export function userEvents(success, error) {
+    request(`/api/events/requests`, {}, 'get', success, error);
+};
+
 export function proposals({ id }, success, error) {
     request(`/api/events/proposals/${id}`, {}, 'get', success, error);
+};
+
+export function details({ event, user }, success, error) {
+    request(`/api/events/details/${event}/user/${user}`, {}, 'get', success, error);
 };
 
 export function requests({ event, user }, success, error) {

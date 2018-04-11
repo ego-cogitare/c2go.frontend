@@ -17,8 +17,8 @@ export default class Proposal extends React.Component {
     if (!this.state.user || !this.state.user.settings) {
       return defaultAvatar;
     }
-    const profilePhoto = this.state.user.settings.find(({ section, value }) => section === 'profile_photo');
-    return profilePhoto ? config.staticFiles + '/' + profilePhoto.value : defaultAvatar;
+    const profilePhoto = this.state.user.settings.profile_photo;
+    return profilePhoto ? config.staticFiles + '/' + profilePhoto : defaultAvatar;
   }
 
   render() {
@@ -62,7 +62,7 @@ export default class Proposal extends React.Component {
           </div>
           <div class="buttons clear">
             <a href="#" class="button">Mehr</a>
-            <Link to={`/event-requests/${this.state.user.event_id}/user/${this.state.user.id}`} class="button violet-button">Anfragen</Link>
+            <Link to={`/event-details/${this.state.user.event_id}/user/${this.state.user.id}`} class="button violet-button">Anfragen</Link>
           </div>
         </div>
       </div>

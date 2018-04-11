@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router';
 import Partials from './partials';
 import classNames from 'classnames';
-import { requests } from '../../actions';
+import { details } from '../../actions';
 import { profilePhoto } from '../../core/helpers/Utils';
 
-export default class EventRequests extends React.Component {
+export default class EventDetails extends React.Component {
 
   constructor(props) {
     super(props);
@@ -17,7 +17,7 @@ export default class EventRequests extends React.Component {
   }
 
   componentDidMount() {
-    requests(
+    details(
       { ...this.props.params },
       ({ data }) => this.setState({ ...data }),
       (e) => console.error(e)
@@ -61,16 +61,13 @@ export default class EventRequests extends React.Component {
                     Hallo ich bin {this.state.user.first_name || this.state.user.last_name}…
                   </div>
                   <p class="text">
-                    Ich möchte am 30.10.17 das Theaterstück "Ich, ein Anfang" in Wetzlar
-                    im Kellertheater sehen. Hast du auch Lust auf ein witziges und modernes
-                    Theaterstück? Schreibe mir einfach ein paar Informationen über dich und
-                    vielleicht sehen wir uns dann bereits in 2 Wochen in dem Theater.
+                    {this.state.message || ''}
                   </p>
                 </div>
               </div>
             </div>
             <div class="hr"></div>
-            { this.state.event.requests && this.state.event.requests.length > 0 &&
+            { this.state.user.reviews && this.state.user.reviews.length > 0 &&
               <div class="reviews">
                 <div class="title clear">
                   <div class="heading-2">
@@ -79,7 +76,7 @@ export default class EventRequests extends React.Component {
                   <div class="star" data-count="5"></div>
                 </div>
                 {
-                  (this.state.event.requests || []).map(({ message, user }, key) => (
+                  (this.state.user.reviews || []).map(({ message, user }, key) => (
                     <div class="review clear" key={key}>
                       <div class="avatar-rating clear">
                         <div class="avatar">

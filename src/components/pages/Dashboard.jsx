@@ -2,7 +2,8 @@ import React from 'react';
 import { Link } from 'react-router';
 import Partials from './partials';
 import User from '../../core/helpers/User';
-import { dashboard } from '../../actions';
+import { userEvents } from '../../actions';
+import { profilePhoto } from '../../core/helpers/Utils';
 
 export default class Dashboard extends React.Component {
 
@@ -10,14 +11,13 @@ export default class Dashboard extends React.Component {
     super(props);
 
     this.state = {
-      pageLoading: false
+      requests: []
     };
 
-    dashboard();
-  }
-
-  onInvitationOpen(id) {
-    console.log('Invitation ID:', id);
+    userEvents(
+      ({ data }) => this.setState({ requests: data }),
+      (error) => console.error(error),
+    );
   }
 
   render() {
@@ -40,61 +40,58 @@ export default class Dashboard extends React.Component {
           <div class="wrapper events-list clear">
             <div class="current">
               <div class="title">Anfragen und Nachrichten</div>
-              <Partials.Invitation
-                id={1111}
-                onOpen={this.onInvitationOpen.bind(this)}
-                state={Partials.Invitation.STATE_NEW}
-                date='18.03.2018'
-                title='Lara Croft'
-                message='Here will be some text message'
-                selected={false}
-                avatar={require('../../staticFiles/img/home/avatar-03.png')}
-              />
-              <Partials.Invitation
+              {
+                this.state.requests.map(({ id, date, state, message, user }) => {
+                  if (state === Partials.Invitation.STATE_ACCEPTED) {
+                    return null;
+                  }
+                  return (
+                    <Partials.Invitation
+                      key={id}
+                      id={id}
+                      state={state}
+                      date={date}
+                      title={`${user.first_name} ${user.last_name}`}
+                      message={message}
+                      selected={false}
+                      avatar={profilePhoto(user)}
+                    />
+                  );
+                })
+              }
+              {/*<Partials.Invitation
                 title='Bitte vervollständige dein Profil'
                 message='Du hast noch kein Profilbild hinterlegt'
                 selected={true}
-              />
-              <Partials.Invitation
-                id={1111}
-                onOpen={this.onInvitationOpen.bind(this)}
-                state={Partials.Invitation.STATE_ACCEPTED}
-                date='18.03.2018'
-                title='Anfrage zu „Blade runner 2049“'
-                message='Hallo, ich bin Mohammed und würde gerne mich. Lorem ipsum sit dolor'
-                selected={false}
-                avatar={require('../../staticFiles/img/home/avatar-01.png')}
-              />
-              <Partials.Invitation
-                id={1111}
-                onOpen={this.onInvitationOpen.bind(this)}
-                state={Partials.Invitation.STATE_DECLINED}
-                date='18.03.2018'
-                title='Anfrage zu „Blade runner 2049“'
-                message='Hallo, ich bin Mohammed und würde gerne mich. Lorem ipsum sit dolor'
-                selected={false}
-                avatar={require('../../staticFiles/img/home/avatar-02.png')}
-              />
-              <Partials.Invitation
-                title='Bitte vervollständige dein Profil'
-                message='Du hast noch kein Profilbild hinterlegt'
-                selected={true}
-              />
+              />*/}
             </div>
             <div class="future">
               <div class="title">Deine anstehenden Events:</div>
+              {
+                this.state.requests.map(({ id, date, state, message, user }) => {
+                  if (state !== Partials.Invitation.STATE_ACCEPTED) {
+                    return null;
+                  }
+                  return (
+                    <Partials.Invitation
+                      key={id}
+                      id={id}
+                      date={date}
+                      title={`${user.first_name} ${user.last_name}`}
+                      message={message}
+                      selected={false}
+                    />
+                  );
+                })
+              }
+              {/*
               <Partials.Invitation
                 date='20.10.2017'
                 title='Bitte verifiziere deine Daten'
                 message='Hier steht ein zweizeiliger Blindtext. Lorem Ipsum set dolor. Bla und Blubb. Und so weiter…'
                 selected={false}
               />
-              <Partials.Invitation
-                date='20.10.2017'
-                title='Bitte verifiziere deine Daten'
-                message='Hier steht ein zweizeiliger Blindtext. Lorem Ipsum set dolor. Bla und Blubb. Und so weiter…'
-                selected={false}
-              />
+              */}
             </div>
           </div>
         </div>

@@ -14,9 +14,9 @@ export default class User {
   }
 
   static get profilePhoto() {
-    const profilePhoto = this.settings.find(({ section, value }) => section === 'profile_photo');
+    const profilePhoto = this.settings.profile_photo;
     return profilePhoto
-      ? config.staticFiles + '/' + profilePhoto.value
+      ? config.staticFiles + '/' + profilePhoto
       : require('../../staticFiles/img/icons/default-avatar.svg');
   }
 

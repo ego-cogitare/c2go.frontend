@@ -45,8 +45,8 @@ const routes = {
       component: require('../components/pages/EventProposals.jsx').default
     },
     {
-      path: 'event-requests/:event/user/:user',
-      component: require('../components/pages/EventRequests.jsx').default
+      path: 'event-details/:event/user/:user',
+      component: require('../components/pages/EventDetails.jsx').default
     },
     {
       path: 'event-general/:event/user/:user',
@@ -55,6 +55,10 @@ const routes = {
     {
       path: 'event-request/:event/user/:user',
       component: require('../components/pages/EventRequest.jsx').default
+    },
+    {
+      path: 'event-accept/:event',
+      component: require('../components/pages/EventAccept.jsx').default
     },
     {
       path: 'logout',

@@ -82,9 +82,8 @@ export default class Home extends React.Component {
   }
 
   getUserProfilePhoto(user) {
-    const profilePhoto = user.settings.find(({ section }) => section === 'profile_photo') || {};
-    return profilePhoto.value
-      ? `${config.staticFiles}/${profilePhoto.value}`
+    return user.settings.profile_photo
+      ? `${config.staticFiles}/${user.settings.profile_photo}`
       : require('../../staticFiles/img/dashboard/empty-avatar.png');
   }
 
