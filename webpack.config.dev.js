@@ -59,6 +59,7 @@ module.exports = {
           '/vendors/font-awesome/css/font-awesome.min.css',
           '/vendors/swiper/dist/css/swiper.min.css',
           '/vendors/rome/dist/rome.min.css',
+          '/vendors/wickedpicker/dist/wickedpicker.min.css',
         ],
         js: [
           'https://maps.googleapis.com/maps/api/js?key=' + config.GOOGLE_APP_ID + '&libraries=places',
@@ -66,6 +67,7 @@ module.exports = {
           '/vendors/jquery/dist/jquery.min.js',
           '/vendors/swiper/dist/js/swiper.min.js',
           '/vendors/rome/dist/rome.min.js',
+          '/vendors/wickedpicker/dist/wickedpicker.min.js',
         ]
       }
     })

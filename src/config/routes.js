@@ -61,6 +61,26 @@ const routes = {
       component: require('../components/pages/EventAccept.jsx').default
     },
     {
+      path: 'event-add',
+      component: require('../components/pages/event-add/Categories.jsx').default
+    },
+    {
+      path: 'event-add/:category',
+      component: require('../components/pages/event-add/Subcategories.jsx').default
+    },
+    {
+      path: 'event-add/:category/:subcategory/location',
+      component: require('../components/pages/event-add/Location.jsx').default
+    },
+    {
+      path: 'event-add/:category/:subcategory/date',
+      component: require('../components/pages/event-add/Date.jsx').default
+    },
+    {
+      path: 'event-add/:category/:subcategory/name',
+      component: require('../components/pages/event-add/Name.jsx').default
+    },
+    {
       path: 'logout',
       component: (props) => {
         // Make logout request

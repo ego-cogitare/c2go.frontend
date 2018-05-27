@@ -39,7 +39,7 @@ export default class Layout extends React.Component {
       '3': 'register-type',
       '4': 'register-settings',
       '5': 'register-interests',
-      '6': 'dashboard',
+      '6': location.pathname,
     };
     return browserHistory.push(uncompletedRegStates[progress] || '');
   }
@@ -61,18 +61,23 @@ export default class Layout extends React.Component {
 
   apiRequestEndHandler({ url, params, result })
   {
-    // Mark lash request as completed
+    // Mark last request as completed
     //this.setState({ pageLoading: false });
 
     // Redirect user to completed registration
-    if ((result.status === 202) || (['/api/auth/login', '/api/auth/registration'].indexOf(url) !== -1 && result.status === 200)) {
+    if (result.status === 202 || (['/api/auth/login', '/api/auth/registration'].indexOf(url) !== -1 && result.status === 200)) {
       this.continueRegistration(result.responseJSON.user.progress);
     }
 
     // If user tries to get closed part of interface
-    if (result.status === 400 && result.responseJSON.error === 'token_not_provided') {
-      browserHistory.push('/');
-      // location.href = '/#login';
+    // if (result.status === 400 && result.responseJSON.error === 'token_not_provided') {
+    //   browserHistory.push('/');
+    //   // location.href = '/#login';
+    // }
+
+    // If user tries to get closed part of interface
+    if (result.status === 401 || result.status === 400 && result.responseJSON.error === 'token_not_provided') {
+      location.hash = '#login';
     }
   }
 

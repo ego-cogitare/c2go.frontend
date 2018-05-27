@@ -45,7 +45,7 @@ export default class Header extends React.Component {
             }
           </nav>
           <div class="add-event right">
-            <a class="btn" href="#">Event erstellen</a>
+            <Link to='/event-add' className="btn" href="#">Event erstellen</Link>
           </div>
         </div>
       </header>
