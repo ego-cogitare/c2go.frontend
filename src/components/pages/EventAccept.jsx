@@ -55,9 +55,9 @@ export default class EventAccept extends React.Component {
               <p>
                 <span class="text-bold">Sprachen</span>: Englisch, Deutsch
               </p>
-              <a href="#" class="btn more-info">
+              <Link to={`/profile/${this.state.user.id}/information`} className="btn more-info">
                 Mehr über {this.state.user.first_name || this.state.user.last_name} erfahren
-              </a>
+              </Link>
             </div>
           </div>
         </div>

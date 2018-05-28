@@ -16,12 +16,12 @@ export default class SidebarMenu extends React.Component {
             <a href="#">Persönliche Daten ändern</a>
           </div>
           <div class="menu-item">
-            <Link to={`/profile/${User.data.id}/information`} activeClassName="active">
+            <Link to={`/profile/information`} activeClassName="active">
               Profilinformationen
             </Link>
           </div>
           <div class="menu-item">
-            <Link to={`/profile/${User.data.id}/contacts`} activeClassName="active">
+            <Link to={`/profile/contacts`} activeClassName="active">
               Bestätigte Daten
             </Link>
           </div>

@@ -14,7 +14,7 @@ export default class Contacts extends React.Component {
 
   popup() {
     dispatch('popup:show', {
-      title: 'Enter e-mail adress',
+      title: 'E-Mail-Adresse ändern',
       body: this.inputDialog
     });
   }

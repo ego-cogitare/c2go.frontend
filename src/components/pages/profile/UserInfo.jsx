@@ -3,17 +3,24 @@ import { Link } from 'react-router';
 import Partials from '../partials';
 import classNames from 'classnames';
 import User from '../../../core/helpers/User';
+import { profilePhoto } from '../../../core/helpers/Utils';
+import { profileInfo } from '../../../actions';
 
-export default class Information extends React.Component {
+export default class UserInfo extends React.Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
+        settings: {
+          profile_interests: []
+        },
     };
-  }
 
-  componentDidMount() {
+    profileInfo({ user: User.data.id },
+      ({ data }) => this.setState({ ...data }),
+      (e) => console.error(e)
+    );
   }
 
   render() {
@@ -64,60 +71,29 @@ export default class Information extends React.Component {
             <div class="heading-2">
               Interessen:
             </div>
-            <div class="tags clear">
-              <div class="title">
-                Musik
-              </div>
-              <div class="tags-list">
-                <a href="#" class="tag">
-                  Barbecue Party Tips For A Truly Amazing Event
-                </a>
-                <a href="#" class="tag">
-                  Cast Iron Cookware
-                </a>
-                <a href="#" class="tag">
-                  Types Of Cookware Pots And Pans
-                </a>
-                <a href="#" class="tag">
-                  Cooking With Eggs
-                </a>
-                <a href="#" class="tag">
-                  Love Food Read All About It With A Cooking Magazine Subscription
-                </a>
-              </div>
-            </div>
-            <div class="tags clear">
-              <div class="title">
-                Sport
-              </div>
-              <div class="tags-list">
-                <a href="#" class="tag">
-                  Cast Iron Cookware
-                </a>
-                <a href="#" class="tag">
-                  Cooking With Eggs
-                </a>
-              </div>
-            </div>
-            <div class="tags clear">
-              <div class="title">
-                Sonstiges
-              </div>
-              <div class="tags-list">
-                <a href="#" class="tag">
-                  Barbecue Party Tips For A Truly Amazing Event
-                </a>
-                <a href="#" class="tag">
-                  Cast Iron Cookware
-                </a>
-                <a href="#" class="tag">
-                  Types Of Cookware Pots And Pans
-                </a>
-                <a href="#" class="tag">
-                  Cooking With Eggs
-                </a>
-              </div>
-            </div>
+            {
+              this.state.settings.profile_interests.map(({ id, name, categories }) => {
+                if (categories.length === 0) {
+                  return null;
+                }
+                return (
+                  <div key={id} class="tags clear">
+                    <div class="title">
+                      { name }
+                    </div>
+                    <div class="tags-list">
+                    {
+                      categories.map(({ id, name }) => (
+                        <a key={id} href="#" class="tag">
+                          { name }
+                        </a>
+                      ))
+                    }
+                    </div>
+                  </div>
+                );
+              })
+            }
             <Link to={`/register-interests`} className="edit">Edit</Link>
           </div>
 

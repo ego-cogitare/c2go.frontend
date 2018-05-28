@@ -60,3 +60,7 @@ export function category({ category }, success, error) {
 export function categories(success, error) {
     request(`/api/categories`, {}, 'get', success, error);
 };
+
+export function profileInfo({ user }, success, error) {
+    request(`/api/user/${user}/info`, {}, 'get', success, error);
+};

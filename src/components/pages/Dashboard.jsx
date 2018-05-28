@@ -32,7 +32,7 @@ export default class Dashboard extends React.Component {
                 <div class="heading-1">{`${User.data.first_name} ${User.data.last_name}`}</div>
                 <div class="buttons clear">
                   <a href="#" class="btn">Ansehen</a>
-                  <Link to={`/profile/${User.data.id}/information`} className="btn">Bearbeiten</Link>
+                  <Link to={`/profile/information`} className="btn">Bearbeiten</Link>
                 </div>
               </div>
             </div>
