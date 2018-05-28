@@ -9,6 +9,8 @@ import Proposal from './Proposal.jsx';
 import EventCover from './EventCover.jsx';
 import Rating from './Rating.jsx';
 import Textarea from './Textarea.jsx';
+import SidebarMenu from './SidebarMenu.jsx';
+import UserAvatar from './UserAvatar.jsx';
 
 export default {
   Header,
@@ -22,4 +24,6 @@ export default {
   EventCover,
   Rating,
   Textarea,
+  SidebarMenu,
+  UserAvatar,
 };

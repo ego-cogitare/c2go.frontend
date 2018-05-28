@@ -81,6 +81,14 @@ const routes = {
       component: require('../components/pages/event-add/Name.jsx').default
     },
     {
+      path: 'profile/:user/information',
+      component: require('../components/pages/profile/Information.jsx').default
+    },
+    {
+      path: 'profile/:user/contacts',
+      component: require('../components/pages/profile/Contacts.jsx').default
+    },
+    {
       path: 'logout',
       component: (props) => {
         // Make logout request

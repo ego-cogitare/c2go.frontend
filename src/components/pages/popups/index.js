@@ -6,6 +6,7 @@ import EmailLoginDialog from './EmailLoginDialog.jsx';
 import TermsOfUse from './TermsOfUse.jsx';
 import RegComplete from './RegComplete.jsx';
 import RequestComplete from './RequestComplete.jsx';
+import ProfileInputDialog from './ProfileInputDialog.jsx';
 
 export default {
   RegSwitchDialog,
@@ -15,4 +16,5 @@ export default {
   TermsOfUse,
   RegComplete,
   RequestComplete,
+  ProfileInputDialog,
 };
