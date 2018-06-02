@@ -1,5 +1,5 @@
 import React from 'react';
-import User from '../core/helpers/User';
+import { logout } from '../core/middleware/Auth';
 
 const routes = {
   // Default routes list
@@ -94,17 +94,7 @@ const routes = {
     },
     {
       path: 'logout',
-      component: (props) => {
-        // Make logout request
-
-        // Remove localStorage data
-        User.endSession();
-
-        // Redirect to default url
-        props.router.push('/');
-
-        return null;
-      }
+      component: logout
     },
     // {
     //   path: ['about-us(/:id)', 'delivery(/:id)'],

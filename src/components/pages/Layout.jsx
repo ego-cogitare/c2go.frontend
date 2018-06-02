@@ -76,7 +76,10 @@ export default class Layout extends React.Component {
     // }
 
     // If user tries to get closed part of interface
-    if (result.status === 401 || result.status === 400 && result.responseJSON.error === 'token_not_provided') {
+    if (result.status === 400 && result.responseJSON.error === 'token_not_provided') {
+      location.hash = '#login';
+    }
+    else if (result.status === 400 && result.responseJSON.error === 'token_expired') {
       location.hash = '#login';
     }
   }

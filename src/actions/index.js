@@ -12,8 +12,11 @@ export function login(data, success, error) {
     request(`/api/auth/login`, data, 'post', success, error);
 };
 
+export function refreshToken({ token }, success, error) {
+    request(`/api/auth/refresh-token`, { token }, 'get', success, error);
+};
+
 export function progress(data, success, error) {
-  console.log(data)
     request(`/api/user/progress/${data.progress}`, data, 'post', success, error);
 };
 

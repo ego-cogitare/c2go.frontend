@@ -1,88 +1,48 @@
-import { hashHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import { dispatch, subscribe } from '../../core/helpers/EventEmitter';
-import AuthProvider from '../../actions/Auth';
+import { login, refreshToken as updateToken } from '../../actions';
+import User from '../helpers/User';
 
-export default new class {
+export function emailLogin(data, onSuccess, onFail) {
+  login(
+    { ...data },
+    ({ token, user }) => {
+      // Starting user session
+      User.beginSession({ token, user });
 
-  get logoutErrorCode() {
-    return 401;
-  }
-
-  get loginRoute() {
-    return '/login';
-  }
-
-  get authorizedCookies() {
-    return 'loggedIn=true';
-  }
-
-  get unauthorizedCookies() {
-    return 'loggedIn=false';
-  }
-
-  login(data) {
-    // Set authorization cookies
-    document.cookie = this.authorizedCookies;
-
-    // Save loggined user data
-    localStorage.setItem('user', JSON.stringify(data));
-
-    // Redirect to default route
-    location.href = '/';
-  }
-
-  logout() {
-    // Set unauthorization cookies
-    document.cookie = this.unauthorizedCookies;
-
-    // Redirect to login route
-    hashHistory.push(this.loginRoute);
-  }
-
-  constructor() {
-    // Listen for every request status error
-    subscribe('request:result', (r) => {
-      if (typeof r !== 'undefined' && r.status === this.logoutErrorCode) {
-        this.logout();
-      }
-    });
-    subscribe('login:success', (r) => {
-      this.login(r);
-    });
-    subscribe('login:fail', (e) => {
-      dispatch('notification:throw', {
-        type: 'danger',
-        title: 'Login failed',
-        message: e.responseJSON.error
-      });
-    });
-    subscribe('logout:success', (r) => {
-      // Remove cookies
-      this.logout();
-    });
-    subscribe('logout:fail', (e) => {
-      // Remove cookies
-      this.logout();
-    });
-  }
-
-  routeEnter(prevState, replace) {
-    this.checkLoggedIn(prevState, replace);
-  }
-
-  routeChange(prevState, nextState, replace) {
-    this.checkLoggedIn(prevState, replace);
-  }
-
-  checkLoggedIn(prevState, replace) {
-    const cookiesSet = document.cookie.match(this.authorizedCookies);
-    const requestRoute = prevState.location.pathname;
-
-    if (!cookiesSet && requestRoute !== this.loginRoute) {
-      replace(this.loginRoute);
+      // On success function call if provided
+      onSuccess && onSuccess({ token, user });
+    },
+    (e) => {
+      // On fail function call if provided
+      onFail && onFail(e);
     }
-    if (cookiesSet && requestRoute === this.loginRoute) {
-      replace('/');
+  );
+};
+
+export function refreshToken(data, onSuccess, onFail) {
+  updateToken(
+    { ...data },
+    ({ token, user }) => {
+      // Update user token
+      User.token = token;
+
+      // On success function call if provided
+      onSuccess && onSuccess({ token, user });
+    },
+    (e) => {
+      // On fail function call if provided
+      onFail && onFail(e);
     }
-  }
+  );
+};
+
+export function logout(props, onSuccess, onFail) {
+  // Remove localStorage data
+  User.endSession();
+
+  // Redirect to default url
+  props.router.push('/');
+
+  return null;
 };

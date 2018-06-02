@@ -1,8 +1,7 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import { dispatch } from '../../../core/helpers/EventEmitter';
-import { login } from '../../../actions';
-import User from '../../../core/helpers/User';
+import { emailLogin } from '../../../core/middleware/Auth';
 
 export default class EmailLoginDialog extends React.Component {
 
@@ -23,16 +22,7 @@ export default class EmailLoginDialog extends React.Component {
   doLogin(e) {
     e.preventDefault();
 
-    login(
-      this.state,
-      ({ token, user }) => {
-        // Starting user session
-        User.beginSession({ token, user });
-      },
-      (e) => {
-        this.setState({ error: 'Email or password is incorrect.' });
-      }
-    );
+    emailLogin(this.state, null, (error) => this.setState({ error: 'Email or password is incorrect.' }));
   }
 
   render() {
