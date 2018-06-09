@@ -12,10 +12,24 @@ const routes = {
       path: 'how-it-works',
       component: require('../components/pages/HowItWorks.jsx').default
     },
+
     {
-      path: 'interests',
-      component: require('../components/pages/Interests.jsx').default
+      path: 'register-interests',
+      component: require('../components/pages/register/Interests.jsx').default
     },
+    {
+      path: 'register-photo',
+      component: require('../components/pages/register/Photo.jsx').default
+    },
+    {
+      path: 'register-type',
+      component: require('../components/pages/register/Type.jsx').default
+    },
+    {
+      path: 'register-settings',
+      component: require('../components/pages/register/Settings.jsx').default
+    },
+
     {
       path: 'dashboard',
       component: require('../components/pages/Dashboard.jsx').default
@@ -23,22 +37,6 @@ const routes = {
     {
       path: 'email-confirmation',
       component: require('../components/pages/EmailConfirmation.jsx').default
-    },
-    {
-      path: 'register-photo',
-      component: require('../components/pages/RegisterPhoto.jsx').default
-    },
-    {
-      path: 'register-type',
-      component: require('../components/pages/RegisterType.jsx').default
-    },
-    {
-      path: 'register-settings',
-      component: require('../components/pages/RegisterSettings.jsx').default
-    },
-    {
-      path: 'register-interests',
-      component: require('../components/pages/Interests.jsx').default
     },
     {
       path: 'event-proposals/:id',
@@ -60,26 +58,31 @@ const routes = {
       path: 'event-accept/:event',
       component: require('../components/pages/EventAccept.jsx').default
     },
+
     {
       path: 'event-add',
+      component: require('../components/pages/event-add/Agreements.jsx').default
+    },
+    {
+      path: 'event-add/categories',
       component: require('../components/pages/event-add/Categories.jsx').default
     },
     {
-      path: 'event-add/:category',
-      component: require('../components/pages/event-add/Subcategories.jsx').default
+      path: 'event-add/description',
+      component: require('../components/pages/event-add/Description.jsx').default
     },
     {
-      path: 'event-add/:category/:subcategory/location',
-      component: require('../components/pages/event-add/Location.jsx').default
+      path: 'event-add/date-place',
+      component: require('../components/pages/event-add/DatePlace.jsx').default
     },
-    {
-      path: 'event-add/:category/:subcategory/date',
-      component: require('../components/pages/event-add/Date.jsx').default
-    },
-    {
-      path: 'event-add/:category/:subcategory/name',
-      component: require('../components/pages/event-add/Name.jsx').default
-    },
+    // {
+    //   path: 'event-add/:category/:subcategory/location',
+    //   component: require('../components/pages/event-add/Location.jsx').default
+    // },
+    // {
+    //   path: 'event-add/:category/:subcategory/date',
+    //   component: require('../components/pages/event-add/Date.jsx').default
+    // },
     {
       path: 'profile/information',
       component: require('../components/pages/profile/UserInfo.jsx').default

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
-import Partials from './partials';
-import { progress } from '../../actions';
+import Partials from '../partials';
+import { progress } from '../../../actions';
 
-export default class RegisterPhoto extends React.Component {
+export default class Photo extends React.Component {
 
   constructor(props) {
     super(props);
@@ -17,7 +17,7 @@ export default class RegisterPhoto extends React.Component {
     return (
       <div class="register-avatar wrapper-small text-center">
         <div class="heading-2">
-          Willkommen
+          WillkommenRegister
         </div>
         <p class="text">
           Lade ein Profilbild hoch um deine Chancen auf ein erfolgreiches Match zu erhöhen

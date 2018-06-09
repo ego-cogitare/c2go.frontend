@@ -3,7 +3,7 @@ import Content from './Content.jsx';
 import Footer from './Footer.jsx';
 import Search from './Search.jsx';
 import Event from './Event.jsx';
-import Interest from './Interest.jsx';
+import Interests from './Interests.jsx';
 import Invitation from './Invitation.jsx';
 import Proposal from './Proposal.jsx';
 import EventCover from './EventCover.jsx';
@@ -18,7 +18,7 @@ export default {
   Footer,
   Search,
   Event,
-  Interest,
+  Interests,
   Invitation,
   Proposal,
   EventCover,

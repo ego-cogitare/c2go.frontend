@@ -1,10 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router';
-import Partials from './partials';
-import SVG from './svg';
-import Popups from './popups';
-import { progress, categories } from '../../actions';
-import { dispatch } from '../../core/helpers/EventEmitter';
+import SVG from '../svg';
+import Interest from './Interest.jsx';
+import { categories } from '../../../actions';
 
 export default class Interests extends React.Component {
 
@@ -22,22 +19,8 @@ export default class Interests extends React.Component {
     );
   }
 
-  next(e) {
-    e.preventDefault();
-    progress(
-      { progress: 6,
-        section: 'profile_interests',
-        value: JSON.stringify({ categories: this.state.interests }) },
-      (r) => dispatch('popup:show', { title: 'Bestätigung – Erfolgreich registriert', body: this.regComplete }),
-      (e) => console.error(e)
-    );
-  }
-
-  /**
-   * Event should be fired on component render
-   */
-  initDialogs() {
-   this.regComplete = <Popups.RegComplete />;
+  get selectedItems() {
+    return this.state.interests;
   }
 
   onInterestChecked(id, checked) {
@@ -51,12 +34,10 @@ export default class Interests extends React.Component {
   }
 
   render() {
-    this.initDialogs();
-
     return (
       <div class="registration-interests">
-        <div class="heading-3">Interessen</div>
-        <p class="text">Wähle hier deine Interessen aus, um individuelle Vorschläge zu erhalten</p>
+        { this.props.title && <p class="heading-3">{this.props.title}</p> }
+        { this.props.description && <p class="text">{this.props.description}</p> }
         <div class="sections">
           {
             this.state.categories.map(({ id, name, color, cover_photo, categories: subcategories }) => (
@@ -71,7 +52,7 @@ export default class Interests extends React.Component {
                 <div class="items left clear">
                   {
                     subcategories.map(({ id, name, cover_photo }) => (
-                      <Partials.Interest
+                      <Interest
                         key={id}
                         id={id}
                         title={name}
@@ -85,9 +66,7 @@ export default class Interests extends React.Component {
             ))
           }
         </div>
-        <div class="buttons">
-          <a href="#" class="violet-button" onClick={this.next.bind(this)}>Weiter</a>
-        </div>
+        { this.props.children }
       </div>
     );
   }

@@ -7,6 +7,7 @@ import UI from '../../core/ui';
 import User from '../../core/helpers/User';
 import { dispatch, subscribe, unsubscribe } from '../../core/helpers/EventEmitter';
 import { bootstrap } from '../../actions';
+import { refreshToken } from '../../core/middleware/Auth';
 import '../../staticFiles/css/main.css';
 
 export default class Layout extends React.Component {
@@ -79,8 +80,15 @@ export default class Layout extends React.Component {
     if (result.status === 400 && result.responseJSON.error === 'token_not_provided') {
       location.hash = '#login';
     }
-    else if (result.status === 400 && result.responseJSON.error === 'token_expired') {
-      location.hash = '#login';
+    if (result.status === 401 && result.responseJSON.error === 'token_expired') {
+      /** Try to refresh token */
+      refreshToken({ token: User.token },
+        ({ token }) => {
+          User.token = token;
+          console.log('Token refreshed');
+        },
+        (e) => console.error(e)
+      );
     }
   }
 

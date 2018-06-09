@@ -5,14 +5,15 @@ import Partials from '../partials';
 import SVG from '../svg';
 import { categories } from '../../../actions';
 
-export default class Name extends React.Component {
+export default class Description extends React.Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
       title: '',
-      description: ''
+      description: '',
+      url: ''
     };
   }
 
@@ -22,6 +23,10 @@ export default class Name extends React.Component {
 
   onDescriptionChange(description) {
     this.setState({ description });
+  }
+
+  onUrlChange(url) {
+    this.setState({ onUrlChange });
   }
 
   render() {
@@ -52,9 +57,19 @@ export default class Name extends React.Component {
               error={this.state.descriptioinError}
             />
           </div>
+          <div class="form-controll">
+            <input type="text"
+                   ref="url"
+                   class="input"
+                   name="url"
+                   value={this.state.url}
+                   onChange={this.onUrlChange.bind(this)}
+                   placeholder="URL"
+           />
+          </div>
         </div>
         <div class="buttons">
-          <Link to={`/event-add/${this.props.params.category}/${this.props.params.subcategory}/location`} className="button violet-button">Weiter</Link>
+          <Link to={`/event-add/date-place`} className="button violet-button">Weiter</Link>
           <Link to={``} className="button default-button">Überspringen</Link>
         </div>
       </div>

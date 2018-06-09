@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
-import Partials from './partials';
-import { progress } from '../../actions';
+import Partials from '../partials';
+import { progress } from '../../../actions';
 
-export default class RegisterSettings extends React.Component {
+export default class Settings extends React.Component {
 
   constructor(props) {
     super(props);
