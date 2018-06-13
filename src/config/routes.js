@@ -75,6 +75,10 @@ const routes = {
       path: 'event-add/date-place',
       component: require('../components/pages/event-add/DatePlace.jsx').default
     },
+    {
+      path: 'event-add/tickets-bought',
+      component: require('../components/pages/event-add/TicketsBought.jsx').default
+    },
     // {
     //   path: 'event-add/:category/:subcategory/location',
     //   component: require('../components/pages/event-add/Location.jsx').default

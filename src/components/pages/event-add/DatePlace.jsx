@@ -156,7 +156,7 @@ export default class DatePlace extends React.Component {
         }
 
         <div class="buttons">
-          <a href="#" class="button violet-button">Weiter</a>
+          <Link to={`/event-add/tickets-bought`} className="button violet-button">Weiter</Link>
           <a href="#" class="button default-button">Überspringen</a>
         </div>
       </div>
