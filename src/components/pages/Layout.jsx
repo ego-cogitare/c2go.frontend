@@ -35,11 +35,11 @@ export default class Layout extends React.Component {
 
   continueRegistration(progress) {
     const uncompletedRegStates = {
-      '1': 'email-confirmation',
-      '2': 'register-photo',
-      '3': 'register-type',
-      '4': 'register-settings',
-      '5': 'register-interests',
+      '1': 'register/email-confirmation',
+      '2': 'register/photo',
+      '3': 'register/type',
+      '4': 'register/settings',
+      '5': 'register/interests',
       '6': location.pathname,
     };
     return browserHistory.push(uncompletedRegStates[progress] || '');

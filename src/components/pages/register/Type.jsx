@@ -14,7 +14,7 @@ export default class Type extends React.Component {
       progress: 4,
       section: 'profile_type',
       value: profileType
-    }, () => browserHistory.push('/register-settings'));
+    }, () => browserHistory.push('/register/settings'));
   }
 
   render() {

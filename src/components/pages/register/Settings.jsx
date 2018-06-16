@@ -22,7 +22,7 @@ export default class Settings extends React.Component {
       { progress: 5,
         section: 'profile_settings',
         value: JSON.stringify(this.state.settings) },
-      () => browserHistory.push('/register-interests')
+      () => browserHistory.push('/register/interests')
     );
   }
 
@@ -30,7 +30,7 @@ export default class Settings extends React.Component {
     e.preventDefault();
     progress(
       { progress: 5 },
-      () => browserHistory.push('/register-interests')
+      () => browserHistory.push('/register/interests')
     );
   }
 

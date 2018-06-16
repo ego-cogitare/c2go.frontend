@@ -10,7 +10,7 @@ export default class Photo extends React.Component {
   }
 
   next() {
-    progress({ progress: 3 }, () => browserHistory.push('/register-type'));
+    progress({ progress: 3 }, () => browserHistory.push('/register/type'));
   }
 
   render() {

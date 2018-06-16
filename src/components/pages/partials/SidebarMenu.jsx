@@ -13,7 +13,9 @@ export default class SidebarMenu extends React.Component {
         </div>
         <nav class="sidebar-menu">
           <div class="menu-item">
-            <a href="#">Persönliche Daten ändern</a>
+            <Link to={`/profile/settings`} activeClassName="active">
+              Persönliche Daten ändern
+            </Link>
           </div>
           <div class="menu-item">
             <Link to={`/profile/information`} activeClassName="active">
@@ -32,19 +34,25 @@ export default class SidebarMenu extends React.Component {
         </div>
         <nav class="sidebar-menu">
           <div class="menu-item">
-            <a href="#">Benachrichtigungen</a>
+            <Link to={`/profile/notifications`} activeClassName="active">
+              Benachrichtigungen
+            </Link>
+          </div>
+          <div class="menu-item">
+            <Link to={`/profile/payments-history`} activeClassName="active">
+              Zahlungsübersicht
+            </Link>
+          </div>
+          <div class="menu-item">
+            <Link to={`/profile/password-change`} activeClassName="active">
+              Kontoneinstellungen
+            </Link>
           </div>
           <div class="menu-item">
             <a href="#">Zahlungsarten</a>
           </div>
           <div class="menu-item">
             <a href="#">Auszahlungspräferenzen</a>
-          </div>
-          <div class="menu-item">
-            <a href="#">Zahlungsübersicht</a>
-          </div>
-          <div class="menu-item">
-            <a href="#">Kontoneinstellungen</a>
           </div>
         </nav>
       </div>

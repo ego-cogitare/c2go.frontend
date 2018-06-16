@@ -8,6 +8,7 @@ import Invitation from './Invitation.jsx';
 import Proposal from './Proposal.jsx';
 import EventCover from './EventCover.jsx';
 import Rating from './Rating.jsx';
+import Input from './Input.jsx';
 import Textarea from './Textarea.jsx';
 import SidebarMenu from './SidebarMenu.jsx';
 import UserAvatar from './UserAvatar.jsx';
@@ -23,6 +24,7 @@ export default {
   Proposal,
   EventCover,
   Rating,
+  Input,
   Textarea,
   SidebarMenu,
   UserAvatar,

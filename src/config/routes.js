@@ -13,31 +13,35 @@ const routes = {
       component: require('../components/pages/HowItWorks.jsx').default
     },
 
+
+    /** Registration routes */
     {
-      path: 'register-interests',
+      path: 'register/interests',
       component: require('../components/pages/register/Interests.jsx').default
     },
     {
-      path: 'register-photo',
+      path: 'register/photo',
       component: require('../components/pages/register/Photo.jsx').default
     },
     {
-      path: 'register-type',
+      path: 'register/type',
       component: require('../components/pages/register/Type.jsx').default
     },
     {
-      path: 'register-settings',
+      path: 'register/settings',
       component: require('../components/pages/register/Settings.jsx').default
     },
+    {
+      path: 'register/email-confirmation',
+      component: require('../components/pages/register/EmailConfirmation.jsx').default
+    },
+
 
     {
       path: 'dashboard',
       component: require('../components/pages/Dashboard.jsx').default
     },
-    {
-      path: 'email-confirmation',
-      component: require('../components/pages/EmailConfirmation.jsx').default
-    },
+
     {
       path: 'event-proposals/:id',
       component: require('../components/pages/EventProposals.jsx').default
@@ -59,6 +63,8 @@ const routes = {
       component: require('../components/pages/EventAccept.jsx').default
     },
 
+
+    /** Event add routes */
     {
       path: 'event-add',
       component: require('../components/pages/event-add/Agreements.jsx').default
@@ -79,14 +85,13 @@ const routes = {
       path: 'event-add/tickets-bought',
       component: require('../components/pages/event-add/TicketsBought.jsx').default
     },
-    // {
-    //   path: 'event-add/:category/:subcategory/location',
-    //   component: require('../components/pages/event-add/Location.jsx').default
-    // },
-    // {
-    //   path: 'event-add/:category/:subcategory/date',
-    //   component: require('../components/pages/event-add/Date.jsx').default
-    // },
+    {
+      path: 'event-add/meeting-point',
+      component: require('../components/pages/event-add/MeetingPoint.jsx').default
+    },
+
+
+    /** Profile settings routes */
     {
       path: 'profile/information',
       component: require('../components/pages/profile/UserInfo.jsx').default
@@ -99,6 +104,24 @@ const routes = {
       path: 'profile/contacts',
       component: require('../components/pages/profile/Contacts.jsx').default
     },
+    {
+      path: 'profile/settings',
+      component: require('../components/pages/profile/Settings.jsx').default
+    },
+    {
+      path: 'profile/notifications',
+      component: require('../components/pages/profile/Notifications.jsx').default
+    },
+    {
+      path: 'profile/payments-history',
+      component: require('../components/pages/profile/PaymentsHistory.jsx').default
+    },
+    {
+      path: 'profile/password-change',
+      component: require('../components/pages/profile/PasswordChange.jsx').default
+    },
+
+
     {
       path: 'logout',
       component: logout

@@ -50,7 +50,7 @@ export default class TicketBought extends React.Component {
           }
         </div>
         <div class="buttons">
-          <Link to={`/event-add/tickets-bought`} className="button violet-button">Weiter</Link>
+          <Link to={`/event-add/meeting-point`} className="button violet-button">Weiter</Link>
           <a href="#" class="button default-button">Überspringen</a>
         </div>
       </div>

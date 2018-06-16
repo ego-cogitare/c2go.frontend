@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
-import Partials from './partials';
-import User from '../../core/helpers/User';
+import Partials from '../partials';
+import User from '../../../core/helpers/User';
 
 export default class EmailConfirmation extends React.Component {
 
