@@ -6,7 +6,7 @@ import User from '../../../core/helpers/User';
 import { profilePhoto } from '../../../core/helpers/Utils';
 import { profileInfo } from '../../../actions';
 
-export default class UserInfo extends React.Component {
+export default class Information extends React.Component {
 
   constructor(props) {
     super(props);
@@ -94,7 +94,7 @@ export default class UserInfo extends React.Component {
                 );
               })
             }
-            <Link to={`/register-interests`} className="edit">Edit</Link>
+            <Link to={`/profile/interests`} className="edit">Edit</Link>
           </div>
 
         </div>

@@ -94,7 +94,11 @@ const routes = {
     /** Profile settings routes */
     {
       path: 'profile/information',
-      component: require('../components/pages/profile/UserInfo.jsx').default
+      component: require('../components/pages/profile/Information.jsx').default
+    },
+    {
+      path: 'profile/interests',
+      component: require('../components/pages/profile/Interests.jsx').default
     },
     {
       path: 'profile/:user/information',

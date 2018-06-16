@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import Partials from '../partials';
 import SVG from '../svg';
 import Popups from '../popups';
@@ -19,7 +19,7 @@ export default class Interests extends React.Component {
       { progress: 6,
         section: 'profile_interests',
         value: JSON.stringify({ categories: this.refs.interests.selectedItems }) },
-      (r) => dispatch('popup:show', { title: 'Bestätigung – Erfolgreich registriert', body: this.regComplete }),
+      (r) => browserHistory.push('/profile/information'),
       (e) => console.error(e)
     );
   }
@@ -46,4 +46,4 @@ export default class Interests extends React.Component {
       </Partials.Interests>
     );
   }
-} 
+}
