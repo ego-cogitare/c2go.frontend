@@ -27,6 +27,7 @@
     "html-minifier": "^3.2.3",
     "html-webpack-plugin": "^2.26.0",
     "http-server": "~0.9.0",
+    "react-autocomplete": "^1.8.1",
     "style-loader": "^0.13.1",
     "uniqueid": "^1.0.0",
     "url-loader": "^0.5.7",

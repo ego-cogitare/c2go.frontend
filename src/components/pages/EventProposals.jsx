@@ -73,13 +73,7 @@ export default class EventProposals extends React.Component {
           <div class="proposals-section single-category swiper-container _events-slider">
             <div class="heading-1">{this.state.event_location_human}, {this.state.date}</div>
             <div class="proposals swiper-wrapper clear">
-              {
-                this.state.proposals.map(( user, key ) => {
-                  return (
-                    <Partials.Proposal key={key} user={user} />
-                  );
-                })
-              }
+              { this.state.proposals.map((data, key) => <Partials.Proposal key={key} data={data} />) }
             </div>
           </div>
         </div>

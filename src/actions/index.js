@@ -67,3 +67,7 @@ export function categories(success, error) {
 export function profileInfo({ user }, success, error) {
     request(`/api/user/${user}/info`, {}, 'get', success, error);
 };
+
+export function eventAddAutocomplete({ keyword }, success, error) {
+    request(`/api/events/autocomplete`, { keyword}, 'get', success, error);
+};

@@ -170,18 +170,19 @@ export default class Home extends React.Component {
                 {
                   this.state.events[1].map(({ category, events }) => {
                     return (
-                      events.map(({ id, category: subcategory, proposals, user, name, date, price, event_location_human }) => (
+                        events.map(({ id, category: subcategory, best_proposal: proposal, proposals_count, name, date, event_location_human }) => (
                         <Partials.Event
                           key={id}
                           id={id}
                           color={subcategory.color}
-                          avatar={this.getUserProfilePhoto(user)}
+                          avatar={this.getUserProfilePhoto(proposal.user)}
                           picture={this.getEventCoverPhoto(category, subcategory)}
                           title={name}
                           category={subcategory.name}
-                          proposals={proposals}
-                          creator={user}
-                          price={`${price}€`}
+                          proposal={proposal}
+                          proposalCount={proposals_count}
+                          creator={proposal.user}
+                          price={`${proposal.price}€`}
                           date={date}
                           location={`In ${event_location_human}`}
                         />
@@ -202,18 +203,19 @@ export default class Home extends React.Component {
                   </div>
                   <div class="events swiper-wrapper">
                     {
-                      events.map(({ id, category: subcategory, proposals, user, name, date, price, event_location_human }) => (
+                      events.map(({ id, category: subcategory, best_proposal: proposal, proposals_count, name, date, event_location_human }) => (
                         <Partials.Event
                           key={id}
                           id={id}
                           color={subcategory.color}
-                          avatar={this.getUserProfilePhoto(user)}
+                          avatar={this.getUserProfilePhoto(proposal.user)}
                           picture={this.getEventCoverPhoto(category, subcategory)}
                           title={name}
                           category={subcategory.name}
-                          proposals={proposals}
-                          creator={user}
-                          price={`${price}€`}
+                          proposal={proposal}
+                          proposalCount={proposals_count}
+                          creator={proposal.user}
+                          price={`${proposal.price}€`}
                           date={date}
                           location={`In ${event_location_human}`}
                         />

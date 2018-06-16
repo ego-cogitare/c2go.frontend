@@ -70,12 +70,12 @@ const routes = {
       component: require('../components/pages/event-add/Agreements.jsx').default
     },
     {
-      path: 'event-add/categories',
-      component: require('../components/pages/event-add/Categories.jsx').default
-    },
-    {
       path: 'event-add/description',
       component: require('../components/pages/event-add/Description.jsx').default
+    },
+    {
+      path: 'event-add/categories',
+      component: require('../components/pages/event-add/Categories.jsx').default
     },
     {
       path: 'event-add/date-place',

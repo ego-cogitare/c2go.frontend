@@ -39,7 +39,7 @@ export default class Agreements extends React.Component {
           </label>
         </div>
         <div class="buttons">
-          <Link to={`/event-add/categories`}
+          <Link to={`/event-add/description`}
                 onClick={(e) => !this.state.agree && e.preventDefault() }
                 class={classNames('button violet-button', { disabled: !this.state.agree })}
           >Weiter</Link>

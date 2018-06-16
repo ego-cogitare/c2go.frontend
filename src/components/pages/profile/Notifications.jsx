@@ -111,25 +111,6 @@ export default class Notifications extends React.Component {
               </div>
             </div>
           </div>
-
-          <div class="settings-section">
-            <div class="heading-2">
-              Erinnerungen und Vorschläge
-            </div>
-            <div class="description">
-              Solltest du einmal eine Nachricht übersehen haben, erinnern wir dich gerne.
-            </div>
-            <div class="table">
-              <div class="table-row">
-                <input type="checkbox" id="setting-email-4" />
-                <label for="setting-email-4">E-Mail</label>
-              </div>
-              <div class="table-row">
-                <input type="checkbox" id="setting-sms-4" />
-                <label for="setting-sms-4">SMS</label>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     );

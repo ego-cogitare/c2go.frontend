@@ -19,7 +19,7 @@ export default class Categories extends React.Component {
         description="Wähle hier deine Interessen aus, um individuelle Vorschläge zu erhalten"
       >
         <div class="buttons">
-          <Link to="/event-add/description" className="violet-button">Weiter</Link>
+          <Link to="/event-add/date-place" className="violet-button">Weiter</Link>
         </div>
       </Partials.Interests>
     );

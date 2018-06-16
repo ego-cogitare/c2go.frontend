@@ -8,23 +8,23 @@ export default class Proposal extends React.Component {
     super(props);
 
     this.state = {
-      user: this.props.user
+      data: this.props.data
     };
   }
 
   get profilePhoto() {
     const defaultAvatar = require('../../../staticFiles/img/icons/default-avatar.svg');
-    if (!this.state.user || !this.state.user.settings) {
+    if (!this.state.data.user || !this.state.data.user.settings) {
       return defaultAvatar;
     }
-    const profilePhoto = this.state.user.settings.profile_photo;
+    const profilePhoto = this.state.data.user.settings.profile_photo;
     return profilePhoto ? config.staticFiles + '/' + profilePhoto : defaultAvatar;
   }
 
   render() {
     return (
       <div class="proposal swiper-slide">
-        <div class="proposal-price">{this.state.user.prices[0].price}€</div>
+        <div class="proposal-price">{this.state.data.price}€</div>
         <div class="proposal-category">Für Begleitperson</div>
         <svg xmlns="http://www.w3.org/2000/svg" width="7.68056in" height="2.63889in" viewBox="0 0 553 190">
           <path fill="#dd1155" stroke="none"
@@ -50,19 +50,19 @@ export default class Proposal extends React.Component {
         </svg>
         <div class="picture" style={{ backgroundImage: `url('${this.profilePhoto}')` }}>
           <div class="author-rank">
-            <i class="star" data-count={this.state.user.rank}></i>
+            <i class="star" data-count={this.state.data.user.rank}></i>
           </div>
         </div>
         <div class="details">
           <div class="author">
-            Mit {this.state.user.first_name || this.state.user.last_name}
+            Mit {this.state.data.user.first_name || this.state.data.user.last_name}
           </div>
           <div class="age">
-            {this.state.user.age} Jahre
+            {this.state.data.user.age} Jahre
           </div>
           <div class="buttons clear">
             <a href="#" class="button">Mehr</a>
-            <Link to={`/event-details/${this.state.user.event_id}/user/${this.state.user.id}`} class="button violet-button">Anfragen</Link>
+            <Link to={`/event-details/${this.state.data.event_id}/user/${this.state.data.user.id}`} class="button violet-button">Anfragen</Link>
           </div>
         </div>
       </div>
