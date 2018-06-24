@@ -71,3 +71,7 @@ export function profileInfo({ user }, success, error) {
 export function eventAddAutocomplete({ keyword }, success, error) {
     request(`/api/events/autocomplete`, { keyword}, 'get', success, error);
 };
+
+export function eventAddGeneral(data, success, error) {
+    request(`/api/events/add/general`, data, 'post', success, error);
+};

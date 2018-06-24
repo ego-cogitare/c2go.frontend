@@ -28,6 +28,7 @@ export default class Textarea extends React.Component {
             this.setState({ value: e.target.value });
             this.props.onChange && this.props.onChange(e.target.value);
           }}
+          {...this.props.inputProps}
         >
           {this.state.value}
         </textarea>
