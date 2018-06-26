@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import moment from 'moment';
 import SVG from '../svg';
-import { categories } from '../../../actions';
+import { categories, eventAddDatePlace } from '../../../actions';
+import queryString from 'query-string';
 
 export default class DatePlace extends React.Component {
 
@@ -10,22 +11,27 @@ export default class DatePlace extends React.Component {
     super(props);
 
     this.state = {
-      date: moment().format('DD.MM.Y'),
-      time: '',
+      // date: moment().format('DD.MM.Y'),
       timestamp: 0,
 
       locationFrom: '',
+      locationFromLatLng: {},
       locationTo: '',
-      location: {},
+      locationToLatLng: {},
+      locationMeetPlace: '',
+      locationMeetPlaceLatLng: {},
       changes: 0,
-      category: this.props.params.category,
-      subcategory: this.props.params.subcategory,
+      category: null,
+
+      nextStep: '/event-add/tickets-bought',
+      journeyCategories: [18]
     };
   }
 
   componentDidMount() {
     const context = this;
     const $date = this.refs.date;
+    const $time = $(this.refs.time);
     if ($date)
     {
       const calendar = rome(
@@ -37,13 +43,14 @@ export default class DatePlace extends React.Component {
         appendTo: $date.parentNode
       })
       .on('hide', function() {
+        const date = $($date).val() + ' ' + $time.val();
         context.setState({
-          date: this.getDateString('DD.MM.YYYY')
+          timestamp: moment(date, 'DD.MM.YYYY HH : mm').unix()
         });
       });
     }
 
-    $(this.refs.time)
+    $time
       .on('change', function() {
         const date = $($date).val() + ' ' + $(this).val();
         context.setState({
@@ -63,13 +70,12 @@ export default class DatePlace extends React.Component {
     const $locationFrom = this.refs.location_from;
     if ($locationFrom)
     {
-      const context = this;
       const locationFrom = new google.maps.places.Autocomplete($locationFrom, config.autocomplete)
         .addListener('place_changed', function() {
           const place = this.getPlace();
           $locationFrom.blur();
           context.setState({
-            location: {
+            locationFromLatLng: {
               lat: place.geometry.location.lat(),
               lng: place.geometry.location.lng()
             },
@@ -81,13 +87,12 @@ export default class DatePlace extends React.Component {
     const $locationTo = this.refs.location_to;
     if ($locationTo)
     {
-      const context = this;
       const locationTo = new google.maps.places.Autocomplete($locationTo, config.autocomplete)
         .addListener('place_changed', function() {
           const place = this.getPlace();
           $locationTo.blur();
           context.setState({
-            location: {
+            locationToLatLng: {
               lat: place.geometry.location.lat(),
               lng: place.geometry.location.lng()
             },
@@ -95,6 +100,27 @@ export default class DatePlace extends React.Component {
           });
         });
     }
+
+    const $meetPlace = this.refs.meet_place;
+    if ($meetPlace)
+    {
+      const meetPlace = new google.maps.places.Autocomplete($meetPlace, config.autocomplete)
+        .addListener('place_changed', function() {
+          const place = this.getPlace();
+          $meetPlace.blur();
+          context.setState({
+            locationMeetPlaceLatLng: {
+              lat: place.geometry.location.lat(),
+              lng: place.geometry.location.lng()
+            },
+            locationMeetPlace: place.vicinity
+          });
+        });
+    }
+
+    /** @var int category */
+    const { category } = queryString.parse(location.search);
+    this.setState({ category: Number(category) });
   }
 
   incChanges() {
@@ -108,6 +134,18 @@ export default class DatePlace extends React.Component {
     this.setState({ changes: --this.state.changes });
   }
 
+  onNextStep(e) {
+    e.preventDefault();
+
+    console.log(this.state);
+
+    // eventAddGeneral(
+    //   $(e.target).serialize(),
+    //   (r) => browserHistory.push(this.state.nextStep),
+    //   (e) => this.setState({ errors: e.responseJSON.errors })
+    // );
+  }
+
   render() {
     return (
       <div class="wrapper-small text-center">
@@ -119,46 +157,76 @@ export default class DatePlace extends React.Component {
         </p>
         <div class="form clear">
           <div class="form-controll left w49p relative">
-            <input type="text" class="input" ref="date" name="date" defaultValue={this.state.date} placeholder="Datum" />
+            <input type="text" class="input" ref="date" name="date" defaultValue={moment().format('DD.MM.Y')} placeholder="Datum" />
           </div>
           <div class="form-controll right w49p relative">
             <input type="text" class="input" ref="time" name="time" placeholder="Uhrzeit" />
           </div>
         </div>
 
-        { this.state.category === '4' &&
+        <form action={this.state.nextStep} onSubmit={this.onNextStep.bind(this)}>
           <div class="form">
             <div class="form-controll">
-              <input type="text" class="input" ref="location_from" name="departure" placeholder="Start" />
+              <input
+                type="text"
+                class="input"
+                ref="location_from"
+                name="location_from"
+                placeholder="Start"
+                onChange={(e) => this.setState({
+                  locationFrom: e.target.value,
+                  locationFromLatLng: {}
+                })}
+              />
             </div>
-            <div class="form-controll">
-              <input type="text" class="input" ref="location_to" name="destination" placeholder="Ziel" />
-            </div>
-            <div class="form-controll relative">
-              <input type="text" class="input" name="transfers" value={this.state.changes} placeholder="0" />
-              <div class="counter clear">
-                <div class="circle-button left" onClick={this.decChanges.bind(this)}>
-                  <span>-</span>
-                </div>
-                <div class="circle-button left" onClick={this.incChanges.bind(this)}>
-                  <span>+</span>
+            { this.state.journeyCategories.indexOf(this.state.category) > -1 &&
+              <div class="form-controll">
+                <input
+                  type="text"
+                  class="input"
+                  ref="location_to"
+                  name="location_to"
+                  placeholder="Ziel"
+                  onChange={(e) => this.setState({
+                    locationTo: e.target.value,
+                    locationToLatLng: {}
+                  })}
+                />
+              </div>
+              /*
+              <div class="form-controll relative">
+                <input type="text" class="input" name="transfers" value={this.state.changes} placeholder="0" />
+                <div class="counter clear">
+                  <div class="circle-button left" onClick={this.decChanges.bind(this)}>
+                    <span>-</span>
+                  </div>
+                  <div class="circle-button left" onClick={this.incChanges.bind(this)}>
+                    <span>+</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        }
-        { this.state.category !== '4' &&
-          <div class="form">
+              */
+            }
             <div class="form-controll">
-              <input type="text" class="input" ref="location_to" name="destination" placeholder="Lage" />
+              <input
+                type="text"
+                class="input"
+                ref="meet_place"
+                name="meet_place"
+                placeholder="Lage"
+                onChange={(e) => this.setState({
+                  locationMeetPlace: e.target.value,
+                  locationMeetPlaceLatLng: {}
+                })}
+              />
             </div>
           </div>
-        }
 
-        <div class="buttons">
-          <Link to={`/event-add/tickets-bought`} className="button violet-button">Weiter</Link>
-          <a href="#" class="button default-button">Überspringen</a>
-        </div>
+          <div class="buttons">
+            <button type="submit" className="button violet-button">Weiter</button>
+            <a href="#" class="button default-button">Überspringen</a>
+          </div>
+        </form>
       </div>
     );
   }

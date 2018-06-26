@@ -68,10 +68,20 @@ export function profileInfo({ user }, success, error) {
     request(`/api/user/${user}/info`, {}, 'get', success, error);
 };
 
+
+
 export function eventAddAutocomplete({ keyword }, success, error) {
     request(`/api/events/autocomplete`, { keyword}, 'get', success, error);
 };
 
 export function eventAddGeneral(data, success, error) {
     request(`/api/events/add/general`, data, 'post', success, error);
+};
+
+export function eventAddCategory(data, success, error) {
+    request(`/api/events/add/category`, data, 'post', success, error);
+};
+
+export function eventAddDatePlace(data, success, error) {
+    request(`/api/events/add/date-place`, data, 'post', success, error);
 };

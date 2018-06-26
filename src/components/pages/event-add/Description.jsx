@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import moment from 'moment';
 import Autocomplete from 'react-autocomplete';
 import Partials from '../partials';
@@ -77,7 +77,7 @@ export default class Description extends React.Component {
 
     eventAddGeneral(
       $(e.target).serialize(),
-      (r) => console.log(r),
+      (r) => browserHistory.push(this.state.nextStep),
       (e) => this.setState({ errors: e.responseJSON.errors })
     );
   }
