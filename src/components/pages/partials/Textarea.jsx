@@ -32,7 +32,7 @@ export default class Textarea extends React.Component {
         >
           {this.state.value}
         </textarea>
-        { this.state.error && <small class="error left">{this.state.error}</small> }
+        { this.state.error && <small class="color-red left">{this.state.error}</small> }
         <div class="textarea-chars-left right">{(this.state.value || '').length}/{this.state.maxLength}</div>
       </div>
     );

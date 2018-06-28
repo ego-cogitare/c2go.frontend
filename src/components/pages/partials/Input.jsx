@@ -31,7 +31,7 @@ export default class Input extends React.Component {
             this.props.onChange && this.props.onChange(e.target.value);
           }}
         />
-        { this.state.error && <small class="error left">{this.state.error}</small> }
+      { this.state.error && <small class="color-red left">{this.state.error}</small> }
       </div>
     );
   }

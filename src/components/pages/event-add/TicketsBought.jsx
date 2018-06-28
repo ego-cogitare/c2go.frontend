@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import Partials from '../partials';
-import { progress } from '../../../actions';
+import { progress, eventAddTickets } from '../../../actions';
 
 export default class TicketBought extends React.Component {
 
@@ -9,8 +9,21 @@ export default class TicketBought extends React.Component {
     super(props);
 
     this.state = {
-      ticketsBought: false
+      ticketsBought: 0,
+      price: '',
+      nextStep: '/event-add/meeting-point',
+      errors: {}
     };
+  }
+
+  onNextStep(e) {
+    e.preventDefault();
+
+    eventAddTickets(
+      { bought: this.state.ticketsBought, price: this.state.price },
+      (r) => browserHistory.push(this.state.nextStep),
+      (e) => this.setState({ errors: e.responseJSON.errors })
+    );
   }
 
   render() {
@@ -24,35 +37,46 @@ export default class TicketBought extends React.Component {
           Europe and the United States that also distill the oil. In 1785, Carlo Allioni, an
           Italian botanist, placed what we know as Roman chamomile.
         </p>
-        <div class="form text-left">
-          <div class="form-controll text-center">
-            <div class="row">
-              <input id="yes" ref="yes" type="radio" name="tickets-bought" />
-              <label for="yes" onClick={() => {
-                this.setState({ ticketsBought: true });
-              }}>
-                <span>Ja</span>
-              </label>
+        <form action={this.state.nextStep} onSubmit={this.onNextStep.bind(this)}>
+          <div class="form text-left">
+            <div class="form-controll text-center">
+              <div class="row">
+                <input id="yes" ref="yes" type="radio" name="tickets-bought" />
+                <label for="yes" onClick={() => {
+                  this.setState({ ticketsBought: 1 });
+                }}>
+                  <span>Ja</span>
+                </label>
+              </div>
+              <div class="row">
+                <input id="no" ref="no" type="radio" name="tickets-bought" />
+                <label for="no" onClick={() => {
+                  this.setState({ ticketsBought: 0 });
+                }}>
+                  <span>Nein</span>
+                </label>
+              </div>
             </div>
-            <div class="row">
-              <input id="no" ref="no" type="radio" name="tickets-bought" />
-              <label for="no" onClick={() => {
-                this.setState({ ticketsBought: false });
-              }}>
-                <span>Nein</span>
-              </label>
-            </div>
+            { this.state.ticketsBought === 1 &&
+              <div class="form-controll">
+                <input
+                  type="text"
+                  class="input"
+                  ref="price"
+                  placeholder="Preis"
+                  maxLength="7"
+                  onChange={(e) => this.setState({ price: e.target.value }) }
+                  autoFocus
+                />
+                <small class="color-red left">{(this.state.errors.price || []).join()}</small>
+              </div>
+            }
           </div>
-          { this.state.ticketsBought &&
-            <div class="form-controll">
-              <input type="text" class="input" ref="price" placeholder="Preis" autoFocus />
-            </div>
-          }
-        </div>
-        <div class="buttons">
-          <Link to={`/event-add/meeting-point`} className="button violet-button">Weiter</Link>
-          <a href="#" class="button default-button">Überspringen</a>
-        </div>
+          <div class="buttons">
+            <button type="submit" class="button violet-button">Weiter</button>
+            <a href="#" class="button default-button">Überspringen</a>
+          </div>
+        </form>
       </div>
     );
   }

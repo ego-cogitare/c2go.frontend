@@ -112,7 +112,7 @@ export default class Description extends React.Component {
                 onChange={this.onKeywordChange.bind(this)}
                 onSelect={this.onAutocompleteSelect.bind(this)}
               />
-            <small class="error left">{(this.state.errors.title || []).join()}</small>
+              <small class="color-red left">{(this.state.errors.title || []).join()}</small>
             </div>
             <div class="form-controll">
               <Partials.Textarea
@@ -133,7 +133,7 @@ export default class Description extends React.Component {
                 onChange={this.onUrlChange.bind(this)}
                 placeholder="URL"
               />
-            <small class="error left">{(this.state.errors.url || []).join()}</small>
+              <small class="color-red left">{(this.state.errors.url || []).join()}</small>
             </div>
             <input type="hidden" name="event_id" value={(this.state.autocompleteItem || {}).id} />
           </div>

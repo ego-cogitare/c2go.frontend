@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import moment from 'moment';
+import classNames from 'classnames';
 import SVG from '../svg';
 import { categories, eventAddDatePlace } from '../../../actions';
 import queryString from 'query-string';
@@ -11,18 +12,17 @@ export default class DatePlace extends React.Component {
     super(props);
 
     this.state = {
-      // date: moment().format('DD.MM.Y'),
       timestamp: 0,
-
-      locationFrom: '',
-      locationFromLatLng: {},
-      locationTo: '',
-      locationToLatLng: {},
-      locationMeetPlace: '',
-      locationMeetPlaceLatLng: {},
+      event_dispatch: '',
+      event_dispatch_latlng: {},
+      event_destination: '',
+      event_destination_latlng: {},
+      event_meet_place: '',
+      event_meet_place_latlng: {},
       changes: 0,
-      category: null,
+      category_id: null,
 
+      errors: {},
       nextStep: '/event-add/tickets-bought',
       journeyCategories: [18]
     };
@@ -67,60 +67,60 @@ export default class DatePlace extends React.Component {
       });
 
 
-    const $locationFrom = this.refs.location_from;
-    if ($locationFrom)
+    const $eventDispatch = this.refs.event_dispatch;
+    if ($eventDispatch)
     {
-      const locationFrom = new google.maps.places.Autocomplete($locationFrom, config.autocomplete)
+      const eventDispatch = new google.maps.places.Autocomplete($eventDispatch, config.autocomplete)
         .addListener('place_changed', function() {
           const place = this.getPlace();
-          $locationFrom.blur();
+          $eventDispatch.blur();
           context.setState({
-            locationFromLatLng: {
+            event_dispatch_latlng: {
               lat: place.geometry.location.lat(),
               lng: place.geometry.location.lng()
             },
-            locationFrom: place.vicinity
+            event_dispatch: place.vicinity
           });
         });
     }
 
-    const $locationTo = this.refs.location_to;
-    if ($locationTo)
+    const $eventDestination = this.refs.event_destination;
+    if ($eventDestination)
     {
-      const locationTo = new google.maps.places.Autocomplete($locationTo, config.autocomplete)
+      const eventDestination = new google.maps.places.Autocomplete($eventDestination, config.autocomplete)
         .addListener('place_changed', function() {
           const place = this.getPlace();
-          $locationTo.blur();
+          $eventDestination.blur();
           context.setState({
-            locationToLatLng: {
+            event_destination_latlng: {
               lat: place.geometry.location.lat(),
               lng: place.geometry.location.lng()
             },
-            locationTo: place.vicinity
+            event_destination: place.vicinity
           });
         });
     }
 
-    const $meetPlace = this.refs.meet_place;
-    if ($meetPlace)
+    const $eventMeetPlace = this.refs.event_meet_place;
+    if ($eventMeetPlace)
     {
-      const meetPlace = new google.maps.places.Autocomplete($meetPlace, config.autocomplete)
+      const eventMeetPlace = new google.maps.places.Autocomplete($eventMeetPlace, config.autocomplete)
         .addListener('place_changed', function() {
           const place = this.getPlace();
-          $meetPlace.blur();
+          $eventMeetPlace.blur();
           context.setState({
-            locationMeetPlaceLatLng: {
+            event_meet_place_latlng: {
               lat: place.geometry.location.lat(),
               lng: place.geometry.location.lng()
             },
-            locationMeetPlace: place.vicinity
+            event_meet_place: place.vicinity
           });
         });
     }
 
     /** @var int category */
     const { category } = queryString.parse(location.search);
-    this.setState({ category: Number(category) });
+    this.setState({ category_id: Number(category) });
   }
 
   incChanges() {
@@ -137,13 +137,11 @@ export default class DatePlace extends React.Component {
   onNextStep(e) {
     e.preventDefault();
 
-    console.log(this.state);
-
-    // eventAddGeneral(
-    //   $(e.target).serialize(),
-    //   (r) => browserHistory.push(this.state.nextStep),
-    //   (e) => this.setState({ errors: e.responseJSON.errors })
-    // );
+    eventAddDatePlace(
+      this.state,
+      (r) => browserHistory.push(this.state.nextStep),
+      (e) => this.setState({ errors: e.responseJSON.errors })
+    );
   }
 
   render() {
@@ -166,59 +164,63 @@ export default class DatePlace extends React.Component {
 
         <form action={this.state.nextStep} onSubmit={this.onNextStep.bind(this)}>
           <div class="form">
-            <div class="form-controll">
+            {/* Event dispatch location - for journeys only */}
+            <div class={classNames('form-controll', { hidden: this.state.journeyCategories.indexOf(this.state.category_id) === -1 })}>
               <input
                 type="text"
                 class="input"
-                ref="location_from"
-                name="location_from"
+                ref="event_dispatch"
+                name="event_dispatch"
                 placeholder="Start"
                 onChange={(e) => this.setState({
-                  locationFrom: e.target.value,
-                  locationFromLatLng: {}
+                  event_dispatch: e.target.value,
+                  event_dispatch_latlng: {}
                 })}
               />
+              <small class="color-red left">{(this.state.errors.event_dispatch || []).join()}</small>
             </div>
-            { this.state.journeyCategories.indexOf(this.state.category) > -1 &&
-              <div class="form-controll">
-                <input
-                  type="text"
-                  class="input"
-                  ref="location_to"
-                  name="location_to"
-                  placeholder="Ziel"
-                  onChange={(e) => this.setState({
-                    locationTo: e.target.value,
-                    locationToLatLng: {}
-                  })}
-                />
-              </div>
-              /*
-              <div class="form-controll relative">
-                <input type="text" class="input" name="transfers" value={this.state.changes} placeholder="0" />
-                <div class="counter clear">
-                  <div class="circle-button left" onClick={this.decChanges.bind(this)}>
-                    <span>-</span>
-                  </div>
-                  <div class="circle-button left" onClick={this.incChanges.bind(this)}>
-                    <span>+</span>
-                  </div>
+            {/*
+            <div class="form-controll relative">
+              <input type="text" class="input" name="transfers" value={this.state.changes} placeholder="0" />
+              <div class="counter clear">
+                <div class="circle-button left" onClick={this.decChanges.bind(this)}>
+                  <span>-</span>
+                </div>
+                <div class="circle-button left" onClick={this.incChanges.bind(this)}>
+                  <span>+</span>
                 </div>
               </div>
-              */
-            }
+            </div>
+            */}
+
+            {/* Event place - destination point where event will take place */}
             <div class="form-controll">
               <input
                 type="text"
                 class="input"
-                ref="meet_place"
-                name="meet_place"
-                placeholder="Lage"
+                ref="event_destination"
+                name="event_destination"
+                placeholder="Ziel"
                 onChange={(e) => this.setState({
-                  locationMeetPlace: e.target.value,
-                  locationMeetPlaceLatLng: {}
+                  event_destination: e.target.value,
+                  event_destination_latlng: {}
                 })}
               />
+              <small class="color-red left">{(this.state.errors.event_destination || []).join()}</small>
+            </div>
+            <div class="form-controll">
+              <input
+                type="text"
+                class="input"
+                ref="event_meet_place"
+                name="event_meet_place"
+                placeholder="Treffpunkt"
+                onChange={(e) => this.setState({
+                  event_meet_place: e.target.value,
+                  event_meet_place_latlng: {}
+                })}
+              />
+              <small class="color-red left">{(this.state.errors.event_meet_place || []).join()}</small>
             </div>
           </div>
 
