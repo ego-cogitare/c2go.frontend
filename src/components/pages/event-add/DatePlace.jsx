@@ -17,8 +17,6 @@ export default class DatePlace extends React.Component {
       event_dispatch_latlng: {},
       event_destination: '',
       event_destination_latlng: {},
-      event_meet_place: '',
-      event_meet_place_latlng: {},
       changes: 0,
       category_id: null,
 
@@ -101,22 +99,22 @@ export default class DatePlace extends React.Component {
         });
     }
 
-    const $eventMeetPlace = this.refs.event_meet_place;
-    if ($eventMeetPlace)
-    {
-      const eventMeetPlace = new google.maps.places.Autocomplete($eventMeetPlace, config.autocomplete)
-        .addListener('place_changed', function() {
-          const place = this.getPlace();
-          $eventMeetPlace.blur();
-          context.setState({
-            event_meet_place_latlng: {
-              lat: place.geometry.location.lat(),
-              lng: place.geometry.location.lng()
-            },
-            event_meet_place: place.vicinity
-          });
-        });
-    }
+    // const $eventMeetPlace = this.refs.event_meet_place;
+    // if ($eventMeetPlace)
+    // {
+    //   const eventMeetPlace = new google.maps.places.Autocomplete($eventMeetPlace, config.autocomplete)
+    //     .addListener('place_changed', function() {
+    //       const place = this.getPlace();
+    //       $eventMeetPlace.blur();
+    //       context.setState({
+    //         event_meet_place_latlng: {
+    //           lat: place.geometry.location.lat(),
+    //           lng: place.geometry.location.lng()
+    //         },
+    //         event_meet_place: place.vicinity
+    //       });
+    //     });
+    // }
 
     /** @var int category */
     const { category } = queryString.parse(location.search);
@@ -137,9 +135,15 @@ export default class DatePlace extends React.Component {
   onNextStep(e) {
     e.preventDefault();
 
+    /** @var Object event */
+    const event = JSON.parse(localStorage.getItem('event') || '{}');
+
     eventAddDatePlace(
       this.state,
-      (r) => browserHistory.push(this.state.nextStep),
+      ({ data }) => {
+        browserHistory.push(this.state.nextStep);
+        localStorage.setItem('event', JSON.stringify(Object.assign(event, data)));
+      },
       (e) => this.setState({ errors: e.responseJSON.errors })
     );
   }
@@ -207,20 +211,6 @@ export default class DatePlace extends React.Component {
                 })}
               />
               <small class="color-red left">{(this.state.errors.event_destination || []).join()}</small>
-            </div>
-            <div class="form-controll">
-              <input
-                type="text"
-                class="input"
-                ref="event_meet_place"
-                name="event_meet_place"
-                placeholder="Treffpunkt"
-                onChange={(e) => this.setState({
-                  event_meet_place: e.target.value,
-                  event_meet_place_latlng: {}
-                })}
-              />
-              <small class="color-red left">{(this.state.errors.event_meet_place || []).join()}</small>
             </div>
           </div>
 

@@ -11,7 +11,7 @@ export default class TicketBought extends React.Component {
     this.state = {
       ticketsBought: 0,
       price: '',
-      nextStep: '/event-add/meeting-point',
+      nextStep: '/event-add/meet-place',
       errors: {}
     };
   }
@@ -19,9 +19,15 @@ export default class TicketBought extends React.Component {
   onNextStep(e) {
     e.preventDefault();
 
+    /** @var Object event */
+    const event = JSON.parse(localStorage.getItem('event') || '{}');
+
     eventAddTickets(
       { bought: this.state.ticketsBought, price: this.state.price },
-      (r) => browserHistory.push(this.state.nextStep),
+      ({ data }) => {
+        browserHistory.push(this.state.nextStep);
+        localStorage.setItem('event', JSON.stringify(Object.assign(event, data)));
+      },
       (e) => this.setState({ errors: e.responseJSON.errors })
     );
   }

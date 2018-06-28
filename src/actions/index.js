@@ -89,3 +89,7 @@ export function eventAddDatePlace(data, success, error) {
 export function eventAddTickets(data, success, error) {
     request(`/api/events/add/tickets`, data, 'post', success, error);
 };
+
+export function eventAdd(data, success, error) {
+    request(`/api/events/add`, data, 'post', success, error);
+};

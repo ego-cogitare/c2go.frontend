@@ -71,7 +71,7 @@ const routes = {
     },
     {
       path: 'event-add/description',
-      component: require('../components/pages/event-add/Description.jsx').default
+      component: require('../components/pages/event-add/General.jsx').default
     },
     {
       path: 'event-add/categories',
@@ -86,8 +86,8 @@ const routes = {
       component: require('../components/pages/event-add/TicketsBought.jsx').default
     },
     {
-      path: 'event-add/meeting-point',
-      component: require('../components/pages/event-add/MeetingPoint.jsx').default
+      path: 'event-add/meet-place',
+      component: require('../components/pages/event-add/MeetPlace.jsx').default
     },
 
 

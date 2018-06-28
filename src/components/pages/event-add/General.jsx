@@ -6,7 +6,7 @@ import Partials from '../partials';
 import SVG from '../svg';
 import { eventAddAutocomplete, eventAddGeneral } from '../../../actions';
 
-export default class Description extends React.Component {
+export default class General extends React.Component {
 
   constructor(props) {
     super(props);
@@ -75,9 +75,15 @@ export default class Description extends React.Component {
   onNextStep(e) {
     e.preventDefault();
 
+    /** @var Object event */
+    const event = JSON.parse(localStorage.getItem('event') || '{}');
+
     eventAddGeneral(
       $(e.target).serialize(),
-      (r) => browserHistory.push(this.state.nextStep),
+      ({ data }) => {
+        browserHistory.push(this.state.nextStep);
+        localStorage.setItem('event', JSON.stringify(Object.assign(event, data)));
+      },
       (e) => this.setState({ errors: e.responseJSON.errors })
     );
   }

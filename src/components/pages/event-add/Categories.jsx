@@ -19,9 +19,15 @@ export default class Categories extends React.Component {
     /** @var int category */
     const category = this.refs.interests.selectedItems[0];
 
+    /** @var Object event */
+    const event = JSON.parse(localStorage.getItem('event') || '{}');
+
     eventAddCategory(
       { category },
-      (r) => browserHistory.push(this.state.nextStep.replace('%CATEGORY%', category)),
+      ({ data }) => {
+        browserHistory.push(this.state.nextStep.replace('%CATEGORY%', category));
+        localStorage.setItem('event', JSON.stringify(Object.assign(event, data)));
+      },
       (e) => this.setState({ errors: e.responseJSON.errors })
     );
   }
