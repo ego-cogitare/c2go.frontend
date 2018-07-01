@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { details } from '../../actions';
 import { profilePhoto } from '../../core/helpers/Utils';
 
-export default class EventDetails extends React.Component {
+export default class ProposalDetails extends React.Component {
 
   constructor(props) {
     super(props);
@@ -18,7 +18,7 @@ export default class EventDetails extends React.Component {
 
   componentDidMount() {
     details(
-      { ...this.props.params },
+      { proposal: this.props.params.proposal },
       ({ data }) => this.setState({ ...data }),
       (e) => console.error(e)
     );
@@ -102,7 +102,7 @@ export default class EventDetails extends React.Component {
             }
 
             <div class="buttons clear">
-              <Link to={`/event-general/${this.state.event_id}/user/${this.state.user_id}`} class="violet-button right">
+              <Link to={`/event/${this.props.params.proposal}/details`} class="violet-button right">
                 Anfragen
               </Link>
               <Link to="/" class="cancel">

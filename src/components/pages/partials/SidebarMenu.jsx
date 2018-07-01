@@ -48,12 +48,6 @@ export default class SidebarMenu extends React.Component {
               Kontoneinstellungen
             </Link>
           </div>
-          <div class="menu-item">
-            <a href="#">Zahlungsarten</a>
-          </div>
-          <div class="menu-item">
-            <a href="#">Auszahlungspräferenzen</a>
-          </div>
         </nav>
       </div>
     );

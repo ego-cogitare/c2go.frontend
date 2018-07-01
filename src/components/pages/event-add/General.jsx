@@ -92,7 +92,7 @@ export default class General extends React.Component {
 
   render() {
     return (
-      <div class="wrapper-small text-center">
+      <div class="wrapper-small text-center adjustments-005">
         <div class="heading-2">
           Event erstellen – Schritt 1
         </div>
@@ -124,7 +124,7 @@ export default class General extends React.Component {
                 <span dangerouslySetInnerHTML={{
                   __html: (this.state.errors.event_id || [])
                     .join()
-                    .replace('proposal', `<a class="text-bold text-underline" href="/event-details/${(this.state.autocompleteItem || {}).id}/user/${User.data.id}">proposal</a>`)
+                    .replace('proposal', `<a class="text-bold text-underline" href="/event/dfasdf">proposal</a>`)
                 }}
                 ></span>
                 {(this.state.errors.title || []).join()}

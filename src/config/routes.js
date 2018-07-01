@@ -38,28 +38,28 @@ const routes = {
 
 
     {
-      path: 'dashboard',
+      path: '/dashboard',
       component: require('../components/pages/Dashboard.jsx').default
     },
 
     {
-      path: 'event-proposals/:id',
+      path: '/event/:event/proposals',
       component: require('../components/pages/EventProposals.jsx').default
     },
     {
-      path: 'event-details/:event/user/:user',
-      component: require('../components/pages/EventDetails.jsx').default
+      path: '/proposal/:proposal/details',
+      component: require('../components/pages/ProposalDetails.jsx').default
     },
     {
-      path: 'event-general/:event/user/:user',
+      path: '/event/:proposal/details',
       component: require('../components/pages/EventGeneral.jsx').default
     },
     {
-      path: 'event-request/:event/user/:user',
+      path: '/event/:proposal/request',
       component: require('../components/pages/EventRequest.jsx').default
     },
     {
-      path: 'event-accept/:event',
+      path: '/event-accept/:event',
       component: require('../components/pages/EventAccept.jsx').default
     },
 

@@ -32,24 +32,24 @@ export function userEvents(success, error) {
     request(`/api/events/requests`, {}, 'get', success, error);
 };
 
-export function proposals({ id }, success, error) {
-    request(`/api/events/proposals/${id}`, {}, 'get', success, error);
+export function proposals({ event }, success, error) {
+    request(`/api/events/proposals/${event}`, {}, 'get', success, error);
 };
 
-export function details({ event, user }, success, error) {
-    request(`/api/events/details/${event}/user/${user}`, {}, 'get', success, error);
+export function details({ proposal }, success, error) {
+    request(`/api/events/details/${proposal}`, {}, 'get', success, error);
 };
 
-export function requests({ event, user }, success, error) {
-    request(`/api/events/requests/${event}/user/${user}`, {}, 'get', success, error);
+export function requests({ proposal }, success, error) {
+    request(`/api/events/requests/${proposal}`, {}, 'get', success, error);
 };
 
-export function storeRequest({ event, user, message }, success, error) {
-    request(`/api/events/requests/${event}/user/${user}`, { message }, 'post', success, error);
+export function storeRequest({ proposal, message }, success, error) {
+    request(`/api/events/requests/${proposal}`, { message }, 'post', success, error);
 };
 
-export function general({ event, user }, success, error) {
-    request(`/api/events/general/${event}/user/${user}`, {}, 'get', success, error);
+export function general({ proposal }, success, error) {
+    request(`/api/events/general/${proposal}`, {}, 'get', success, error);
 };
 
 export function events(data, success, error) {

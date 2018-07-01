@@ -13,15 +13,17 @@ export default class MeetPlace extends React.Component {
     super(props);
 
     this.state = {
-      telephone: '',
+      telephone: User.phone,
       meet_place: '',
-      selected_phone: User.phones[0] || '',
       errors: {},
     };
   }
 
   eventAdd(e) {
     e.preventDefault();
+
+    /** Reset old errors */
+    this.setState({ errors: {} });
 
     /** @var Object event */
     const event = JSON.parse(localStorage.getItem('event') || '{}');
@@ -71,25 +73,12 @@ export default class MeetPlace extends React.Component {
         </p>
         <form action="" onSubmit={this.eventAdd.bind(this)}>
           <div class="form clear">
-            <div class="form-controll">
-              <select
-                class={classNames('input', { hidden: User.phones.length === 0 })}
-                onChange={(e) => this.setState({ selected_phone: e.target.value })}
-              >
-                <optgroup label="Confirmed phones">
-                {
-                  User.phones.map((phone) => (
-                    <option key={phone} value={phone}>{phone}</option>
-                  ))
-                }
-                </optgroup>
-                <option value="">-- manual input --</option>
-              </select>
+            <div class={classNames('form-controll', { hidden: User.phone !== '' })}>
               <Partials.Input
                 maxLength="15"
-                class={classNames('input', { hidden: this.state.selected_phone !== '' })}
                 onChange={this.onTelephoneChange.bind(this)}
                 placeholder="Telefon"
+                value={this.state.telephone}
                 error={(this.state.errors.telephone || []).join()}
               />
             </div>

@@ -46,7 +46,7 @@ export default class User {
     return Object.keys(this.data).length > 0;
   }
 
-  static get phones() {
-    return this.settings.phone || [];
+  static get phone() {
+    return this.settings.phone || '';
   }
 }

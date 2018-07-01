@@ -157,7 +157,7 @@ export default class Search extends React.Component {
             <i class="fa fa-search"></i> Suchen
           </Link>
         </div>
-        <Link to="#" className="create-event" onClick={this.props.onEventAdd}>
+        <Link to="/event-add" className="create-event" onClick={this.props.onEventAdd}>
           Event erstellen
         </Link>
       </div>

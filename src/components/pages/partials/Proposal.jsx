@@ -62,7 +62,7 @@ export default class Proposal extends React.Component {
           </div>
           <div class="buttons clear">
             <a href="#" class="button">Mehr</a>
-            <Link to={`/event-details/${this.state.data.event_id}/user/${this.state.data.user.id}`} class="button violet-button">Anfragen</Link>
+            <Link to={`/proposal/${this.state.data.id}/details`} class="button violet-button">Anfragen</Link>
           </div>
         </div>
       </div>

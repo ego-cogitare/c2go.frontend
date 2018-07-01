@@ -16,7 +16,7 @@ export default class EventGeneral extends React.Component {
 
   componentDidMount() {
     general(
-      { ...this.props.params },
+      { proposal: this.props.params.proposal },
       ({ data }) => this.setState({ ...data }),
       (e) => console.error(e)
     );
@@ -51,7 +51,7 @@ export default class EventGeneral extends React.Component {
               <br/>
               <br/>
               <div class="buttons clear">
-                <Link to={`/event-request/${this.state.event_id}/user/${this.state.user_id}`} class="next violet-button">
+                <Link to={`/event/${this.props.params.proposal}/request`} class="next violet-button">
                   Weiter
                 </Link>
                 <Link to="/" class="cancel">

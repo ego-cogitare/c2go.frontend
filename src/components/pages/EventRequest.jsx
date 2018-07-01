@@ -12,13 +12,14 @@ export default class EventRequest extends React.Component {
 
     this.state = {
       event: {},
-      user: {}
+      user: {},
+      error: ''
     };
   }
 
   componentDidMount() {
     general(
-      { ...this.props.params },
+      { proposal: this.props.params.proposal },
       ({ data }) => this.setState({ ...data }),
       (e) => console.error(e)
     );
@@ -30,8 +31,7 @@ export default class EventRequest extends React.Component {
 
     storeRequest(
       { message: textarea.value,
-        user: this.state.user_id,
-        event: this.state.event_id
+        proposal: this.props.params.proposal
       },
       (r) => {
         dispatch('popup:show', {
@@ -40,12 +40,15 @@ export default class EventRequest extends React.Component {
         });
         this.refs.message.reset();
       },
-      (e) => this.setState({ error: e.responseJSON.message })
+      ({ responseJSON: { errors } }) => {
+        const error = (errors.message || errors.event_proposals_id || []).pop();
+        this.setState({ error });
+      }
     );
   }
 
   initDialogs() {
-   this.requestComplete = <Popups.RequestComplete eventId={this.state.event_id} userId={this.state.user_id} />;
+    this.requestComplete = <Popups.RequestComplete proposal={this.props.params.proposal} />;
   }
 
   render() {

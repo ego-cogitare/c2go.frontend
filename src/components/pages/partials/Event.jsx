@@ -15,7 +15,7 @@ export default class Event extends React.Component {
   render() {
     return (
       <div class={ classNames('event swiper-slide', this.props.type) }>
-        <Link to={this.props.proposalCount > 1 ? `/event-proposals/${this.props.id}` : `/event-details/${this.props.id}/user/${this.props.creator.id}`}
+        <Link to={this.props.proposalCount > 1 ? `/event/${this.props.id}/proposals` : `/proposal/${this.props.proposal.id}/details`}
               className="picture"
               data-color={this.props.color}
               style={{ display: 'block', backgroundImage: `url('${this.props.picture}')` }}

@@ -17,7 +17,7 @@ export default class EventProposals extends React.Component {
 
   componentDidMount() {
     proposals(
-      { id: this.props.params.id },
+      { event: this.props.params.event },
       ({ data }) => this.setState({ ...data }, () => console.log(this.state)),
       (e) => console.error(e)
     );
