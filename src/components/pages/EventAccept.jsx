@@ -73,7 +73,7 @@ export default class EventAccept extends React.Component {
             </div>
           </div>
           <div class="event-details">
-            <span>{this.state.event.event_location_human}</span>
+            <span>{this.state.event.destination}</span>
             <span>{this.state.event.date}</span>
             <span>{this.state.price}€</span>
           </div>

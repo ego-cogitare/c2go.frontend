@@ -5,6 +5,7 @@ import Autocomplete from 'react-autocomplete';
 import Partials from '../partials';
 import SVG from '../svg';
 import { eventAddAutocomplete, eventAddGeneral } from '../../../actions';
+import User from '../../../core/helpers/User';
 
 export default class General extends React.Component {
 
@@ -20,7 +21,8 @@ export default class General extends React.Component {
       /** Selected item in autocomplete list */
       autocompleteItem: null,
 
-      /** Next step url. If user select item from autocomplete list (means
+      /**
+       * Next step url. If user select item from autocomplete list (means
        * select existing event) - next two steps should be skipped
        */
       nextStep: '/event-add/categories',
@@ -53,7 +55,7 @@ export default class General extends React.Component {
           ({ id,
              date,
              name,
-             event_location_human: location
+             destination: location
           }) =>
           ({ id,
              label: date + ', ' + name + ', ' + location
@@ -118,7 +120,15 @@ export default class General extends React.Component {
                 onChange={this.onKeywordChange.bind(this)}
                 onSelect={this.onAutocompleteSelect.bind(this)}
               />
-              <small class="color-red left">{(this.state.errors.title || []).join()}</small>
+              <small class="color-red left">
+                <span dangerouslySetInnerHTML={{
+                  __html: (this.state.errors.event_id || [])
+                    .join()
+                    .replace('proposal', `<a class="text-bold text-underline" href="/event-details/${(this.state.autocompleteItem || {}).id}/user/${User.data.id}">proposal</a>`)
+                }}
+                ></span>
+                {(this.state.errors.title || []).join()}
+              </small>
             </div>
             <div class="form-controll">
               <Partials.Textarea

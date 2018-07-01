@@ -170,7 +170,7 @@ export default class Home extends React.Component {
                 {
                   this.state.events[1].map(({ category, events }) => {
                     return (
-                        events.map(({ id, category: subcategory, best_proposal: proposal, proposals_count, name, date, event_location_human }) => (
+                        events.map(({ id, category: subcategory, best_proposal: proposal, proposals_count, name, date, destination }) => (
                         <Partials.Event
                           key={id}
                           id={id}
@@ -184,7 +184,7 @@ export default class Home extends React.Component {
                           creator={proposal.user}
                           price={`${proposal.price}€`}
                           date={date}
-                          location={`In ${event_location_human}`}
+                          location={`In ${destination}`}
                         />
                       ))
                     );
@@ -203,7 +203,7 @@ export default class Home extends React.Component {
                   </div>
                   <div class="events swiper-wrapper">
                     {
-                      events.map(({ id, category: subcategory, best_proposal: proposal, proposals_count, name, date, event_location_human }) => (
+                      events.map(({ id, category: subcategory, best_proposal: proposal, proposals_count, name, date, destination }) => (
                         <Partials.Event
                           key={id}
                           id={id}
@@ -217,7 +217,7 @@ export default class Home extends React.Component {
                           creator={proposal.user}
                           price={`${proposal.price}€`}
                           date={date}
-                          location={`In ${event_location_human}`}
+                          location={`In ${destination}`}
                         />
                       ))
                     }

@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
+import classNames from 'classnames';
 import Partials from '../partials';
 import Popups from '../popups';
 import { dispatch, subscribe } from '../../../core/helpers/EventEmitter';
 import { eventAdd } from '../../../actions';
+import User from '../../../core/helpers/User';
 
 export default class MeetPlace extends React.Component {
 
@@ -13,6 +15,7 @@ export default class MeetPlace extends React.Component {
     this.state = {
       telephone: '',
       meet_place: '',
+      selected_phone: User.phones[0] || '',
       errors: {},
     };
   }
@@ -32,7 +35,7 @@ export default class MeetPlace extends React.Component {
 
       ({ data }) => {
         /** Remove added event stored data */
-        localStorage.removeItem('event');
+        //localStorage.removeItem('event');
 
         dispatch('popup:show', {
           title: 'Bestätigung – Erfolgreich registriert',
@@ -69,8 +72,22 @@ export default class MeetPlace extends React.Component {
         <form action="" onSubmit={this.eventAdd.bind(this)}>
           <div class="form clear">
             <div class="form-controll">
+              <select
+                class={classNames('input', { hidden: User.phones.length === 0 })}
+                onChange={(e) => this.setState({ selected_phone: e.target.value })}
+              >
+                <optgroup label="Confirmed phones">
+                {
+                  User.phones.map((phone) => (
+                    <option key={phone} value={phone}>{phone}</option>
+                  ))
+                }
+                </optgroup>
+                <option value="">-- manual input --</option>
+              </select>
               <Partials.Input
                 maxLength="15"
+                class={classNames('input', { hidden: this.state.selected_phone !== '' })}
                 onChange={this.onTelephoneChange.bind(this)}
                 placeholder="Telefon"
                 error={(this.state.errors.telephone || []).join()}

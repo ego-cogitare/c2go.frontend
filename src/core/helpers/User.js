@@ -10,7 +10,7 @@ export default class User {
   }
 
   static get settings() {
-    return this.data.settings || [];
+    return this.data.settings || {};
   }
 
   static get profilePhoto() {
@@ -44,5 +44,9 @@ export default class User {
 
   static get hasSession() {
     return Object.keys(this.data).length > 0;
+  }
+
+  static get phones() {
+    return this.settings.phone || [];
   }
 }

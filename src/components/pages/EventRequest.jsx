@@ -60,7 +60,7 @@ export default class EventRequest extends React.Component {
         <div class="proposals-wrapper clear" style={{ backgroundColor: '#ffffff' }}>
           <div class="wrapper">
             <div class="event-general">
-              <div class="heading-2">{this.state.event.event_location_human}</div>
+              <div class="heading-2">{this.state.event.destination}</div>
               <br/>
               <div class="heading-2">{this.state.event.date}</div>
               <br/>

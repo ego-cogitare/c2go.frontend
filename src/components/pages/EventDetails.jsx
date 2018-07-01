@@ -33,7 +33,7 @@ export default class EventDetails extends React.Component {
         />
         <div class="proposals-wrapper clear" style={{ backgroundColor: '#ffffff' }}>
           <div class="proposal-section wrapper">
-            <div class="heading-1">{this.state.event.event_location_human}, {this.state.event.date}</div>
+            <div class="heading-1">{this.state.event.destination}, {this.state.event.date}</div>
             <div class="proposal-details clear">
               <div class="profile-photo">
                 <div class="heading-2">
