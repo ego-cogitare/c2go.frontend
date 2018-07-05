@@ -11,9 +11,12 @@ export default class EventAccept extends React.Component {
     super(props);
 
     this.state = {
-      event: {},
-      author: {},
-      user: {},
+      proposal: {
+        event: {
+          category: {}
+        },
+      },
+      user: {}
     };
 
     eventAccept(
@@ -26,8 +29,8 @@ export default class EventAccept extends React.Component {
     return (
       <div class="event-view">
         <Partials.EventCover
-          category={this.state.event.category || {}}
-          title={this.state.event.name}
+          category={this.state.proposal.event.category || {}}
+          title={this.state.proposal.event.name}
         />
 
         <div class="wrapper actions-wrapper">
@@ -66,16 +69,16 @@ export default class EventAccept extends React.Component {
           <div class="ttl">Eventdaten</div>
           <div class="event-date">
             <div class="heading-2">
-              {this.state.event.name}
+              {this.state.proposal.event.name}
             </div>
             <div class="description">
-              {this.state.request_message}
+              {this.state.proposal.message}
             </div>
           </div>
           <div class="event-details">
-            <span>{this.state.event.destination}</span>
-            <span>{this.state.event.date}</span>
-            <span>{this.state.price}€</span>
+            <span>{this.state.proposal.event.destination}</span>
+            <span>{this.state.proposal.event.date}</span>
+            <span>{this.state.proposal.price}€</span>
           </div>
         </div>
 

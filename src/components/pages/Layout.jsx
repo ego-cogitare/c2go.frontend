@@ -81,8 +81,10 @@ export default class Layout extends React.Component {
       location.hash = '#login';
     }
     if (result.status === 401 && result.responseJSON.error === 'token_expired') {
+      console.log('ad')
       /** Try to refresh token */
-      refreshToken({ token: User.token },
+      refreshToken(
+        { token: User.token },
         ({ token }) => {
           User.token = token;
           console.log('Token refreshed');

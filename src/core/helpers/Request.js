@@ -20,7 +20,8 @@ export function request(url, params, type, onSuccess, onFail = ()=>{}) {
   dispatch('api:request:begin', { url, params });
 
   // Broadcast end of request
-  setTimeout(() => result.always((r) => dispatch('api:request:end', { url, params, result })));
+  result.always((r) => dispatch('api:request:end', { url, params, result }));
+  // setTimeout(() => result.always((r) => dispatch('api:request:end', { url, params, result })));
 
   return (typeof onSuccess === 'undefined') ? result :
     result

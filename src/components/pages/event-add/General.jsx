@@ -19,7 +19,7 @@ export default class General extends React.Component {
       autocompleteItems: [],
 
       /** Selected item in autocomplete list */
-      autocompleteItem: null,
+      autocompleteItem: {},
 
       /**
        * Next step url. If user select item from autocomplete list (means
@@ -124,7 +124,7 @@ export default class General extends React.Component {
                 <span dangerouslySetInnerHTML={{
                   __html: (this.state.errors.event_id || [])
                     .join()
-                    .replace('proposal', `<a class="text-bold text-underline" href="/event/dfasdf">proposal</a>`)
+                    .replace('proposal', `<a class="text-bold text-underline" href="/proposal/${this.state.autocompleteItem.id}/details">proposal</a>`)
                 }}
                 ></span>
                 {(this.state.errors.title || []).join()}
@@ -151,7 +151,7 @@ export default class General extends React.Component {
               />
               <small class="color-red left">{(this.state.errors.url || []).join()}</small>
             </div>
-            <input type="hidden" name="event_id" value={(this.state.autocompleteItem || {}).id} />
+            <input type="hidden" name="event_id" value={this.state.autocompleteItem.id} />
           </div>
           <div class="buttons">
             <button type="submit" className="button violet-button">Weiter</button>

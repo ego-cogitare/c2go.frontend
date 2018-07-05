@@ -59,7 +59,7 @@ const routes = {
       component: require('../components/pages/EventRequest.jsx').default
     },
     {
-      path: '/event-accept/:event',
+      path: '/event/:event/accept',
       component: require('../components/pages/EventAccept.jsx').default
     },
 
