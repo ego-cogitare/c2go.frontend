@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import Partials from './partials';
 import User from '../../core/helpers/User';
-import { userEvents } from '../../actions';
+import { eventRequests, upcomingEvents } from '../../actions';
 import { profilePhoto } from '../../core/helpers/Utils';
 
 export default class Dashboard extends React.Component {
@@ -11,12 +11,20 @@ export default class Dashboard extends React.Component {
     super(props);
 
     this.state = {
-      requests: []
+      requests: [],
+      upcomings: [],
     };
 
-    userEvents(
+    /** Get future events list */
+    upcomingEvents(
+      ({ data }) => this.setState({ upcomings: data }),
+      (error) => console.error(error)
+    );
+
+    /** Get event request list */
+    eventRequests(
       ({ data }) => this.setState({ requests: data }),
-      (error) => console.error(error),
+      (error) => console.error(error)
     );
   }
 
@@ -41,19 +49,17 @@ export default class Dashboard extends React.Component {
             <div class="current">
               <div class="title">Anfragen und Nachrichten</div>
               {
-                this.state.requests.map(({ id, date, state, message, user }) => {
-                  if (state === Partials.Invitation.STATE_ACCEPTED) {
-                    return null;
-                  }
+                this.state.requests.map(({ id, date, message, user, state }) => {
                   return (
                     <Partials.Invitation
                       key={id}
-                      id={id}
                       state={state}
                       date={date}
                       title={`${user.first_name} ${user.last_name}`}
                       message={message}
                       selected={false}
+                      openLink={`/event/requests/${id}/overview`}
+                      titleLink={`/profile/${user.id}/information`}
                       avatar={profilePhoto(user)}
                     />
                   );
@@ -68,17 +74,15 @@ export default class Dashboard extends React.Component {
             <div class="future">
               <div class="title">Deine anstehenden Events:</div>
               {
-                this.state.requests.map(({ id, date, state, message, user }) => {
-                  if (state !== Partials.Invitation.STATE_ACCEPTED) {
-                    return null;
-                  }
+                this.state.upcomings.map(({ id, date, name, destination, proposal_id, user }) => {
                   return (
                     <Partials.Invitation
                       key={id}
                       id={id}
                       date={date}
-                      title={`${user.first_name} ${user.last_name}`}
-                      message={message}
+                      title={`${name}`}
+                      message={`Mit ${user.first_name} in ${destination}`}
+                      titleLink={`proposal/${proposal_id}/details`}
                       selected={false}
                     />
                   );

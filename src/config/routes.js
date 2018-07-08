@@ -36,10 +36,14 @@ const routes = {
       component: require('../components/pages/register/EmailConfirmation.jsx').default
     },
 
-
     {
       path: '/dashboard',
       component: require('../components/pages/Dashboard.jsx').default
+    },
+
+    {
+      path: '/proposal/:proposal/details',
+      component: require('../components/pages/ProposalDetails.jsx').default
     },
 
     {
@@ -47,20 +51,16 @@ const routes = {
       component: require('../components/pages/EventProposals.jsx').default
     },
     {
-      path: '/proposal/:proposal/details',
-      component: require('../components/pages/ProposalDetails.jsx').default
-    },
-    {
       path: '/event/:proposal/details',
       component: require('../components/pages/EventGeneral.jsx').default
     },
     {
       path: '/event/:proposal/request',
-      component: require('../components/pages/EventRequest.jsx').default
+      component: require('../components/pages/WriteRequest.jsx').default
     },
     {
-      path: '/event/:event/accept',
-      component: require('../components/pages/EventAccept.jsx').default
+      path: '/event/requests/:request/overview',
+      component: require('../components/pages/RequestOverview.jsx').default
     },
 
 

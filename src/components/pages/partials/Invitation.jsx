@@ -24,25 +24,20 @@ export default class Invitation extends React.Component {
     ][state];
   }
 
-  onOpen(e) {
-    e.preventDefault();
-    this.props.onOpen(this.props.id);
-  }
-
   render() {
     return (
       <div class={classNames('event-item clear', this.mapState(this.props.state), this.props.selected ? 'active' : null)}>
         { this.props.date && <div class="date">{this.props.date}</div> }
         { this.props.avatar && <div class="avatar" style={ this.props.avatar ? { backgroundImage: `url('${this.props.avatar}')` } : {} }></div> }
-        <Link to={`/event/${this.props.id}/accept`} className="info">
-          { this.props.onOpen && <Link to="#" class="state">Offene Anfrage</Link> }
+        <div className="info">
+          { this.props.openLink && <Link to={this.props.openLink} class="state">Offene Anfrage</Link> }
           <div class="heading-2">
-            {this.props.title}
+            <Link to={this.props.titleLink}>{this.props.title}</Link>
           </div>
           <div class="message">
             {this.props.message}
           </div>
-        </Link>
+        </div>
       </div>
     );
   }

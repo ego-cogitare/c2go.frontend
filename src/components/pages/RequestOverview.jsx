@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import Partials from './partials';
 import classNames from 'classnames';
-import { eventAccept } from '../../actions';
+import { requestOverview } from '../../actions';
 import { profilePhoto } from '../../core/helpers/Utils';
 
 export default class EventAccept extends React.Component {
@@ -19,8 +19,8 @@ export default class EventAccept extends React.Component {
       user: {}
     };
 
-    eventAccept(
-      { event: this.props.params.event },
+    requestOverview(
+      { requestId: this.props.params.request },
       ({ data }) => this.setState({ ...data })
     );
   }

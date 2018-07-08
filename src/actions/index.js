@@ -24,11 +24,25 @@ export function profilePhoto(data, success, error) {
     request(`/api/user/profile-photo`, data, 'post', success, error);
 };
 
-export function eventAccept({ event }, success, error) {
-    request(`/api/events/accept/${event}`, {}, 'get', success, error);
+export function category({ category }, success, error) {
+    request(`/api/category/${category}`, {}, 'get', success, error);
 };
 
-export function userEvents(success, error) {
+export function categories(success, error) {
+    request(`/api/categories`, {}, 'get', success, error);
+};
+
+export function profileInfo({ user }, success, error) {
+    request(`/api/user/${user}/info`, {}, 'get', success, error);
+};
+
+
+
+export function requestOverview({ requestId }, success, error) {
+    request(`/api/events/requests/${requestId}/overview`, {}, 'get', success, error);
+};
+
+export function eventRequests(success, error) {
     request(`/api/events/requests`, {}, 'get', success, error);
 };
 
@@ -56,20 +70,6 @@ export function events(data, success, error) {
     request(`/api/events`, data, 'get', success, error);
 };
 
-export function category({ category }, success, error) {
-    request(`/api/category/${category}`, {}, 'get', success, error);
-};
-
-export function categories(success, error) {
-    request(`/api/categories`, {}, 'get', success, error);
-};
-
-export function profileInfo({ user }, success, error) {
-    request(`/api/user/${user}/info`, {}, 'get', success, error);
-};
-
-
-
 export function eventAddAutocomplete({ keyword }, success, error) {
     request(`/api/events/autocomplete`, { keyword}, 'get', success, error);
 };
@@ -92,4 +92,8 @@ export function eventAddTickets(data, success, error) {
 
 export function eventAdd(data, success, error) {
     request(`/api/events/add`, data, 'post', success, error);
+};
+
+export function upcomingEvents(success, error) {
+    request(`/api/events/upcoming`, {}, 'get', success, error);
 };
