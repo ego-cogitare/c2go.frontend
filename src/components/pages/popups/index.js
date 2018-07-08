@@ -7,6 +7,7 @@ import TermsOfUse from './TermsOfUse.jsx';
 import RegComplete from './RegComplete.jsx';
 import RequestComplete from './RequestComplete.jsx';
 import ProfileInputDialog from './ProfileInputDialog.jsx';
+import EventRequestConfirmDialog from './EventRequestConfirmDialog.jsx';
 
 export default {
   RegSwitchDialog,
@@ -17,4 +18,5 @@ export default {
   RegComplete,
   RequestComplete,
   ProfileInputDialog,
+  EventRequestConfirmDialog,
 };

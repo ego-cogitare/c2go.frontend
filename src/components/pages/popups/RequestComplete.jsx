@@ -19,7 +19,7 @@ export default class RequestComplete extends React.Component {
           <img src={require('../../../staticFiles/img/icons/checkbox-big.png')} alt="Completed" />
         </div>
         <div class="buttons clear">
-          <Link to={`/event/${this.props.proposal}/requests`} class="violet-button">Weitersuchen</Link>
+          <Link to={`/proposal/${this.props.proposal}/details`} class="violet-button">Weitersuchen</Link>
           <a href="#" class="main-profile" onClick={this.popupClose.bind(this)}>Fertig</a>
         </div>
       </div>

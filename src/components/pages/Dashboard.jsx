@@ -82,7 +82,7 @@ export default class Dashboard extends React.Component {
                       date={date}
                       title={`${name}`}
                       message={`Mit ${user.first_name} in ${destination}`}
-                      titleLink={`proposal/${proposal_id}/details`}
+                      titleLink={`/event/${proposal_id}/details`}
                       selected={false}
                     />
                   );

@@ -97,3 +97,11 @@ export function eventAdd(data, success, error) {
 export function upcomingEvents(success, error) {
     request(`/api/events/upcoming`, {}, 'get', success, error);
 };
+
+export function eventReject({ requestId }, success, error) {
+    request(`/api/events/requests/${requestId}/reject`, {}, 'post', success, error);
+};
+
+export function eventAccept({ requestId }, success, error) {
+    request(`/api/events/requests/${requestId}/accept`, {}, 'post', success, error);
+};
