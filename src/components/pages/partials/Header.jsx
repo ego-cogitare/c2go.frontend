@@ -44,9 +44,11 @@ export default class Header extends React.Component {
               </div>
             }
           </nav>
-          <div class="add-event right">
-            <Link to='/event-add' className="btn" href="#">Event erstellen</Link>
-          </div>
+          { Number(User.profileType) === 1 &&
+            <div class="add-event right">
+              <Link to='/event-add' className="btn" href="#">Event erstellen</Link>
+            </div>
+          }
         </div>
       </header>
     );

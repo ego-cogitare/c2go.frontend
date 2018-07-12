@@ -28,6 +28,10 @@ export default class Dashboard extends React.Component {
     );
   }
 
+  isDefaultProfile() {
+    return Number(User.profileType) === 2;
+  }
+
   render() {
     return (
         // this.state.pageLoading ? null :
@@ -48,22 +52,34 @@ export default class Dashboard extends React.Component {
           <div class="wrapper events-list clear">
             <div class="current">
               <div class="title">Anfragen und Nachrichten</div>
-              {
-                this.state.requests.map(({ id, date, message, user, state }) => {
+              { this.state.requests.length > 0 ?
+                this.state.requests.map(({ request_id: id, date, message, requestor, state, proposal }) => {
                   return (
-                    <Partials.Invitation
-                      key={id}
-                      state={state}
-                      date={date}
-                      title={`${user.first_name} ${user.last_name}`}
-                      message={message}
-                      selected={false}
-                      openLink={`/event/requests/${id}/overview`}
-                      titleLink={`/profile/${user.id}/information`}
-                      avatar={profilePhoto(user)}
-                    />
+                    this.isDefaultProfile() ?
+                      <Partials.Invitation
+                        key={id}
+                        state={state}
+                        date={date}
+                        title={`${proposal.user.first_name} ${proposal.user.last_name}`}
+                        message={message}
+                        selected={false}
+                        titleLink={`/profile/${proposal.user.id}/information`}
+                        avatar={profilePhoto(proposal.user)}
+                      /> :
+                      <Partials.Invitation
+                        key={id}
+                        state={state}
+                        date={date}
+                        title={`${requestor.first_name} ${requestor.last_name}`}
+                        message={message}
+                        selected={false}
+                        openLink={`/event/requests/${id}/overview`}
+                        titleLink={`/profile/${requestor.id}/information`}
+                        avatar={profilePhoto(requestor)}
+                      />
                   );
-                })
+                }) :
+                <span><br/>Nothing to show</span>
               }
               {/*<Partials.Invitation
                 title='Bitte vervollständige dein Profil'
@@ -72,21 +88,30 @@ export default class Dashboard extends React.Component {
               />*/}
             </div>
             <div class="future">
-              <div class="title">Deine anstehenden Events:</div>
-              {
-                this.state.upcomings.map(({ id, date, name, destination, proposal_id, user }) => {
+              <div class="title">Deine anstehenden Events</div>
+              { this.state.upcomings.length > 0 ?
+                this.state.upcomings.map(({ id, date, name, destination, proposal, requestor }) => {
                   return (
-                    <Partials.Invitation
-                      key={id}
-                      id={id}
-                      date={date}
-                      title={`${name}`}
-                      message={`Mit ${user.first_name} in ${destination}`}
-                      titleLink={`/event/${proposal_id}/details`}
-                      selected={false}
-                    />
+                    this.isDefaultProfile() ?
+                      <Partials.Invitation
+                        key={id}
+                        date={date}
+                        title={`${name}`}
+                        message={<span>Mit <Link to={`/profile/${proposal.user.id}/information`}>{proposal.user.first_name}</Link> in {destination} </span>}
+                        titleLink={`/event/${proposal.id}/details`}
+                        selected={false}
+                      /> :
+                      <Partials.Invitation
+                        key={id}
+                        date={date}
+                        title={`${name}`}
+                        message={<span>Mit <Link to={`/profile/${requestor.id}/information`}>{requestor.first_name}</Link> in {destination} </span>}
+                        titleLink={`/event/${proposal.id}/details`}
+                        selected={false}
+                      />
                   );
-                })
+                }) :
+                <span><br/>Nothing to show</span>
               }
               {/*
               <Partials.Invitation

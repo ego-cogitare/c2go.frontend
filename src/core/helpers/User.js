@@ -49,4 +49,8 @@ export default class User {
   static get phone() {
     return this.settings.phone || '';
   }
+
+  static get profileType() {
+    return this.settings.profile_type;
+  }
 }
