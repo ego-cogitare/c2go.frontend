@@ -16,6 +16,10 @@ export function refreshToken({ token }, success, error) {
     request(`/api/auth/refresh-token`, { token }, 'get', success, error);
 };
 
+
+/**
+ * Profile actions
+ */
 export function progress(data, success, error) {
     request(`/api/user/progress/${data.progress}`, data, 'post', success, error);
 };
@@ -34,6 +38,14 @@ export function categories(success, error) {
 
 export function profileInfo({ user }, success, error) {
     request(`/api/user/${user}/info`, {}, 'get', success, error);
+};
+
+export function profileDeactivate(success, error) {
+    request(`/api/user/deactivate`, {}, 'post', success, error);
+};
+
+export function profileChangePassword(data, success, error) {
+    request(`/api/user/change-password`, data, 'post', success, error);
 };
 
 

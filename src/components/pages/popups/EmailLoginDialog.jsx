@@ -22,7 +22,10 @@ export default class EmailLoginDialog extends React.Component {
   doLogin(e) {
     e.preventDefault();
 
-    emailLogin(this.state, null, (error) => this.setState({ error: 'Email or password is incorrect.' }));
+    emailLogin(this.state,
+      (r) => dispatch('user:loggedin', { ...r, type: 'email' }), 
+      (e) => this.setState({ error: 'Email or password is incorrect.' })
+    );
   }
 
   render() {

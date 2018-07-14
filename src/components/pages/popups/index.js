@@ -8,6 +8,8 @@ import RegComplete from './RegComplete.jsx';
 import RequestComplete from './RequestComplete.jsx';
 import ProfileInputDialog from './ProfileInputDialog.jsx';
 import EventRequestConfirmDialog from './EventRequestConfirmDialog.jsx';
+import ProfileDeactivateDialog from './ProfileDeactivateDialog.jsx';
+import DefaultConfirmDialog from './DefaultConfirmDialog.jsx';
 
 export default {
   RegSwitchDialog,
@@ -19,4 +21,6 @@ export default {
   RequestComplete,
   ProfileInputDialog,
   EventRequestConfirmDialog,
+  ProfileDeactivateDialog,
+  DefaultConfirmDialog,
 };

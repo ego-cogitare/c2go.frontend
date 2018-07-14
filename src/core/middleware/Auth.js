@@ -1,5 +1,5 @@
 import { browserHistory } from 'react-router';
-import { dispatch, subscribe } from '../../core/helpers/EventEmitter';
+import { dispatch } from '../../core/helpers/EventEmitter';
 import { login, refreshToken as updateToken } from '../../actions';
 import User from '../helpers/User';
 
@@ -37,12 +37,15 @@ export function refreshToken(data, onSuccess, onFail) {
   );
 };
 
-export function logout(props, onSuccess, onFail) {
+export function logout(props) {
   // Remove localStorage data
   User.endSession();
 
   // Redirect to default url
   props.router.push('/');
+
+  // On success function call if provided
+  dispatch('user:loggedout');
 
   return null;
 };

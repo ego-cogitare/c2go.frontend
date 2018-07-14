@@ -3,7 +3,7 @@ import { Link, browserHistory } from 'react-router';
 import classNames from 'classnames';
 import Partials from '../partials';
 import Popups from '../popups';
-import { dispatch, subscribe } from '../../../core/helpers/EventEmitter';
+import { dispatch } from '../../../core/helpers/EventEmitter';
 import { eventAdd } from '../../../actions';
 import User from '../../../core/helpers/User';
 

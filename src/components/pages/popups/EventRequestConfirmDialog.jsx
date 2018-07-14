@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import { dispatch } from '../../../core/helpers/EventEmitter';
 
 export default class EventRequestConfirmDialog extends React.Component {
