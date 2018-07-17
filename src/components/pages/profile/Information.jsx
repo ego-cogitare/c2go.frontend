@@ -4,7 +4,7 @@ import Partials from '../partials';
 import classNames from 'classnames';
 import User from '../../../core/helpers/User';
 import { profilePhoto } from '../../../core/helpers/Utils';
-import { profileInfo } from '../../../actions';
+import { profileInfo, profileDisabilityInformation, profileRequiredAssistance } from '../../../actions';
 
 export default class Information extends React.Component {
 
@@ -15,9 +15,14 @@ export default class Information extends React.Component {
         settings: {
           profile_interests: []
         },
+        disability_info: 'Disability Info',
+        disabilityInfoEdit: false,
+        require_assistance: 'Require Assistance',
+        requireAssistanceEdit: false,
+        errors: {}
     };
 
-    profileInfo({ user: User.data.id },
+    profileInfo(
       ({ data }) => this.setState({ ...data }),
       (e) => console.error(e)
     );
@@ -34,7 +39,6 @@ export default class Information extends React.Component {
             <div class="heading-2">
               Profilinformationen
             </div>
-
             <Partials.UserAvatar ref="avatar">
               <a href="#" class="edit" onClick={(e) => {
                   e.preventDefault();
@@ -43,29 +47,69 @@ export default class Information extends React.Component {
             </Partials.UserAvatar>
           </div>
 
-          <div class="settings-section">
-            <div class="heading-2">
-              Angaben zu einer Behinderung
+          { this.state.disabilityInfoEdit &&
+            <div class="settings-section">
+              <div class="heading-2">
+                Angaben zu einer Behinderung
+              </div>
+              <Partials.Textarea
+                value={this.state.disability_info}
+                maxLength="120"
+                onChange={(value) => this.setState({ disability_info: value })}
+                error={(this.state.errors.disability_info || []).join()}
+              />
+              <a href="#" class="edit" onClick={(e) => {
+                e.preventDefault();
+                this.setState({ disabilityInfoEdit: false });
+              }}>Save</a>
             </div>
-            <div class="description">
-              Roman chamomile is mainly grown in England, and there are some areas in continental Europe and the United States that also distill the oil. In 1785,
-              Carlo Allioni, an Italian botanist, placed what we know as Roman chamomile in the genus Chamaemelum, naming Anthemis nobilis as Chamaemelum nobile,
-              thus furthering the confusion about chamomiles.
+          }
+          { !this.state.disabilityInfoEdit &&
+            <div class="settings-section">
+              <div class="heading-2">
+                Angaben zu einer Behinderung
+              </div>
+              <div class="description">
+                { this.state.disability_info }
+              </div>
+              <a href="#" class="edit" onClick={(e) => {
+                e.preventDefault();
+                this.setState({ disabilityInfoEdit: true });
+              }}>Edit</a>
             </div>
-            <a href="#" class="edit">Edit</a>
-          </div>
+          }
 
-          <div class="settings-section">
-            <div class="heading-2">
-              Welche Unterstützung benötigst Du?
+          { this.state.requireAssistanceEdit &&
+            <div class="settings-section">
+              <div class="heading-2">
+                Welche Unterstützung benötigst Du?
+              </div>
+              <Partials.Textarea
+                value={this.state.require_assistance}
+                maxLength="120"
+                onChange={(value) => this.setState({ require_assistance: value })}
+                error={(this.state.errors.require_assistance || []).join()}
+              />
+              <a href="#" class="edit" onClick={(e) => {
+                e.preventDefault();
+                this.setState({ requireAssistanceEdit: false });
+              }}>Save</a>
             </div>
-            <div class="description">
-              Roman chamomile is mainly grown in England, and there are some areas in continental Europe and the United States that also distill the oil. In 1785,
-              Carlo Allioni, an Italian botanist, placed what we know as Roman chamomile in the genus Chamaemelum, naming Anthemis nobilis as Chamaemelum nobile,
-              thus furthering the confusion about chamomiles.
+          }
+          { !this.state.requireAssistanceEdit &&
+            <div class="settings-section">
+              <div class="heading-2">
+                Welche Unterstützung benötigst Du?
+              </div>
+              <div class="description">
+                { this.state.require_assistance }
+              </div>
+              <a href="#" class="edit" onClick={(e) => {
+                e.preventDefault();
+                this.setState({ requireAssistanceEdit: true });
+              }}>Edit</a>
             </div>
-            <a href="#" class="edit">Edit</a>
-          </div>
+          }
 
           <div class="settings-section">
             <div class="heading-2">
@@ -82,8 +126,7 @@ export default class Information extends React.Component {
                       { name }
                     </div>
                     <div class="tags-list">
-                    {
-                      categories.map(({ id, name }) => (
+                    { categories.map(({ id, name }) => (
                         <a key={id} href="#" class="tag">
                           { name }
                         </a>

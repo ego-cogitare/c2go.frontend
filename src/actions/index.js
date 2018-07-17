@@ -36,8 +36,8 @@ export function categories(success, error) {
     request(`/api/categories`, {}, 'get', success, error);
 };
 
-export function profileInfo({ user }, success, error) {
-    request(`/api/user/${user}/info`, {}, 'get', success, error);
+export function profileInfo(success, error) {
+    request(`/api/user/info`, {}, 'get', success, error);
 };
 
 export function profileDeactivate(success, error) {
@@ -46,6 +46,14 @@ export function profileDeactivate(success, error) {
 
 export function profileChangePassword(data, success, error) {
     request(`/api/user/change-password`, data, 'post', success, error);
+};
+
+export function profileDisabilityInformation(data, success, error) {
+    request(`/api/user/disability-information`, data, 'post', success, error);
+};
+
+export function profileRequiredAssistance(data, success, error) {
+    request(`/api/user/required-assistance`, data, 'post', success, error);
 };
 
 

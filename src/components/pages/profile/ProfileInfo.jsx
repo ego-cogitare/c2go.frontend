@@ -17,7 +17,7 @@ export default class ProfileInfo extends React.Component {
         },
     };
 
-    profileInfo({ user: this.props.params.user },
+    profileInfo(
       ({ data }) => this.setState({ ...data }),
       (e) => console.error(e)
     );
