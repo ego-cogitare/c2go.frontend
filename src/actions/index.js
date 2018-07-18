@@ -52,8 +52,8 @@ export function profileDisabilityInformation(data, success, error) {
     request(`/api/user/disability-information`, data, 'post', success, error);
 };
 
-export function profileRequiredAssistance(data, success, error) {
-    request(`/api/user/required-assistance`, data, 'post', success, error);
+export function profileRequireAssistance(data, success, error) {
+    request(`/api/user/require-assistance`, data, 'post', success, error);
 };
 
 

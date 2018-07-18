@@ -50,6 +50,10 @@ export default class User {
     return this.settings.phone || '';
   }
 
+  static get email() {
+    return this.data.email || '';
+  }
+
   static get profileType() {
     return this.settings.profile_type;
   }

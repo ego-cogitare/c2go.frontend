@@ -8,15 +8,46 @@ import User from '../../../core/helpers/User';
 
 export default class Contacts extends React.Component {
 
-  initDialogs() {
-    this.inputDialog = <Popups.ProfileInputDialog className="popup-sm adjustments-002" />;
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      phone: User.phone,
+      email: User.email,
+    };
+
+    // this.state = {
+    //   phone: null,
+    //   email: null,
+    // };
   }
 
-  popup() {
-    dispatch('popup:show', {
-      title: 'E-Mail-Adresse ändern',
-      body: this.inputDialog
-    });
+  initDialogs() {
+    this.changeEmailDialog = <Popups.ProfileInputDialog
+      message="Bitte gebe ein gültige E-Mail-Adresse ein. Im nächsten Schritt solltest du diese bestätigen."
+      disabledText={User.email}
+      placeholder="Neue E-Mail-Adresse"
+      className="popup-sm adjustments-002"
+    />;
+
+    this.addEmailDialog = <Popups.ProfileInputDialog
+      message="Bitte gebe ein gültige Telefonnummer ein. Im nächsten Schritt solltest du diese bestätigen."
+      placeholder="E-Mail-Adresse"
+      className="popup-sm adjustments-002"
+    />;
+
+    this.changePhoneDialog = <Popups.ProfileInputDialog
+      message="Bitte gebe ein gültige Telefonnummer ein. Im nächsten Schritt solltest du diese bestätigen."
+      disabledText={User.phone}
+      placeholder="Neue Telefonnummer"
+      className="popup-sm adjustments-002"
+    />;
+
+    this.addPhoneDialog = <Popups.ProfileInputDialog
+      message="Bitte gebe ein gültige Telefonnummer ein. Im nächsten Schritt solltest du diese bestätigen."
+      placeholder="Telefonnummer"
+      className="popup-sm adjustments-002"
+    />;
   }
 
   render() {
@@ -33,8 +64,19 @@ export default class Contacts extends React.Component {
           </div>
           <div class="table email-phone">
             <div class="table-row clear">
-              <div class="left with-icon icon-success">
-                E-Mail-Adresse
+              <div class={classNames("left with-icon", {'icon-success': this.state.email, 'icon-plus-red': !this.state.email})} onClick={(e) => {
+                e.preventDefault();
+                this.state.email ?
+                  dispatch('popup:show', {
+                    title: 'E-Mail-Adresse ändern',
+                    body: this.changeEmailDialog
+                  }) :
+                  dispatch('popup:show', {
+                    title: 'E-Mail-Adresse hinzufügen',
+                    body: this.addEmailDialog
+                  });
+              }}>
+                <a href="#">{ this.state.email || 'E-Mail-Adresse' }</a>
               </div>
               <div class="right">
                 <a href="#">
@@ -43,8 +85,19 @@ export default class Contacts extends React.Component {
               </div>
             </div>
             <div class="table-row clear">
-              <div class="left with-icon icon-plus-red" onClick={this.popup.bind(this)}>
-                Telefonnummer
+              <div class={classNames("left with-icon", {'icon-success': this.state.phone, 'icon-plus-red': !this.state.phone})} onClick={(e) => {
+                e.preventDefault();
+                this.state.phone ?
+                  dispatch('popup:show', {
+                    title: 'Telefonnummer ändern',
+                    body: this.changePhoneDialog
+                  }) :
+                  dispatch('popup:show', {
+                    title: 'Telefonnummer hinzufügen',
+                    body: this.addPhoneDialog
+                  });
+              }}>
+                <a href="#">{ this.state.phone || 'Telefonnummer' }</a>
               </div>
               <div class="right">
                 <a href="#">

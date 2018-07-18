@@ -2,29 +2,24 @@ import React from 'react';
 import { Link } from 'react-router';
 
 export default class ProfileInputDialog extends React.Component {
-
-  onSubmit(e) {
-    e.preventDefault();
-  }
-
   render() {
     return (
       <div class="popup-body">
         <div class="text">
-          Bitte gebe ein gültige E-Mail-Adresse ein. Im nächsten Schritt solltest du diese bestätigen.
+          { this.props.message }
         </div>
-        <form onSubmit={this.onSubmit.bind(this)}>
+        { this.props.disabledText &&
           <div class="form-controll">
-            <input type="text" class="input disabled" defaultValue="ego.cogitare@gmail.com" disabled />
+            <input type="text" class="input disabled" defaultValue={ this.props.disabledText } disabled />
           </div>
-          <div class="form-controll">
-            <input type="text" class="input" name="email" defaultValue="" placeholder="Neue E-Mail-Adresse" autoFocus />
-          </div>
-          <div class="buttons">
-            <a href="#" class="violet-button">Ändern</a>
-            <a href="#" class="skip">Abbrechen</a>
-          </div>
-        </form>
+        }
+        <div class="form-controll">
+          <input type="text" class="input" name="email" defaultValue="" placeholder={ this.props.placeholder } autoFocus />
+        </div>
+        <div class="buttons">
+          <a href="#" class="violet-button">Ändern</a>
+          <a href="#" class="skip">Abbrechen</a>
+        </div>
       </div>
     );
   }

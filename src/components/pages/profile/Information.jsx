@@ -4,7 +4,7 @@ import Partials from '../partials';
 import classNames from 'classnames';
 import User from '../../../core/helpers/User';
 import { profilePhoto } from '../../../core/helpers/Utils';
-import { profileInfo, profileDisabilityInformation, profileRequiredAssistance } from '../../../actions';
+import { profileInfo, profileDisabilityInformation, profileRequireAssistance } from '../../../actions';
 
 export default class Information extends React.Component {
 
@@ -12,19 +12,37 @@ export default class Information extends React.Component {
     super(props);
 
     this.state = {
-        settings: {
-          profile_interests: []
-        },
-        disability_info: 'Disability Info',
-        disabilityInfoEdit: false,
-        require_assistance: 'Require Assistance',
-        requireAssistanceEdit: false,
-        errors: {}
+      profile_interests: [],
+      disability_information: '',
+      disabilityInfoEdit: false,
+      require_assistance: '',
+      requireAssistanceEdit: false,
+      errors: {}
     };
 
     profileInfo(
-      ({ data }) => this.setState({ ...data }),
+      ({ data: { settings } }) => this.setState({ ...settings }),
       (e) => console.error(e)
+    );
+  }
+
+  disabilityInfoSave(e) {
+    e.preventDefault();
+
+    profileDisabilityInformation(
+      { disability_information: this.state.disability_information },
+      (r) => this.setState({ disabilityInfoEdit: false, errors: {} }),
+      (e) => this.setState({ errors: e.responseJSON.errors })
+    );
+  }
+
+  requireAssistanceSave(e) {
+    e.preventDefault();
+
+    profileRequireAssistance(
+      { require_assistance: this.state.require_assistance },
+      (r) => this.setState({ requireAssistanceEdit: false, errors: {} }),
+      (e) => this.setState({ errors: e.responseJSON.errors })
     );
   }
 
@@ -53,15 +71,12 @@ export default class Information extends React.Component {
                 Angaben zu einer Behinderung
               </div>
               <Partials.Textarea
-                value={this.state.disability_info}
+                value={this.state.disability_information}
                 maxLength="120"
-                onChange={(value) => this.setState({ disability_info: value })}
-                error={(this.state.errors.disability_info || []).join()}
+                onChange={(value) => this.setState({ disability_information: value })}
+                error={(this.state.errors.disability_information || []).join()}
               />
-              <a href="#" class="edit" onClick={(e) => {
-                e.preventDefault();
-                this.setState({ disabilityInfoEdit: false });
-              }}>Save</a>
+              <a href="#" class="edit" onClick={this.disabilityInfoSave.bind(this)}>Save</a>
             </div>
           }
           { !this.state.disabilityInfoEdit &&
@@ -70,7 +85,7 @@ export default class Information extends React.Component {
                 Angaben zu einer Behinderung
               </div>
               <div class="description">
-                { this.state.disability_info }
+                { this.state.disability_information }
               </div>
               <a href="#" class="edit" onClick={(e) => {
                 e.preventDefault();
@@ -90,10 +105,7 @@ export default class Information extends React.Component {
                 onChange={(value) => this.setState({ require_assistance: value })}
                 error={(this.state.errors.require_assistance || []).join()}
               />
-              <a href="#" class="edit" onClick={(e) => {
-                e.preventDefault();
-                this.setState({ requireAssistanceEdit: false });
-              }}>Save</a>
+            <a href="#" class="edit" onClick={this.requireAssistanceSave.bind(this)}>Save</a>
             </div>
           }
           { !this.state.requireAssistanceEdit &&
@@ -116,7 +128,7 @@ export default class Information extends React.Component {
               Interessen:
             </div>
             {
-              this.state.settings.profile_interests.map(({ id, name, categories }) => {
+              this.state.profile_interests.map(({ id, name, categories }) => {
                 if (categories.length === 0) {
                   return null;
                 }
