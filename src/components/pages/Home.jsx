@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import Partials from './partials';
 import queryString from 'query-string';
 import { events, categories } from '../../actions';
-import { buildUrl } from '../../core/helpers/Utils';
+import { buildUrl, profilePhoto } from '../../core/helpers/Utils';
 import classNames from 'classnames';
 
 export default class Home extends React.Component {
@@ -81,33 +81,10 @@ export default class Home extends React.Component {
     );
   }
 
-  getUserProfilePhoto(user) {
-    return user.settings.profile_photo
-      ? `${config.staticFiles}/${user.settings.profile_photo}`
-      : require('../../staticFiles/img/dashboard/empty-avatar.png');
-  }
-
   getEventCoverPhoto(category, subcategory) {
     const coverPhoto = subcategory.cover_photo || category.cover_photo || '';
     return coverPhoto ? `${config.staticFiles}/${coverPhoto}` : '';
   }
-
-  // eventSearchHandle({ category, date, location1, location2 }) {
-  //   this.setState({
-  //     params: {
-  //       category,
-  //       date,
-  //       location1,
-  //       location2
-  //     }
-  //   });
-  //   // this.fetchEvents({
-  //   //   category: category.id,
-  //   //   date,
-  //   //   location: location1.human,
-  //   //   destination: location2.human,
-  //   // });
-  // }
 
   eventAddHandle() {
     console.log('Events add');
@@ -175,7 +152,7 @@ export default class Home extends React.Component {
                           key={id}
                           id={id}
                           color={subcategory.color}
-                          avatar={this.getUserProfilePhoto(proposal.user)}
+                          avatar={profilePhoto(proposal.user)}
                           picture={this.getEventCoverPhoto(category, subcategory)}
                           title={name}
                           category={subcategory.name}
@@ -208,7 +185,7 @@ export default class Home extends React.Component {
                           key={id}
                           id={id}
                           color={subcategory.color}
-                          avatar={this.getUserProfilePhoto(proposal.user)}
+                          avatar={profilePhoto(proposal.user)}
                           picture={this.getEventCoverPhoto(category, subcategory)}
                           title={name}
                           category={subcategory.name}

@@ -20,7 +20,14 @@ export function profilePhoto(user) {
     return defaultAvatar;
   }
   const profilePhoto = user.settings.profile_photo;
-  return profilePhoto ? config.staticFiles + '/' + profilePhoto : defaultAvatar;
+
+  if (profilePhoto) {
+    return profilePhoto.match(/http(s)?\:\/\//)
+      ? profilePhoto
+      : `${config.staticFiles}/${profilePhoto}`;
+  } else {
+    return defaultAvatar;
+  }
 };
 
 /**

@@ -15,9 +15,14 @@ export default class User {
 
   static get profilePhoto() {
     const profilePhoto = this.settings.profile_photo;
-    return profilePhoto
-      ? config.staticFiles + '/' + profilePhoto
-      : require('../../staticFiles/img/icons/default-avatar.svg');
+
+    if (profilePhoto) {
+      return profilePhoto.match(/http(s)?\:\/\//)
+        ? profilePhoto
+        : `${config.staticFiles}/${profilePhoto}`;
+    } else {
+      return require('../../staticFiles/img/icons/default-avatar.svg');
+    }
   }
 
   static get token() {
