@@ -21,6 +21,7 @@ export default class Information extends React.Component {
     };
 
     profileInfo(
+      { },
       ({ data: { settings } }) => this.setState({ ...settings }),
       (e) => console.error(e)
     );

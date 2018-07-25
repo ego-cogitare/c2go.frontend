@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router';
+import { profilePhoto } from '../../../core/helpers/Utils';
 
 export default class Proposal extends React.Component {
 
@@ -10,15 +11,6 @@ export default class Proposal extends React.Component {
     this.state = {
       data: this.props.data
     };
-  }
-
-  get profilePhoto() {
-    const defaultAvatar = require('../../../staticFiles/img/icons/default-avatar.svg');
-    if (!this.state.data.user || !this.state.data.user.settings) {
-      return defaultAvatar;
-    }
-    const profilePhoto = this.state.data.user.settings.profile_photo;
-    return profilePhoto ? config.staticFiles + '/' + profilePhoto : defaultAvatar;
   }
 
   render() {
@@ -48,7 +40,7 @@ export default class Proposal extends React.Component {
                      0.00,179.00 0.00,0.00 0.00,0.00
                      0.00,0.00 553.00,0.00 553.00,0.00 Z" />
         </svg>
-        <div class="picture" style={{ backgroundImage: `url('${this.profilePhoto}')` }}>
+        <div class="picture" style={{ backgroundImage: `url('${profilePhoto(this.state.data.user)}')` }}>
           <div class="author-rank">
             <i class="star" data-count={this.state.data.user.rank}></i>
           </div>

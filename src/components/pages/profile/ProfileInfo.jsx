@@ -12,12 +12,13 @@ export default class ProfileInfo extends React.Component {
     super(props);
 
     this.state = {
-        settings: {
-          profile_interests: []
-        },
+      settings: {
+        profile_interests: []
+      },
     };
 
     profileInfo(
+      { user: this.props.params.user },
       ({ data }) => this.setState({ ...data }),
       (e) => console.error(e)
     );
@@ -27,11 +28,14 @@ export default class ProfileInfo extends React.Component {
     return (
       <div class="profile-settings wrapper clear">
         <div class="content" style={{ width: '100%' }}>
-          <div class="settings-section">
+          <div class="settings-section clear">
             <div class="heading-2">
               Profilinformationen
             </div>
-            <div class="avatar" style={{ backgroundImage: `url('${profilePhoto(this.state)}')` }}></div>
+            <div class="avatar left " style={{ backgroundImage: `url('${profilePhoto(this.state)}')` }}></div>
+            <div class="profile-actions left">
+              <div class="heading-1" style={{ padding: '40px 0 0 50px' }}>{`${this.state.first_name} ${this.state.last_name}`}</div>
+            </div>
           </div>
           <div class="settings-section">
             <div class="heading-2">

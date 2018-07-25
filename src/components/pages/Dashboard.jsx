@@ -53,28 +53,30 @@ export default class Dashboard extends React.Component {
             <div class="current">
               <div class="title">Anfragen und Nachrichten</div>
               { this.state.requests.length > 0 ?
-                this.state.requests.map(({ request_id: id, date, message, requestor, state, proposal }) => {
+                this.state.requests.map(({ request_id: id, date, name, message, requestor, state, proposal }) => {
                   return (
                     this.isDefaultProfile() ?
                       <Partials.Invitation
                         key={id}
                         state={state}
                         date={date}
-                        title={`${proposal.user.first_name} ${proposal.user.last_name}`}
+                        title={name}
                         message={message}
                         selected={false}
-                        titleLink={`/profile/${proposal.user.id}/information`}
+                        titleLink={`/event/${proposal.id}/details`}
+                        avatarLink={`/profile/${proposal.user.id}/information`}
                         avatar={profilePhoto(proposal.user)}
                       /> :
                       <Partials.Invitation
                         key={id}
                         state={state}
                         date={date}
-                        title={`${requestor.first_name} ${requestor.last_name}`}
+                        title={name}
                         message={message}
                         selected={false}
                         openLink={`/event/requests/${id}/overview`}
-                        titleLink={`/profile/${requestor.id}/information`}
+                        titleLink={`/event/${proposal.id}/details`}
+                        avatarLink={`/profile/${requestor.id}/information`}
                         avatar={profilePhoto(requestor)}
                       />
                   );

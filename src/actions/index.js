@@ -36,8 +36,9 @@ export function categories(success, error) {
     request(`/api/categories`, {}, 'get', success, error);
 };
 
-export function profileInfo(success, error) {
-    request(`/api/user/info`, {}, 'get', success, error);
+export function profileInfo({ user }, success, error) {
+    const url = user ? `/api/user/${user}/info` : `/api/user/info`;
+    request(url, {}, 'get', success, error);
 };
 
 export function profileDeactivate(success, error) {
