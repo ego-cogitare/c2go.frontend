@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router';
-import Partials from './partials';
-import { general } from '../../actions';
+import Partials from '../partials';
+import { general } from '../../../actions';
 
-export default class EventGeneral extends React.Component {
+export default class General extends React.Component {
 
   constructor(props) {
     super(props);

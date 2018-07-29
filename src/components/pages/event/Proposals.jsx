@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router';
-import Partials from './partials';
 import classNames from 'classnames';
-import { proposals } from '../../actions';
+import Partials from '../partials';
+import { proposals } from '../../../actions';
 
-export default class EventProposals extends React.Component {
+export default class Proposals extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       category: {},
       proposals: []

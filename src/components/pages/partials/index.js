@@ -12,6 +12,7 @@ import Input from './Input.jsx';
 import Textarea from './Textarea.jsx';
 import SidebarMenu from './SidebarMenu.jsx';
 import UserAvatar from './UserAvatar.jsx';
+import Review from './Review.jsx';
 
 export default {
   Header,
@@ -28,4 +29,5 @@ export default {
   Textarea,
   SidebarMenu,
   UserAvatar,
+  Review,
 };

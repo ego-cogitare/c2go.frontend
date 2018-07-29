@@ -43,7 +43,7 @@ export default class Dashboard extends React.Component {
                 <div class="text">Profil</div>
                 <div class="heading-1">{`${User.data.first_name} ${User.data.last_name}`}</div>
                 <div class="buttons clear">
-                  <a href="#" class="btn">Ansehen</a>
+                  <Link to={`/event/history`} className="btn">Veranstaltungen</Link>
                   <Link to={`/profile/information`} className="btn">Bearbeiten</Link>
                 </div>
               </div>

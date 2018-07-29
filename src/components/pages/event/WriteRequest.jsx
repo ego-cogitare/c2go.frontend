@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router';
-import Partials from './partials';
-import Popups from './popups';
-import { general, storeRequest } from '../../actions';
-import { dispatch } from '../../core/helpers/EventEmitter';
+import Partials from '../partials';
+import Popups from '../popups';
+import { general, storeRequest } from '../../../actions';
+import { dispatch } from '../../../core/helpers/EventEmitter';
 
 export default class EventRequest extends React.Component {
 

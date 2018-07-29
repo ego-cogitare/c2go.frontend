@@ -28,11 +28,11 @@ export default class Invitation extends React.Component {
     return (
       <div class={classNames('event-item clear', this.mapState(this.props.state), this.props.selected ? 'active' : null)}>
         { this.props.date && <div class="date">{this.props.date}</div> }
-        { this.props.avatar && <Link
+        { this.props.avatar &&
+          <Link
             to={this.props.avatarLink}
-            className="avatar" 
-            style={ this.props.avatar ? { backgroundImage: `url('${this.props.avatar}')` } : {} }
-            ></Link> }
+            className="avatar"
+            style={ this.props.avatar ? { backgroundImage: `url('${this.props.avatar}')` } : {} }></Link> }
         <div className="info">
           { this.props.openLink && <Link to={this.props.openLink} class="state">Offene Anfrage</Link> }
           <div class="heading-2">

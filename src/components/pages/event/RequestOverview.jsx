@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link, browserHistory } from 'react-router';
 import classNames from 'classnames';
-import Partials from './partials';
-import Popups from './popups';
-import { requestOverview, eventReject, eventAccept } from '../../actions';
-import { profilePhoto } from '../../core/helpers/Utils';
-import { dispatch } from '../../core/helpers/EventEmitter';
+import Partials from '../partials';
+import Popups from '../popups';
+import { requestOverview, eventReject, eventAccept } from '../../../actions';
+import { profilePhoto } from '../../../core/helpers/Utils';
+import { dispatch } from '../../../core/helpers/EventEmitter';
 
 export default class EventAccept extends React.Component {
 

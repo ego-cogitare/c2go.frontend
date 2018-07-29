@@ -12,6 +12,7 @@ export default class ProfileInfo extends React.Component {
     super(props);
 
     this.state = {
+      reviews: [],
       settings: {
         profile_interests: []
       },
@@ -57,34 +58,48 @@ export default class ProfileInfo extends React.Component {
               thus furthering the confusion about chamomiles.
             </div>
           </div>
-          <div class="settings-section">
-            <div class="heading-2">
-              Interessen:
+          { /** If user interests settings are set */
+            this.state.settings.profile_interests.length > 0 &&
+            <div class="settings-section">
+              <div class="heading-2">
+                Interessen:
+              </div>
+              { this.state.settings.profile_interests.map(({ id, name, categories }) => {
+                  if (categories.length === 0) {
+                    return null;
+                  }
+                  return (
+                    <div key={id} class="tags clear">
+                      <div class="title">
+                        { name }
+                      </div>
+                      <div class="tags-list">
+                      {
+                        categories.map(({ id, name }) => (
+                          <a key={id} href="#" class="tag">
+                            { name }
+                          </a>
+                        ))
+                      }
+                      </div>
+                    </div>
+                  );
+                })
+              }
             </div>
-            {
-              this.state.settings.profile_interests.map(({ id, name, categories }) => {
-                if (categories.length === 0) {
-                  return null;
-                }
-                return (
-                  <div key={id} class="tags clear">
-                    <div class="title">
-                      { name }
-                    </div>
-                    <div class="tags-list">
-                    {
-                      categories.map(({ id, name }) => (
-                        <a key={id} href="#" class="tag">
-                          { name }
-                        </a>
-                      ))
-                    }
-                    </div>
-                  </div>
-                );
-              })
-            }
-          </div>
+          }
+          { /** If reviews about current logged in user are exists */
+            this.state.reviews.length > 0 &&
+            <div class="user-reviews">
+              <div class="title clear">
+                <div class="heading-2">Bewertungen</div>
+                <div class="star" data-count="5" />
+              </div>
+              { this.state.reviews.map(({ message, reviewer }, key) =>
+                <Partials.Review message={message} reviewer={reviewer} key={key} />)
+              }
+            </div>
+          }
         </div>
       </div>
     );

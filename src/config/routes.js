@@ -5,11 +5,11 @@ const routes = {
   // Default routes list
   default: [
     {
-      path: 'home',
+      path: '/home',
       component: require('../components/pages/Home.jsx').default
     },
     {
-      path: 'how-it-works',
+      path: '/how-it-works',
       component: require('../components/pages/HowItWorks.jsx').default
     },
 
@@ -20,19 +20,19 @@ const routes = {
       component: require('../components/pages/register/Interests.jsx').default
     },
     {
-      path: 'register/photo',
+      path: '/register/photo',
       component: require('../components/pages/register/Photo.jsx').default
     },
     {
-      path: 'register/type',
+      path: '/register/type',
       component: require('../components/pages/register/Type.jsx').default
     },
     {
-      path: 'register/settings',
+      path: '/register/settings',
       component: require('../components/pages/register/Settings.jsx').default
     },
     {
-      path: 'register/email-confirmation',
+      path: '/register/email-confirmation',
       component: require('../components/pages/register/EmailConfirmation.jsx').default
     },
 
@@ -46,88 +46,93 @@ const routes = {
       component: require('../components/pages/ProposalDetails.jsx').default
     },
 
+    /** Event roures */
     {
       path: '/event/:event/proposals',
-      component: require('../components/pages/EventProposals.jsx').default
+      component: require('../components/pages/event/Proposals.jsx').default
     },
     {
       path: '/event/:proposal/details',
-      component: require('../components/pages/EventGeneral.jsx').default
+      component: require('../components/pages/event/General.jsx').default
     },
     {
       path: '/event/:proposal/request',
-      component: require('../components/pages/WriteRequest.jsx').default
+      component: require('../components/pages/event/WriteRequest.jsx').default
     },
     {
       path: '/event/requests/:request/overview',
-      component: require('../components/pages/RequestOverview.jsx').default
+      component: require('../components/pages/event/RequestOverview.jsx').default
+    },
+    {
+      path: '/event/history',
+      component: require('../components/pages/event/History.jsx').default
     },
 
 
     /** Event add routes */
     {
-      path: 'event-add',
+      path: '/event-add',
       component: require('../components/pages/event-add/Agreements.jsx').default
     },
     {
-      path: 'event-add/description',
+      path: '/event-add/description',
       component: require('../components/pages/event-add/General.jsx').default
     },
     {
-      path: 'event-add/categories',
+      path: '/event-add/categories',
       component: require('../components/pages/event-add/Categories.jsx').default
     },
     {
-      path: 'event-add/date-place',
+      path: '/event-add/date-place',
       component: require('../components/pages/event-add/DatePlace.jsx').default
     },
     {
-      path: 'event-add/tickets-bought',
+      path: '/event-add/tickets-bought',
       component: require('../components/pages/event-add/TicketsBought.jsx').default
     },
     {
-      path: 'event-add/meet-place',
+      path: '/event-add/meet-place',
       component: require('../components/pages/event-add/MeetPlace.jsx').default
     },
 
 
     /** Profile settings routes */
     {
-      path: 'profile/information',
+      path: '/profile/information',
       component: require('../components/pages/profile/Information.jsx').default
     },
     {
-      path: 'profile/interests',
+      path: '/profile/interests',
       component: require('../components/pages/profile/Interests.jsx').default
     },
     {
-      path: 'profile/:user/information',
+      path: '/profile/:user/information',
       component: require('../components/pages/profile/ProfileInfo.jsx').default
     },
     {
-      path: 'profile/contacts',
+      path: '/profile/contacts',
       component: require('../components/pages/profile/Contacts.jsx').default
     },
     {
-      path: 'profile/settings',
+      path: '/profile/settings',
       component: require('../components/pages/profile/Settings.jsx').default
     },
     {
-      path: 'profile/notifications',
+      path: '/profile/notifications',
       component: require('../components/pages/profile/Notifications.jsx').default
     },
     {
-      path: 'profile/payments-history',
+      path: '/profile/payments-history',
       component: require('../components/pages/profile/PaymentsHistory.jsx').default
     },
     {
-      path: 'profile/password-change',
+      path: '/profile/password-change',
       component: require('../components/pages/profile/PasswordChange.jsx').default
     },
 
 
     {
-      path: 'logout',
+      path: '/logout',
       component: logout
     },
     // {

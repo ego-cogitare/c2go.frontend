@@ -68,32 +68,15 @@ export default class ProposalDetails extends React.Component {
             </div>
             <div class="hr"></div>
             { this.state.user.reviews && this.state.user.reviews.length > 0 &&
-              <div class="reviews">
+              <div class="user-reviews">
                 <div class="title clear">
                   <div class="heading-2">
                     Bewertungen
                   </div>
                   <div class="star" data-count="5"></div>
                 </div>
-                {
-                  (this.state.user.reviews || []).map(({ message, user }, key) => (
-                    <div class="review clear" key={key}>
-                      <div class="avatar-rating clear">
-                        <div class="avatar">
-                          <a href="#">
-                            <img src={profilePhoto(user)} alt={user.first_name || user.last_name} />
-                          </a>
-                        </div>
-                        <Partials.Rating type="percentage" progress={`${user.rank * 20 + 3}%`} />
-                      </div>
-                      <div class="text user-name">
-                        {user.first_name || user.last_name}
-                      </div>
-                      <div class="text">
-                        { message }
-                      </div>
-                    </div>
-                  ))
+                { (this.state.user.reviews || []).map(({ message, reviewer }, key) =>
+                  <Partials.Review message={message} reviewer={reviewer} key={key} />)
                 }
                 <div class="violet-button-inverse show-more">
                   Mehr

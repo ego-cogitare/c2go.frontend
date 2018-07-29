@@ -67,6 +67,10 @@ export function eventRequests(success, error) {
     request(`/api/events/requests`, {}, 'get', success, error);
 };
 
+export function eventsVisited(success, error) {
+    request(`/api/events/visited`, {}, 'get', success, error);
+};
+
 export function proposals({ event }, success, error) {
     request(`/api/events/proposals/${event}`, {}, 'get', success, error);
 };
