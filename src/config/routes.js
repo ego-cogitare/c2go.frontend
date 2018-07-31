@@ -67,6 +67,10 @@ const routes = {
       path: '/event/history',
       component: require('../components/pages/event/History.jsx').default
     },
+    {
+      path: '/event/:request/vote',
+      component: require('../components/pages/event/Vote.jsx').default
+    },
 
 
     /** Event add routes */

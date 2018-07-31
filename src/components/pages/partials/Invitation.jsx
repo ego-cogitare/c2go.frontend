@@ -34,7 +34,7 @@ export default class Invitation extends React.Component {
             className="avatar"
             style={ this.props.avatar ? { backgroundImage: `url('${this.props.avatar}')` } : {} }></Link> }
         <div className="info">
-          { this.props.openLink && <Link to={this.props.openLink} class="state">Offene Anfrage</Link> }
+          { this.props.openLink }
           <div class="heading-2">
             <Link to={this.props.titleLink}>{this.props.title}</Link>
           </div>

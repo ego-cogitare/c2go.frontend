@@ -1,12 +1,60 @@
 import React from 'react';
+import classNames from 'classnames';
 
-export default ({ type, progress }) => (
-  <div class={`rating ${type}`}>
-    <div class="progress" style={{ width: `${progress || 'auto'}` }}></div>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-);
+export default class Review extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      stars: [
+        {
+          id: 1,
+          selected: false
+        },
+        {
+          id: 2,
+          selected: false
+        },
+        {
+          id: 3,
+          selected: false
+        },
+        {
+          id: 4,
+          selected: false
+        },
+        {
+          id: 5,
+          selected: false
+        },
+      ]
+    };
+  }
+
+  onStarClick(star, e) {
+    e.preventDefault();
+
+    this.state.stars.map((s) => {
+      s.selected = s.id === star.id;
+    });
+
+    this.setState({ stars: this.state.stars },
+      () => this.props.onChange && this.props.onChange(6 - star.id)
+    );
+  }
+
+  render() {
+    return (
+      <div class={`rating ${this.props.type}`}>
+        <div class="progress" style={{ width: `${this.props.progress || 'auto'}` }}></div>
+        {
+          this.state.stars.map((star) => (
+            <span key={star.id}
+                  onClick={this.onStarClick.bind(this, star)}
+                  class={classNames({ fix: star.selected })} />
+          ))
+        }
+      </div>
+    );
+  }
+}

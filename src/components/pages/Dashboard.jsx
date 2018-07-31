@@ -74,7 +74,7 @@ export default class Dashboard extends React.Component {
                         title={name}
                         message={message}
                         selected={false}
-                        openLink={`/event/requests/${id}/overview`}
+                        openLink={<Link to={`/event/requests/${id}/overview`} class="state">Offene Anfrage</Link>}
                         titleLink={`/event/${proposal.id}/details`}
                         avatarLink={`/profile/${requestor.id}/information`}
                         avatar={profilePhoto(requestor)}

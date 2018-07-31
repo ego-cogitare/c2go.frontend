@@ -35,7 +35,7 @@ export default class History extends React.Component {
               <div class="heading-2">Veranstaltungen besuchen</div>
               <br/>
               { this.state.visited.length > 0 ?
-                this.state.visited.map(({ request_id: id, date, name, message, requestor, state, proposal }, key) => {
+                this.state.visited.map(({ request_id: id, request_id, date, name, message, requestor, state, proposal }, key) => {
                   return (
                     this.isDefaultProfile() ?
                       <Partials.Invitation
@@ -43,7 +43,10 @@ export default class History extends React.Component {
                         state={state}
                         date={date}
                         title={name}
-                        message={<Link to="/">werte einen Begleiter aus</Link>}
+                        message={requestor.reviews.length > 0
+                          ? <Partials.Rating type="percentage" progress={ `${requestor.reviews[0].mark * 20 + 3}%` } />
+                          : <Link to={`/event/${request_id}/vote`}>werte einen Begleiter aus</Link>
+                        }
                         selected={false}
                         titleLink={`/event/${proposal.id}/details`}
                         avatarLink={`/profile/${proposal.user.id}/information`}
@@ -56,10 +59,9 @@ export default class History extends React.Component {
                         title={name}
                         message={requestor.reviews.length > 0
                           ? <Partials.Rating type="percentage" progress={ `${requestor.reviews[0].mark * 20 + 3}%` } />
-                          : <Link to="/event/live-review">werte einen Begleiter aus</Link>
+                          : <Link to={`/event/${request_id}/vote`}>werte einen Begleiter aus</Link>
                         }
                         selected={false}
-                        openLink={`/event/requests/${id}/overview`}
                         titleLink={`/event/${proposal.id}/details`}
                         avatarLink={`/profile/${requestor.id}/information`}
                         avatar={profilePhoto(requestor)}
