@@ -43,8 +43,8 @@ export default class History extends React.Component {
                         state={state}
                         date={date}
                         title={name}
-                        message={requestor.reviews.length > 0
-                          ? <Partials.Rating type="percentage" progress={ `${requestor.reviews[0].mark * 20 + 3}%` } />
+                        message={proposal.user.reviews.length > 0
+                          ? <Partials.Rating type="percentage" progress={ `${proposal.user.reviews[0].mark * 20 + 3}%` } />
                           : <Link to={`/event/${request_id}/vote`}>werte einen Begleiter aus</Link>
                         }
                         selected={false}

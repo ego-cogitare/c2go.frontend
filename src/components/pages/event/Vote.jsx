@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import Partials from '../partials';
 import User from '../../../core/helpers/User';
-import { eventsVisited } from '../../../actions';
+import { eventsVisited, vote } from '../../../actions';
 import { profilePhoto } from '../../../core/helpers/Utils';
 
 export default class Vote extends React.Component {
@@ -19,6 +19,13 @@ export default class Vote extends React.Component {
     eventsVisited(
       ({ data }) => this.setState({ visited: data }),
       (error) => console.error(error)
+    );
+  }
+
+  sendVote() {
+    vote({ requestId: this.props.params.request, mark: this.state.mark },
+      (r) => browserHistory.push(`/event/history`),
+      (e) => console.error(e)
     );
   }
 
@@ -40,7 +47,7 @@ export default class Vote extends React.Component {
           onChange={(mark) => this.setState({ mark })}
         />
         <div class="buttons">
-          <a href="#" class="button violet-button">Weiter</a>
+          <a href="#" class="button violet-button" onClick={this.sendVote.bind(this)}>Weiter</a>
           <Link to={`/event/history`} class="button default-button">Abbrechen</Link>
         </div>
       </div>
