@@ -57,10 +57,13 @@ export function profileRequireAssistance(data, success, error) {
     request(`/api/user/require-assistance`, data, 'post', success, error);
 };
 
+export function profileUpdateSetting(data, success, error) {
+    request(`/api/user/update-setting`, data, 'post', success, error);
+};
+
 export function vote(data, success, error) {
     request(`/api/user/vote/${data.requestId}`, data, 'post', success, error);
 };
-
 
 
 export function requestOverview({ requestId }, success, error) {

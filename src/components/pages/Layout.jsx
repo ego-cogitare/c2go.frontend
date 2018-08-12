@@ -6,8 +6,6 @@ import Popups from './popups';
 import UI from '../../core/ui';
 import User from '../../core/helpers/User';
 import { dispatch, subscribe, unsubscribe } from '../../core/helpers/EventEmitter';
-import { bootstrap } from '../../actions';
-import { refreshToken } from '../../core/middleware/Auth';
 import '../../staticFiles/css/main.css';
 
 export default class Layout extends React.Component {
@@ -26,11 +24,9 @@ export default class Layout extends React.Component {
       '#register/email',
       '#register/terms-of-use'
     ];
+
     this.apiRequestBegin = this.apiRequestBeginHandler.bind(this);
     this.apiRequestEnd = this.apiRequestEndHandler.bind(this);
-
-    // Get bootstrap data
-    // bootstrap();
   }
 
   continueRegistration(progress) {
@@ -81,7 +77,6 @@ export default class Layout extends React.Component {
       location.hash = '#login';
     }
     if (result.status === 401 && result.responseJSON.error === 'token_expired') {
-      console.log('ad')
       /** Try to refresh token */
       refreshToken(
         { token: User.token },
