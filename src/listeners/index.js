@@ -1,5 +1,4 @@
 import { subscribe, unsubscribe } from '../core/helpers/EventEmitter';
-import { refreshToken } from '../core/middleware/Auth';
 import { profileInfo } from '../actions';
 import User from '../core/helpers/User';
 

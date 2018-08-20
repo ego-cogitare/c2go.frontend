@@ -4,8 +4,8 @@ import { browserHistory } from 'react-router';
 import Partials from './partials';
 import Popups from './popups';
 import UI from '../../core/ui';
-import User from '../../core/helpers/User';
 import { dispatch, subscribe, unsubscribe } from '../../core/helpers/EventEmitter';
+import { refreshToken } from '../../core/middleware/Auth';
 import '../../staticFiles/css/main.css';
 
 export default class Layout extends React.Component {
@@ -61,30 +61,26 @@ export default class Layout extends React.Component {
     // Mark last request as completed
     //this.setState({ pageLoading: false });
 
-    // Redirect user to completed registration
+    /** Redirect user to completed registration */
     if (result.status === 202 || (['/api/auth/login', '/api/auth/registration'].indexOf(url) !== -1 && result.status === 200)) {
       this.continueRegistration(result.responseJSON.user.progress);
     }
 
-    // If user tries to get closed part of interface
-    // if (result.status === 400 && result.responseJSON.error === 'token_not_provided') {
-    //   browserHistory.push('/');
-    //   // location.href = '/#login';
-    // }
-
-    // If user tries to get closed part of interface
+    /** If user tries to get closed part of portal */
     if (result.status === 400 && result.responseJSON.error === 'token_not_provided') {
       location.hash = '#login';
     }
+
+    /** Token expired */
     if (result.status === 401 && result.responseJSON.error === 'token_expired') {
       /** Try to refresh token */
       refreshToken(
-        { token: User.token },
-        ({ token }) => {
-          User.token = token;
-          console.log('Token refreshed');
+        (data) => {
+          console.log('Token refresh: ', data);
         },
-        (e) => console.error(e)
+        (data) => {
+          console.log('user:token:refresh', data);
+        }
       );
     }
   }

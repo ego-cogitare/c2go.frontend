@@ -67,19 +67,19 @@ export default class Notifications extends React.Component {
             <div class="table">
               <div class="table-row">
                 <input type="checkbox" id="notify_participants_email" onClick={this.updateSetting.bind(this)}
-                  {...{checked: Boolean(eval(this.state.settings.notify_participants_email))}}
+                  {...{checked: this.state.settings.notify_participants_email}}
                 />
                 <label for="notify_participants_email">E-Mail</label>
               </div>
               <div class="table-row">
                 <input type="checkbox" id="notify_participants_sms" onClick={this.updateSetting.bind(this)}
-                  {...{checked: Boolean(eval(this.state.settings.notify_participants_sms))}}
+                  {...{checked: this.state.settings.notify_participants_sms}}
                 />
                 <label for="notify_participants_sms">SMS</label>
               </div>
               <div class="table-row">
                 <input type="checkbox" id="notify_participants_push" onClick={this.updateSetting.bind(this)}
-                  {...{checked: Boolean(eval(this.state.settings.notify_participants_push))}}
+                  {...{checked: this.state.settings.notify_participants_push}}
                 />
                 <label for="notify_participants_push">Push-Benachrichtigungen</label>
               </div>
@@ -123,7 +123,7 @@ export default class Notifications extends React.Component {
             <div class="table">
               <div class="table-row">
                 <input type="checkbox" id="notify_platform_email" onClick={this.updateSetting.bind(this)}
-                  {...{checked: Boolean(eval(this.state.settings.notify_platform_email))}}
+                  {...{checked: this.state.settings.notify_platform_email}}
                 />
                 <label for="notify_platform_email">E-Mail</label>
               </div>
@@ -140,13 +140,13 @@ export default class Notifications extends React.Component {
             <div class="table">
               <div class="table-row">
                 <input type="checkbox" id="notify_reminder_email" onClick={this.updateSetting.bind(this)}
-                  {...{checked: Boolean(eval(this.state.settings.notify_reminder_email))}}
+                  {...{checked: this.state.settings.notify_reminder_email}}
                 />
                 <label for="notify_reminder_email">E-Mail</label>
               </div>
               <div class="table-row">
                 <input type="checkbox" id="notify_reminder_sms" onClick={this.updateSetting.bind(this)}
-                  {...{checked: Boolean(eval(this.state.settings.notify_reminder_sms))}}
+                  {...{checked: this.state.settings.notify_reminder_sms}}
                 />
                 <label for="notify_reminder_sms">SMS</label>
               </div>

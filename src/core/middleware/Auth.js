@@ -20,9 +20,9 @@ export function emailLogin(data, onSuccess, onFail) {
   );
 };
 
-export function refreshToken(data, onSuccess, onFail) {
+export function refreshToken(onSuccess, onFail) {
   updateToken(
-    { ...data },
+    { token: User.token },
     ({ token, user }) => {
       // Update user token
       User.token = token;
