@@ -61,6 +61,10 @@ export function profileUpdateSetting(data, success, error) {
     request(`/api/user/update-setting`, data, 'post', success, error);
 };
 
+export function profileUpdateSettings(data, success, error) {
+    request(`/api/user/update-settings`, data, 'post', success, error);
+};
+
 export function vote(data, success, error) {
     request(`/api/user/vote/${data.requestId}`, data, 'post', success, error);
 };
