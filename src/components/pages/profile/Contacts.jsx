@@ -5,6 +5,7 @@ import Popups from '../popups';
 import { dispatch } from '../../../core/helpers/EventEmitter';
 import classNames from 'classnames';
 import User from '../../../core/helpers/User';
+import { profileChangeEmail } from '../../../actions';
 
 export default class Contacts extends React.Component {
 
@@ -15,11 +16,6 @@ export default class Contacts extends React.Component {
       phone: User.phone,
       email: User.email,
     };
-
-    // this.state = {
-    //   phone: null,
-    //   email: null,
-    // };
   }
 
   initDialogs() {
@@ -28,6 +24,16 @@ export default class Contacts extends React.Component {
       disabledText={User.email}
       placeholder="Neue E-Mail-Adresse"
       className="popup-sm adjustments-002"
+      onPositiveButtonClick={(input) => {
+        profileChangeEmail(
+          { email: input.value },
+          (r) => {
+            input.value = '';
+            dispatch('popup:close');
+          },
+          (e) => console.log(e)
+        );
+      }}
     />;
 
     this.addEmailDialog = <Popups.ProfileInputDialog

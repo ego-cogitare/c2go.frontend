@@ -136,6 +136,12 @@ const routes = {
 
 
     {
+      path: '/email/change/:hash',
+      component: require('../components/pages/profile/EmailChange.jsx').default
+    },
+
+
+    {
       path: '/logout',
       component: logout
     },

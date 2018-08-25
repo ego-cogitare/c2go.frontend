@@ -14,10 +14,13 @@ export default class ProfileInputDialog extends React.Component {
           </div>
         }
         <div class="form-controll">
-          <input type="text" class="input" name="email" defaultValue="" placeholder={ this.props.placeholder } autoFocus />
+          <input type="text" class="input" ref="input" name="email" defaultValue="" placeholder={ this.props.placeholder } autoFocus />
         </div>
         <div class="buttons">
-          <a href="#" class="violet-button">Ändern</a>
+          <a href="#" class="violet-button" onClick={(e) => {
+              e.preventDefault();
+              this.props.onPositiveButtonClick(this.refs.input);
+          }}>Ändern</a>
           <a href="#" class="skip">Abbrechen</a>
         </div>
       </div>

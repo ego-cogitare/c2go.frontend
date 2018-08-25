@@ -49,6 +49,11 @@ export function profileChangePassword(data, success, error) {
     request(`/api/user/change-password`, data, 'post', success, error);
 };
 
+export function profileChangeEmail(data, success, error) {
+    const hash = data.hash ? '/'.concat(data.hash) : '';
+    request(`/api/user/change-email${hash}`, data, 'post', success, error);
+};
+
 export function profileDisabilityInformation(data, success, error) {
     request(`/api/user/disability-information`, data, 'post', success, error);
 };
