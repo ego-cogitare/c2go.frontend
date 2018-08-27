@@ -158,7 +158,7 @@ export default class Search extends React.Component {
           </Link>
         </div>
         <Link to="/event-add" className="create-event" onClick={this.props.onEventAdd}>
-          Event erstellen
+          Angebot erstellen
         </Link>
       </div>
     );

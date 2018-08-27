@@ -25,7 +25,7 @@ export default class Footer extends React.Component {
                   <a href="#">Event suchen</a>
                 </div>
                 <div class="menu-item">
-                  <a href="#">Event erstellen</a>
+                  <a href="#">Angebot erstellen</a>
                 </div>
                 <div class="menu-item">
                   <a href="#">So funktioniert's</a>

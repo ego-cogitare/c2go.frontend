@@ -11,7 +11,9 @@ export default class Interest extends React.Component {
     return (
       <div class="item">
         <input type="checkbox" id={id} checked={this.props.model.checked} onChange={(e) => this.props.onCheckedChange && this.props.onCheckedChange(this.props.model.id, e.target.checked)} />
-        <label for={id}>{this.props.model.title}</label>
+        <label for={id}>
+          <span class="category-name">{this.props.model.name}</span>
+        </label>
         <div class="picture" style={{ backgroundImage: `url('${config.staticFiles}/${this.props.model.cover_photo}')` }}>
           <div class="overlay"></div>
         </div>

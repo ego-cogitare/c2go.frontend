@@ -23,7 +23,7 @@ export default class EmailLoginDialog extends React.Component {
     e.preventDefault();
 
     emailLogin(this.state,
-      (r) => dispatch('user:loggedin', { ...r, type: 'email' }), 
+      (r) => dispatch('user:loggedin', { ...r, type: 'email' }),
       (e) => this.setState({ error: 'Email or password is incorrect.' })
     );
   }
@@ -34,13 +34,13 @@ export default class EmailLoginDialog extends React.Component {
         <div class="register-form">
           <form action="" method="post" onSubmit={this.doLogin.bind(this)}>
             <div class="clear">
-              <div class="column left">
+              <div class="column w100p">
                 <div class="form-controll">
                   <input type="text" class="input" name="email" value={this.state.email} onChange={this.updateField.bind(this)} placeholder="E-Mail-Adresse" />
                   <small class="color-red">{this.state.error}</small>
                 </div>
               </div>
-              <div class="column left">
+              <div class="column w100p">
                 <div class="form-controll">
                   <input type="password" class="input" name="password" value={this.state.password} onChange={this.updateField.bind(this)} placeholder="Passwort" />
                 </div>

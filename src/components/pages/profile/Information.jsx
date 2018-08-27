@@ -66,7 +66,8 @@ export default class Information extends React.Component {
             </Partials.UserAvatar>
           </div>
 
-          { this.state.disabilityInfoEdit &&
+          { User.profileType == 1 &&
+            this.state.disabilityInfoEdit &&
             <div class="settings-section">
               <div class="heading-2">
                 Angaben zu einer Behinderung
@@ -80,7 +81,8 @@ export default class Information extends React.Component {
               <a href="#" class="edit" onClick={this.disabilityInfoSave.bind(this)}>Save</a>
             </div>
           }
-          { !this.state.disabilityInfoEdit &&
+          { User.profileType == 1 &&
+            !this.state.disabilityInfoEdit &&
             <div class="settings-section">
               <div class="heading-2">
                 Angaben zu einer Behinderung
