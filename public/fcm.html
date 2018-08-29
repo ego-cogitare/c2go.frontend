@@ -1,0 +1,94 @@
+!<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="manifest" href="manifest.json" />
+
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase.js"></script>
+    <script>
+      firebase.initializeApp({
+        apiKey: "AIzaSyAHSA2bBUDo8c5oI5JplPMttBn7iuqNZGU",
+        authDomain: "companion2go-1521406947018.firebaseapp.com",
+        databaseURL: "https://companion2go-1521406947018.firebaseio.com",
+        projectId: "companion2go-1521406947018",
+        storageBucket: "companion2go-1521406947018.appspot.com",
+        messagingSenderId: "940156244935"
+      });
+    </script>
+  </head>
+
+  <body>
+    <script>
+      // Retrieve Firebase Messaging object.
+      const messaging = firebase.messaging();
+
+      messaging.requestPermission().then(function() {
+        console.log('Notification permission granted.');
+        // Get Instance ID token. Initially this makes a network call, once retrieved
+        // subsequent calls to getToken will return from cache.
+        messaging.getToken().then(function(currentToken) {
+          if (currentToken) {
+            sendTokenToServer(currentToken);
+          } else {
+            // Show permission request.
+            console.log('No Instance ID token available. Request permission to generate one.');
+            setTokenSentToServer(false);
+          }
+        }).catch(function(err) {
+          console.log('An error occurred while retrieving token. ', err);
+          showToken('Error retrieving Instance ID token. ', err);
+          setTokenSentToServer(false);
+        });
+      }).catch(function(err) {
+        console.log('Unable to get permission to notify.', err);
+      });
+
+      // Callback fired if Instance ID token is updated.
+      messaging.onTokenRefresh(function() {
+        messaging.getToken().then(function(currentToken) {
+          if (currentToken) {
+            sendTokenToServer(currentToken);
+          } else {
+            // Show permission request.
+            console.log('No Instance ID token available. Request permission to generate one.');
+            setTokenSentToServer(false);
+          }
+        }).catch(function(err) {
+          console.log('An error occurred while retrieving token. ', err);
+          showToken('Error retrieving Instance ID token. ', err);
+          setTokenSentToServer(false);
+        });
+      });
+
+      messaging.onMessage(function(payload) {
+        new Notification(
+          payload.notification.title,
+          payload.notification
+        );
+        console.log('Message received. ', payload, self);
+      });
+
+      function setTokenSentToServer(isSent) {
+        console.log('setTokenSentToServer', isSent);
+      }
+
+      function sendTokenToServer(token) {
+        console.log('Token: ', token);
+      }
+
+      function showToken(msg, err) {
+        console.error(msg, err);
+      }
+/*
+curl -X POST -H "Authorization: key=AIzaSyCugEwyecoWvpJJ6GhDwpzGKACI3r3Ci40" -H "Content-Type: application/json" -d '{
+"notification": {
+  "title": "FCM Message",
+  "body": "This is a message from FCM",
+  "icon": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZjVLtJDgMTOExfMHsTZuT4G5cAmaRT0N0vnoVbblrTTKkwSOb",
+  "click_action": "https://google.com"
+},
+"to": "dyKhHS1NFcY:APA91bFbAdNgtrFu1B5lptzOOvDotfAnoW-YhnvlDp3ODKcKQMNC06kSTfvR3P3PwjesPO_AG1ckNTfDBr9YkVl7sh4cVwQ-83frqjbbOHWacm849makL9riczDyzX0WJInr-tnHwMfH"
+}' "https://fcm.googleapis.com/fcm/send"
+*/
+    </script>
+  </body>
+</html>
