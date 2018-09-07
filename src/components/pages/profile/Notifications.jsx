@@ -14,13 +14,33 @@ export default class Notifications extends React.Component {
     super(props);
 
     this.state = {
-      settings: {}
+      settings: {},
+      pushPermissionGranted: false
     };
+  }
+
+  componentWillMount() {
+    /** Initialize FCM */
+    !firebase.apps.length && firebase.initializeApp(config.FIREBASE_CLOUD_MESSAGING);
+    this.fcm = firebase.messaging();
 
     /** Get current user settings */
-    raiseEvent('user:info:refresh', {}, (data) => {
-      this.setState({ ...data });
-    });
+    raiseEvent(
+      'user:info:refresh',
+      {},
+      (data) => this.setState({ ...data }, () => {
+        // Check if push notification enabled by user
+        if (this.state.settings.notify_participants_push) {
+          this.fcm
+            .requestPermission()
+            .then(() => this.setState({ pushPermissionGranted: true }))
+            .catch((err) => {
+              console.error('Error getting permission:', err);
+              this.setState({ pushPermissionGranted: false });
+            });
+        }
+      })
+    );
   }
 
   initDialogs() {
@@ -35,13 +55,39 @@ export default class Notifications extends React.Component {
   }
 
   updateSetting(e) {
-    /** Update checkbox state  */
-    this.state.settings[e.target.id] = e.target.checked;
-    this.setState({ settings: this.state.settings });
+    const { id, checked } = e.target;
 
+    /** Update checkbox state  */
+    this.state.settings[id] = checked;
+
+    this.setState({ settings: this.state.settings }, () => {
+      /** If push notification checkbox state changed */
+      if (id === 'notify_participants_push' && this.state.pushPermissionGranted === false) {
+        this.fcm
+          .requestPermission()
+          .then(() => {
+            return this.fcm.getToken();
+          })
+          .then((token) => {
+            console.log('Token:', token);
+            this.setState({ pushPermissionGranted: token !== null },
+              () => {
+                this.doUpdateSetting(id, this.state.pushPermissionGranted);
+                this.doUpdateSetting('fcm_push_notification_token', token);
+              }
+            );
+          })
+          .catch((err) => console.error('Error getting FCM token:', err));
+      } else {
+        this.doUpdateSetting(id, checked);
+      }
+    });
+  }
+
+  doUpdateSetting(id, value) {
     /** Save setting */
     profileUpdateSetting(
-      { section: e.target.id, value: e.target.checked },
+      { section: id, value },
       (r) => console.log(r),
       (e) => console.error(e)
     );
@@ -79,7 +125,7 @@ export default class Notifications extends React.Component {
               </div>
               <div class="table-row">
                 <input type="checkbox" id="notify_participants_push" onClick={this.updateSetting.bind(this)}
-                  {...{checked: this.state.settings.notify_participants_push}}
+                  {...{checked: this.state.settings.notify_participants_push && this.state.pushPermissionGranted}}
                 />
                 <label for="notify_participants_push">Push-Benachrichtigungen</label>
               </div>

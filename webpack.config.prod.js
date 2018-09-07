@@ -51,7 +51,7 @@ module.exports = {
   plugins: [
     new webpack.ProvidePlugin({ config: 'config' }),
     new WebpackCleanupPlugin({
-      exclude: ['vendors/**/*', 'icons/**/*'],
+      exclude: config.cleanupPluginExcludes,
     }),
     new HtmlWebpackPlugin({
       title: 'C2Go',
@@ -59,14 +59,27 @@ module.exports = {
       template: 'src/staticFiles/index.ejs',
       externalSources: {
         css: [
-          '/vendors/font-awesome/css/font-awesome.min.css',
-          '/vendors/swiper/dist/css/swiper.min.css',
-          '/vendors/rome/dist/rome.min.css',
-          '/vendors/wickedpicker/dist/wickedpicker.min.css',
+          {
+            href: '/vendors/font-awesome/css/font-awesome.min.css',
+          },
+          {
+            href: '/vendors/swiper/dist/css/swiper.min.css',
+          },
+          {
+            href: '/vendors/rome/dist/rome.min.css',
+          },
+          {
+            href: '/vendors/wickedpicker/dist/wickedpicker.min.css',
+          },
+          {
+            href: '/manifest.json',
+            rel: 'manifest'
+          },
         ],
         js: [
           'https://maps.googleapis.com/maps/api/js?key=' + config.GOOGLE_APP_ID + '&libraries=places',
           'https://apis.google.com/js/api.js',
+          'https://www.gstatic.com/firebasejs/5.4.1/firebase.js',
           '/vendors/jquery/dist/jquery.min.js',
           '/vendors/swiper/dist/js/swiper.min.js',
           '/vendors/rome/dist/rome.min.js',

@@ -11,7 +11,7 @@
 
   <% if (htmlWebpackPlugin.options.externalSources) { %>
     <% for (var chunk in htmlWebpackPlugin.options.externalSources.css) { %>
-      <link href="<%= htmlWebpackPlugin.options.externalSources.css[chunk] %>" rel="stylesheet">
+      <link href="<%= htmlWebpackPlugin.options.externalSources.css[chunk].href %>" rel="<%= htmlWebpackPlugin.options.externalSources.css[chunk].rel || 'stylesheet' %>">
     <% } %>
   <% } %>
 
