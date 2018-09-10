@@ -53,7 +53,7 @@ export default class Proposal extends React.Component {
             {this.state.data.user.age} Jahre
           </div>
           <div class="buttons clear">
-            <a href="#" class="button">Mehr</a>
+            <Link to={`/profile/${this.state.data.user.id}/information`} class="button">Mehr</Link>
             <Link to={`/proposal/${this.state.data.id}/details`} class="button violet-button">Anfragen</Link>
           </div>
         </div>

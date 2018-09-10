@@ -19,26 +19,26 @@ export default class Footer extends React.Component {
             <div class="column left">
               <nav class="menu">
                 <div class="menu-item">
-                  <a href="#">Startseite</a>
+                  <Link to='/'>Startseite</Link>
                 </div>
                 <div class="menu-item">
-                  <a href="#">Event suchen</a>
+                  <Link to='/'>Event suchen</Link>
                 </div>
                 <div class="menu-item">
-                  <a href="#">Angebot erstellen</a>
+                  <Link to='/event-add'>Angebot erstellen</Link>
                 </div>
                 <div class="menu-item">
-                  <a href="#">So funktioniert's</a>
+                  <Link to='/how-it-works'>So funktioniert's</Link>
                 </div>
               </nav>
             </div>
             <div class="column left">
               <nav class="menu">
                 <div class="menu-item">
-                  <a href="#">Registrieren</a>
+                  <Link to='#register'>Registrieren</Link>
                 </div>
                 <div class="menu-item">
-                  <a href="#">Einloggen</a>
+                  <Link to='#login'>Einloggen</Link>
                 </div>
                 <div class="menu-item">
                   <a href="#">Nutzungsbedingungen</a>
