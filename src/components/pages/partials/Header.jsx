@@ -11,7 +11,9 @@ export default class Header extends React.Component {
 
     this.state = {
       hasSession: User.hasSession,
-      profileType: User.profileType
+      profileType: User.profileType,
+
+      menuOpened: false
     };
 
     this.onUserLogin = this.onUserLoginHandler.bind(this);
@@ -56,11 +58,6 @@ export default class Header extends React.Component {
             <div class="menu-item">
               <Link to="/how-it-works" activeClassName="active">So funktioniert's</Link>
             </div>
-            { this.state.hasSession &&
-              <div class="menu-item">
-                <Link to="/dashboard" activeClassName="active">Dashboard</Link>
-              </div>
-            }
             { !this.state.hasSession &&
               <div class="menu-item">
                 <a href="#register">Registrieren</a>
@@ -71,9 +68,26 @@ export default class Header extends React.Component {
                 <a href="#login">Einloggen</a>
               </div>
             }
+
             { this.state.hasSession &&
-              <div class="menu-item">
-                <Link to="/logout">Ausloggen</Link>
+              <div className="menu-item">
+                <Link to="/dashboard">Neuigkeiten</Link>
+              </div>
+            }
+            { this.state.hasSession &&
+              <div class="menu-item avatar-container">
+                  <img className="menu-avatar" src={User.profilePhoto}/>
+
+                <div className="context-menu">
+                  <ul>
+                    <li>
+                        <Link to="/profile/settings">Einstellungen</Link>
+                    </li>
+                    <li>
+                        <Link to="/logout">Ausloggen</Link>
+                    </li>
+                  </ul>
+                </div>
               </div>
             }
           </nav>

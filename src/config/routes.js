@@ -43,7 +43,7 @@ const routes = {
 
     {
       path: '/proposal/:proposal/details',
-      component: require('../components/pages/ProposalDetails.jsx').default
+      component: require('../components/pages/event/View.jsx').default
     },
 
     /** Event roures */

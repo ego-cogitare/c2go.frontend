@@ -10,12 +10,16 @@ export default class Popup extends React.Component {
     this.state = { popup: null };
 
     subscribe('popup:show', (payload) => {
+      $("html, body").addClass("no-scroll");
       this.setState({
         popup: Object.assign({}, this.initialState, payload)
       });
     });
 
-    subscribe('popup:close', () => this.closePopup());
+    subscribe('popup:close', () => {
+        $("html, body").removeClass("no-scroll");
+      this.closePopup()
+    });
   }
 
   closePopup() {

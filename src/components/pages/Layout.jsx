@@ -7,6 +7,7 @@ import UI from '../../core/ui';
 import { dispatch, subscribe, unsubscribe } from '../../core/helpers/EventEmitter';
 import { refreshToken } from '../../core/middleware/Auth';
 import '../../staticFiles/css/main.css';
+import '../../staticFiles/css/addional.css';
 
 export default class Layout extends React.Component {
 
@@ -109,6 +110,7 @@ export default class Layout extends React.Component {
   }
 
   popups(props) {
+    let exists = false;
     switch (props.router.location.hash) {
       case '#login':
         dispatch('popup:show', {

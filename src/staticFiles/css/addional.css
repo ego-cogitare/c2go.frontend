@@ -1,0 +1,59 @@
+.menu-avatar {
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-top: 6px;
+    border: 1px solid #440381;
+    cursor: pointer;
+}
+
+.avatar-container {
+    position: relative;
+}
+
+.context-menu {
+    position: absolute;
+    top: 40px;
+    right: -2px;
+    padding: 10px;
+    background-color: #f2f2f2;
+    border: solid 1px #e6e6e6;
+}
+
+.context-menu ul {
+    padding: 0;
+    list-style: none;
+}
+
+.context-menu ul li a {
+    line-height: 40px;
+    margin: 0;
+    text-align: center;
+    border: 0 !important;
+}
+
+.wrapper-small .buttons .default-button {
+    font-size: 1.125rem;
+}
+
+.text {
+    font-family: "Arial";
+    font-size: 16px;
+}
+
+.line {
+    border: 0;
+    background-color: #d8d8d8;
+    height: 1px;
+    margin: 10px 0;
+}
+
+.no-scroll {
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+.popup-wrapper.opened {
+    overflow: auto;
+}

@@ -20,12 +20,30 @@ export default class Search extends React.Component {
 
   componentWillReceiveProps({ categories }) {
     const all = [{ id: '', name: 'Alle' }];
-    this.setState({ categories: categories.concat(all) });
+    this.setState({ categories: categories.concat(all) }, () => {
+        let merge = {};
+        window.location.search.substr(1).split("&")
+            .forEach(param => {
+                const parts = param.split("=");
+                if (parts.length === 2 && parts[0] === 'category') {
+                  merge.category_id = +parts[1];
+                    merge.selectedCategory = this.state.categories.find(item => {
+                        return item.id === merge.category_id;
+                    }) || {};
+                } else if (parts.length === 2 && parts[0] === 'date') merge.selectedDate = parts[1];
+                else if (parts.length === 2 && parts[0] === 'location') {
+                  merge.location1_human = parts[1];
+                  this.refs['autocomplete-from'].value = parts[1];
+                }
+
+                console.log(parts[0], parts[1]);
+                this.setState(merge);
+            });
+    });
   }
 
   componentDidMount() {
     const context = this;
-
     $(this.refs.categories).on('click', function() {
       $(this).toggleClass('expanded');
     });
@@ -150,7 +168,7 @@ export default class Search extends React.Component {
             <i class="right fa fa-map-marker"></i>
           </div>
           <div class="filter-item date">
-            <input type="text" id="date" class="input" placeholder="Datum" defaultValue="" />
+            <input type="text" id="date" class="input" placeholder="Datum" defaultValue="" value={this.state.selectedDate} />
             <i class="right fa fa-calendar"></i>
           </div>
           <Link class="filter-item search" to={this.searchParams} /*onClick={this.onEventsSearch.bind(this)}*/>

@@ -77,6 +77,22 @@ export default class EventRequest extends React.Component {
                 error={this.state.error}
                 ref="message"
               />
+              <hr className="line"/>
+              <div>
+                  *Der Betrag wird nur abgebucht, wenn dein Companion euer Match bestätigt.
+              </div>
+              <div>
+                <label>
+                    <Partials.Input type="checkbox"/>
+                    Ich erkläre mich mit den Datenschutzbestimmungen einverstanden
+                </label>
+              </div>
+              <div>
+                  <label>
+                      <Partials.Input type="checkbox"/>
+                      Ich erkläre mich mit den AGB einverstanden
+                  </label>
+              </div>
               <div class="buttons clear">
                 <div class="next violet-button" onClick={this.postRequest.bind(this)}>
                   Weiter
