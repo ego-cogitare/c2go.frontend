@@ -86,6 +86,9 @@ export default class LoginSwitchDialog extends React.Component {
           </a>
           <a href="#login/email" class="violet-button email">Mit E-Mail-Adresse</a>
         </div>
+          <br/>
+          <br/>
+          <a href="#register" className="violet-button email">Register</a>
       </div>
     );
   }

@@ -15,7 +15,14 @@ export default class Popup extends React.Component {
       });
     });
 
-    subscribe('popup:close', () => this.closePopup());
+    subscribe('popup:close', () => {
+        $("html, body").removeClass("no-scroll");
+        this.closePopup()
+    });
+  }
+
+  componentWillMount() {
+      $("html, body").addClass("no-scroll");
   }
 
   closePopup() {
