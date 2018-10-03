@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const config = require('./src/config/config.prod');
+const config = require('./src/config/config.dev');
 
 module.exports = {
   entry: './src/app.jsx',

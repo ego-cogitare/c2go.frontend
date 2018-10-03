@@ -9,21 +9,21 @@ export default class Type extends React.Component {
         super(props);
     }
 
-    next(profileType) {
-        if (profileType === 2) {
-            progress({
-                progress: 4,
-                section: 'profile_type',
-                value: profileType
-            }, () => browserHistory.push('/register/interests'));
-            return;
-        }
-        progress({
-            progress: 4,
-            section: 'profile_type',
-            value: profileType
-        }, () => browserHistory.push('/register/settings'));
-    }
+  next(profileType) {
+      if(profileType === 2) {
+          progress({
+              progress: 4,
+              section: 'profile_type',
+              value: profileType
+          }, () => browserHistory.push('/register/interests'));
+          return;
+      }
+    progress({
+      progress: 4,
+      section: 'profile_type',
+      value: profileType
+    }, () => browserHistory.push('/register/settings'));
+  }
 
     render() {
         return (

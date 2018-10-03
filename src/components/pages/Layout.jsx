@@ -110,6 +110,7 @@ export default class Layout extends React.Component {
   }
 
   popups(props) {
+    let exists = false;
     switch (props.router.location.hash) {
       case '#login':
         dispatch('popup:show', {
